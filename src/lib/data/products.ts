@@ -266,6 +266,81 @@ export const products: Product[] = [
 			],
 			systemRequirements: 'iOS 17.0以上'
 		}
+	},
+	{
+		id: 'llm-agent',
+		name: 'ゆるブレイン',
+		description:
+			'お気に入りの AI とデバイスをつなぐエージェントアプリ。カレンダー、リマインダー、写真、位置情報などを自然な会話で操作できます。',
+		fullDescription:
+			'ゆるブレインは、複数の LLM プロバイダー（Claude、ChatGPT、Gemini、DeepSeek、Grok 等）に対応した AI エージェントアプリです。従来のチャット UI ではなく、キャンバス形式で思考の断片を柔軟に扱えます。カレンダー、リマインダー、連絡先、位置情報、写真、カメラ、音声入力など、デバイス機能を AI ツールとして統合。カスタムスキルやサブエージェントで用途を拡張でき、プロジェクト単位でナレッジを管理できます。',
+		type: 'app',
+		status: 'development',
+		platforms: ['ios', 'macos'],
+		links: {},
+		technologies: ['Swift', 'SwiftUI', 'AI', 'Firebase'],
+		thumbnail: '/llm-agent-icon.jpg',
+		featured: true,
+		price: '無料（アプリ内課金あり）',
+		category: 'ユーティリティ',
+		ageRating: '4+',
+		features: [
+			'マルチプロバイダー LLM 対応（Claude、ChatGPT、Gemini、DeepSeek、Grok、Groq、Mistral、OpenRouter）',
+			'デバイス統合ツール（カレンダー、リマインダー、連絡先、位置情報、写真、カメラ）',
+			'音声入力・音声認識',
+			'画像生成（DALL-E、FLUX、Imagen）',
+			'Web 検索・ページ取得',
+			'カスタムスキル・サブエージェント',
+			'プロジェクト単位のナレッジ管理',
+			'Live Activity（Dynamic Island）対応',
+			'macOS 対応（シェル実行・システム情報ツール）'
+		],
+		privacy: {
+			effectiveDate: '2026-03-16',
+			dataCollection: 'minimal',
+			dataItems: [
+				'アカウント情報（Google/Apple Sign-In / ゲスト認証）',
+				'会話メッセージ（選択した AI プロバイダーに送信）',
+				'セッション履歴・設定（端末内にのみ保存）',
+				'デバイスデータ（カレンダー・連絡先・位置情報等 — ツール実行時のみ、許可制）'
+			],
+			thirdPartyServices: [
+				'Firebase Authentication（ユーザー認証）',
+				'Anthropic Claude API（AI 会話 — プラットフォームサーバー経由）',
+				'OpenAI GPT / DALL-E API（AI 会話・画像生成 — プラットフォームサーバー経由）',
+				'Google Gemini / Imagen API（AI 会話・画像生成 — プラットフォームサーバー経由）',
+				'DeepSeek API（AI 会話 — プラットフォームサーバー経由）',
+				'xAI Grok API（AI 会話 — プラットフォームサーバー経由）',
+				'Groq API（AI 会話 — プラットフォームサーバー経由）',
+				'Mistral API（AI 会話 — プラットフォームサーバー経由）',
+				'OpenRouter（AI ルーティング — プラットフォームサーバー経由）',
+				'fal.ai FLUX（画像生成 — プラットフォームサーバー経由）'
+			],
+			analyticsUsed: false,
+			contactEmail: 'info@taniguchi-kyoichi.com'
+		},
+		support: {
+			contactEmail: 'info@taniguchi-kyoichi.com',
+			faq: [
+				{
+					question: 'データはどこに保存されますか？',
+					answer: 'セッション履歴や設定はすべて端末内にのみ保存されます。会話メッセージは選択した AI プロバイダーに送信されますが、当社サーバーにログとして保存されることはありません。'
+				},
+				{
+					question: 'API キーは必要ですか？',
+					answer: 'いいえ。プラットフォームサーバー経由で AI にアクセスするため、API キーの設定は不要です。アプリ内クレジットを購入してご利用ください。'
+				},
+				{
+					question: 'デバイス機能（カレンダー・連絡先等）へのアクセスは安全ですか？',
+					answer: '各デバイス機能はツールとして提供され、利用時に iOS の標準権限ダイアログで許可が求められます。許可しない限りアクセスされません。'
+				},
+				{
+					question: 'どの AI モデルが使えますか？',
+					answer: 'Claude（Anthropic）、GPT-4o / o1（OpenAI）、Gemini（Google）、DeepSeek、Grok（xAI）、Groq、Mistral、OpenRouter 経由の各種モデルに対応しています。'
+				}
+			],
+			systemRequirements: 'iOS 26.0以上 / macOS 26.0以上'
+		}
 	}
 ];
 
