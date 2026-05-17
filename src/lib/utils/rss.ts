@@ -19,6 +19,10 @@ interface YouTubeAPIResponse {
 	}>;
 }
 
+interface RSSMediaContent {
+	'@_url'?: string;
+}
+
 interface RSSItem {
 	title: string;
 	link: string;
@@ -27,6 +31,8 @@ interface RSSItem {
 	enclosure?: {
 		'@_url'?: string;
 	};
+	'media:thumbnail'?: RSSMediaContent;
+	'media:content'?: RSSMediaContent | RSSMediaContent[];
 }
 
 interface RSSChannel {
@@ -59,7 +65,18 @@ function stripHtml(html: string): string {
 function detectSource(url: string): ArticleSource {
 	if (url.includes('zenn.dev')) return 'zenn';
 	if (url.includes('note.com')) return 'note';
+	if (url.includes('reinself.com')) return 'rein';
 	return 'other';
+}
+
+function extractThumbnail(item: RSSItem): string | undefined {
+	if (item.enclosure?.['@_url']) return item.enclosure['@_url'];
+	if (item['media:thumbnail']?.['@_url']) return item['media:thumbnail']['@_url'];
+	const mediaContent = item['media:content'];
+	if (Array.isArray(mediaContent)) {
+		return mediaContent[0]?.['@_url'];
+	}
+	return mediaContent?.['@_url'];
 }
 
 function parseRSSItems(xml: string, source: ArticleSource): Article[] {
@@ -72,7 +89,7 @@ function parseRSSItems(xml: string, source: ArticleSource): Article[] {
 		url: item.link,
 		publishedAt: item.pubDate,
 		description: item.description ? stripHtml(item.description) : undefined,
-		thumbnail: item.enclosure?.['@_url'],
+		thumbnail: extractThumbnail(item),
 		source
 	}));
 }

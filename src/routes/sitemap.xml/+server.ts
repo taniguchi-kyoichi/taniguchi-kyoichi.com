@@ -7,7 +7,8 @@ export async function GET() {
 	const staticPages = [
 		{ url: '', priority: '1.0', changefreq: 'weekly' },
 		{ url: '/writings', priority: '0.8', changefreq: 'daily' },
-		{ url: '/oss', priority: '0.8', changefreq: 'weekly' }
+		{ url: '/oss', priority: '0.8', changefreq: 'weekly' },
+		{ url: '/rein', priority: '0.8', changefreq: 'daily' }
 	];
 
 	const productPages = products.map((p) => ({

@@ -127,6 +127,14 @@
 					</li>
 					<li>
 						<a
+							href="/rein"
+							class="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+						>
+							Rein
+						</a>
+					</li>
+					<li>
+						<a
 							href="/#contact"
 							class="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
 						>

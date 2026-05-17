@@ -11,12 +11,14 @@
 	const sourceLabel: Record<string, string> = {
 		zenn: 'Zenn',
 		note: 'note',
+		rein: 'Rein',
 		other: 'Other'
 	};
 
 	const sourceColor: Record<string, string> = {
 		zenn: 'bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400',
 		note: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
+		rein: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300',
 		other: 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-400'
 	};
 </script>

@@ -6,9 +6,11 @@ import { DEFAULT_OG_IMAGE, DEFAULT_OG_IMAGE_SIZE, SITE_NAME, SITE_URL } from '$l
 import type { SEO } from '$lib/seo';
 
 const RSS_FEEDS = ['https://zenn.dev/kyoichi/feed', 'https://note.com/note_kyoichi/rss'];
+const REIN_RSS = 'https://reinself.com/rss.xml';
 const YOUTUBE_CHANNEL_ID = 'UCmMnuEXRsrNNcW4bVeeTI8A';
 const MAX_ARTICLES_ON_HOME = 4;
 const MAX_VIDEOS_ON_HOME = 4;
+const MAX_REIN_ARTICLES_ON_HOME = 4;
 
 export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
 	setHeaders({
@@ -19,15 +21,20 @@ export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
 		? fetchYouTubeChannel(YOUTUBE_CHANNEL_ID, env.YOUTUBE_API_KEY, MAX_VIDEOS_ON_HOME)
 		: Promise.resolve(null);
 
-	const [articlesArrays, youtubePlaylist] = await Promise.all([
+	const [articlesArrays, youtubePlaylist, reinArticlesAll] = await Promise.all([
 		Promise.all(RSS_FEEDS.map((url) => fetchArticlesFromRSS(url, fetch))),
-		youtubePromise
+		youtubePromise,
+		fetchArticlesFromRSS(REIN_RSS, fetch)
 	]);
 
 	const articles = articlesArrays
 		.flat()
 		.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
 		.slice(0, MAX_ARTICLES_ON_HOME);
+
+	const reinArticles = reinArticlesAll
+		.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+		.slice(0, MAX_REIN_ARTICLES_ON_HOME);
 
 	const seo: SEO = {
 		title: `${SITE_NAME} | ${profile.title}`,
@@ -56,5 +63,5 @@ export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
 		}
 	};
 
-	return { articles, youtubePlaylist, seo };
+	return { articles, youtubePlaylist, reinArticles, seo };
 };

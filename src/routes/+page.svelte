@@ -231,6 +231,52 @@
 	</section>
 {/if}
 
+<!-- Rein Articles Section -->
+{#if data.reinArticles && data.reinArticles.length > 0}
+	<section id="rein" class="bg-gray-50 py-12 md:py-20 dark:bg-gray-800/50">
+		<div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+			<div class="mb-6 flex items-center gap-3 sm:mb-8">
+				<img src="/rein-icon.png" alt="Rein" class="h-12 w-12 rounded-xl shadow-sm sm:h-14 sm:w-14" />
+				<div>
+					<h2 class="text-xl font-bold text-gray-900 sm:text-2xl dark:text-white">Rein</h2>
+					<p class="text-xs text-gray-600 sm:text-sm dark:text-gray-400">
+						意志じゃなくて、仕組み。認知科学で日常のつまずきを言語化するメディア
+					</p>
+				</div>
+			</div>
+
+			<div class="grid gap-4 sm:gap-6 md:grid-cols-2">
+				{#each data.reinArticles as article}
+					<ArticleCard {article} />
+				{/each}
+			</div>
+
+			<div class="mt-6 flex flex-wrap items-center justify-center gap-3 sm:mt-8">
+				<a
+					href="/rein"
+					class="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-amber-700 px-6 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-amber-800 dark:bg-amber-600 dark:hover:bg-amber-500"
+				>
+					Rein の記事をもっと見る
+					<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+					</svg>
+				</a>
+				<a
+					href="https://reinself.com"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-gray-300 bg-white px-6 py-2.5 text-sm font-medium text-gray-700 shadow-sm transition-all hover:border-amber-300 hover:bg-amber-50 hover:text-amber-800 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-amber-700 dark:hover:bg-gray-700 dark:hover:text-amber-300"
+				>
+					reinself.com を訪れる
+					<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+					</svg>
+				</a>
+			</div>
+		</div>
+	</section>
+{/if}
+
 <!-- Contact Section -->
 <section id="contact" class="bg-gray-50 py-12 md:py-20 dark:bg-gray-800/50">
 	<div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
