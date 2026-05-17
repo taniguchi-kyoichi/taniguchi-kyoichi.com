@@ -1,15 +1,7 @@
 <script lang="ts">
 	import { ossProjects } from '$lib/data/oss';
-	import { profile } from '$lib/data/profile';
 	import OSSCard from '$lib/components/OSSCard.svelte';
 </script>
-
-<svelte:head>
-	<title>Open Source | {profile.name}</title>
-	<meta name="description" content="{profile.name}が公開しているOSSプロジェクト一覧" />
-	<meta property="og:title" content="Open Source | {profile.name}" />
-	<meta property="og:description" content="{profile.name}が公開しているOSSプロジェクト一覧（{ossProjects.length}件）" />
-</svelte:head>
 
 <section class="bg-white py-12 md:py-20 dark:bg-gray-900">
 	<div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">

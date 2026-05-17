@@ -1,6 +1,34 @@
 import type { PageServerLoad } from './$types';
 import { ossProjects } from '$lib/data/oss';
 import { error } from '@sveltejs/kit';
+import { profile } from '$lib/data/profile';
+import { DEFAULT_OG_IMAGE, DEFAULT_OG_IMAGE_SIZE, SITE_NAME, SITE_URL } from '$lib/seo';
+import type { SEO } from '$lib/seo';
+
+async function fetchReadme(
+	repository: string,
+	fetchFn: typeof fetch
+): Promise<string | null> {
+	const repoMatch = repository.match(/github\.com\/([^/]+)\/([^/]+)/);
+	if (!repoMatch) return null;
+
+	const [, owner, repo] = repoMatch;
+
+	try {
+		const main = await fetchFn(
+			`https://raw.githubusercontent.com/${owner}/${repo}/main/README.md`
+		);
+		if (main.ok) return await main.text();
+
+		const master = await fetchFn(
+			`https://raw.githubusercontent.com/${owner}/${repo}/master/README.md`
+		);
+		if (master.ok) return await master.text();
+	} catch {
+		return null;
+	}
+	return null;
+}
 
 export const load: PageServerLoad = async ({ params, fetch }) => {
 	const project = ossProjects.find((p) => p.id === params.id);
@@ -9,35 +37,29 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
 		throw error(404, 'Project not found');
 	}
 
-	// Extract owner and repo from repository URL
-	const repoMatch = project.repository.match(/github\.com\/([^/]+)\/([^/]+)/);
-	if (!repoMatch) {
-		return { project, readme: null };
-	}
+	const readme = await fetchReadme(project.repository, fetch);
 
-	const [, owner, repo] = repoMatch;
-
-	try {
-		// Fetch README from GitHub raw content
-		const readmeResponse = await fetch(
-			`https://raw.githubusercontent.com/${owner}/${repo}/main/README.md`
-		);
-
-		if (!readmeResponse.ok) {
-			// Try master branch if main doesn't exist
-			const masterResponse = await fetch(
-				`https://raw.githubusercontent.com/${owner}/${repo}/master/README.md`
-			);
-			if (!masterResponse.ok) {
-				return { project, readme: null };
-			}
-			const readme = await masterResponse.text();
-			return { project, readme };
+	const seo: SEO = {
+		title: `${project.name} | ${SITE_NAME}`,
+		description: project.description,
+		canonical: `${SITE_URL}/oss/${project.id}`,
+		ogType: 'website',
+		ogImage: DEFAULT_OG_IMAGE,
+		ogImageAlt: project.name,
+		ogImageWidth: DEFAULT_OG_IMAGE_SIZE,
+		ogImageHeight: DEFAULT_OG_IMAGE_SIZE,
+		twitterCard: 'summary',
+		jsonLd: {
+			'@context': 'https://schema.org',
+			'@type': 'SoftwareSourceCode',
+			name: project.name,
+			description: project.description,
+			codeRepository: project.repository,
+			programmingLanguage: project.language,
+			...(project.topics ? { keywords: project.topics.join(', ') } : {}),
+			author: { '@type': 'Person', name: profile.name, url: SITE_URL }
 		}
+	};
 
-		const readme = await readmeResponse.text();
-		return { project, readme };
-	} catch {
-		return { project, readme: null };
-	}
+	return { project, readme, seo };
 };

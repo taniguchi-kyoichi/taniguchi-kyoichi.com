@@ -1,16 +1,8 @@
 <script lang="ts">
 	import ArticleCard from '$lib/components/ArticleCard.svelte';
-	import { profile } from '$lib/data/profile';
 
 	let { data } = $props();
 </script>
-
-<svelte:head>
-	<title>Writings | {profile.name}</title>
-	<meta name="description" content="{profile.name}が執筆した技術記事一覧" />
-	<meta property="og:title" content="Writings | {profile.name}" />
-	<meta property="og:description" content="{profile.name}が執筆した技術記事一覧。Zenn・noteで公開中の技術ブログ。" />
-</svelte:head>
 
 <section class="bg-white py-12 md:py-20 dark:bg-gray-900">
 	<div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">

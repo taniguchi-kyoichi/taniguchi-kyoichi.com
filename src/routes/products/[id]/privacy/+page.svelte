@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { profile } from '$lib/data/profile';
 	import type { Product } from '$lib/types';
 
 	interface Props {
@@ -20,8 +19,6 @@
 </script>
 
 <svelte:head>
-	<title>プライバシーポリシー - {product.name} | {profile.name}</title>
-	<meta name="description" content="{product.name}のプライバシーポリシー" />
 	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 

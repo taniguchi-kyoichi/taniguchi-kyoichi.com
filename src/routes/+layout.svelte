@@ -1,48 +1,74 @@
 <script lang="ts">
 	import '../app.css';
 	import { profile } from '$lib/data/profile';
+	import { page } from '$app/state';
+	import { SITE_NAME, SITE_URL } from '$lib/seo';
+	import type { SEO } from '$lib/seo';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 	import MobileMenu from '$lib/components/MobileMenu.svelte';
 
-	const SITE_URL = 'https://taniguchi-kyoichi.com';
-
 	interface Props {
 		children: import('svelte').Snippet;
-		data: { url: string };
+		data: { url: string; seo: SEO };
 	}
 
-	let { children, data }: Props = $props();
+	let { children }: Props = $props();
 
 	let mobileMenuOpen = $state(false);
+
+	const seo = $derived(page.data.seo as SEO);
 
 	const websiteJsonLd = {
 		'@context': 'https://schema.org',
 		'@type': 'WebSite',
-		name: profile.name,
+		name: SITE_NAME,
 		url: SITE_URL,
 		author: {
 			'@type': 'Person',
 			name: profile.name,
 			jobTitle: profile.title,
-			url: SITE_URL
+			url: SITE_URL,
+			sameAs: profile.socialLinks.map((l) => l.url)
 		}
 	};
 </script>
 
 <svelte:head>
-	<meta name="description" content="{profile.name} - {profile.title}" />
-	<link rel="canonical" href="{SITE_URL}{data.url}" />
-	<meta property="og:site_name" content={profile.name} />
+	<title>{seo.title}</title>
+	<meta name="description" content={seo.description} />
+	<link rel="canonical" href={seo.canonical} />
+
+	<!-- Open Graph -->
+	<meta property="og:site_name" content={SITE_NAME} />
 	<meta property="og:locale" content="ja_JP" />
-	<meta property="og:type" content="website" />
-	<meta property="og:url" content="{SITE_URL}{data.url}" />
-	<meta property="og:title" content="{profile.name} - {profile.title}" />
-	<meta property="og:description" content="{profile.name} - {profile.title}" />
-	<meta property="og:image" content="{SITE_URL}/profile.jpg" />
-	<meta name="twitter:card" content="summary" />
+	<meta property="og:type" content={seo.ogType ?? 'website'} />
+	<meta property="og:url" content={seo.canonical} />
+	<meta property="og:title" content={seo.title} />
+	<meta property="og:description" content={seo.description} />
+	{#if seo.ogImage}
+		<meta property="og:image" content={seo.ogImage} />
+		{#if seo.ogImageAlt}<meta property="og:image:alt" content={seo.ogImageAlt} />{/if}
+		{#if seo.ogImageWidth}<meta property="og:image:width" content={String(seo.ogImageWidth)} />{/if}
+		{#if seo.ogImageHeight}<meta property="og:image:height" content={String(seo.ogImageHeight)} />{/if}
+	{/if}
+
+	<!-- Twitter Card -->
+	<meta name="twitter:card" content={seo.twitterCard ?? 'summary'} />
+	<meta name="twitter:title" content={seo.title} />
+	<meta name="twitter:description" content={seo.description} />
+	{#if seo.ogImage}
+		<meta name="twitter:image" content={seo.ogImage} />
+		{#if seo.ogImageAlt}<meta name="twitter:image:alt" content={seo.ogImageAlt} />{/if}
+	{/if}
+
+	<!-- JSON-LD: WebSite (site-wide) -->
 	{@html `<script type="application/ld+json">${JSON.stringify(websiteJsonLd)}</script>`}
+	<!-- JSON-LD: Page-specific -->
+	{#if seo.jsonLd}
+		{@html `<script type="application/ld+json">${JSON.stringify(seo.jsonLd)}</script>`}
+	{/if}
+
 	<script>
-		// Prevent flash of wrong theme
 		(function () {
 			const saved = localStorage.getItem('theme');
 			const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;

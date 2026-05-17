@@ -1,6 +1,9 @@
 import type { PageServerLoad } from './$types';
 import { env } from '$env/dynamic/private';
 import { fetchArticlesFromRSS, fetchYouTubeChannel } from '$lib/utils/rss';
+import { profile } from '$lib/data/profile';
+import { DEFAULT_OG_IMAGE, DEFAULT_OG_IMAGE_SIZE, SITE_NAME, SITE_URL } from '$lib/seo';
+import type { SEO } from '$lib/seo';
 
 const RSS_FEEDS = ['https://zenn.dev/kyoichi/feed', 'https://note.com/note_kyoichi/rss'];
 const YOUTUBE_CHANNEL_ID = 'UCmMnuEXRsrNNcW4bVeeTI8A';
@@ -8,7 +11,6 @@ const MAX_ARTICLES_ON_HOME = 4;
 const MAX_VIDEOS_ON_HOME = 4;
 
 export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
-	// Set cache headers for edge caching
 	setHeaders({
 		'cache-control': 'public, max-age=3600, stale-while-revalidate=86400'
 	});
@@ -22,11 +24,37 @@ export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
 		youtubePromise
 	]);
 
-	// Flatten, sort by date (newest first), and take top N
 	const articles = articlesArrays
 		.flat()
 		.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
 		.slice(0, MAX_ARTICLES_ON_HOME);
 
-	return { articles, youtubePlaylist };
+	const seo: SEO = {
+		title: `${SITE_NAME} | ${profile.title}`,
+		description: profile.bio,
+		canonical: SITE_URL,
+		ogType: 'profile',
+		ogImage: DEFAULT_OG_IMAGE,
+		ogImageAlt: SITE_NAME,
+		ogImageWidth: DEFAULT_OG_IMAGE_SIZE,
+		ogImageHeight: DEFAULT_OG_IMAGE_SIZE,
+		twitterCard: 'summary',
+		jsonLd: {
+			'@context': 'https://schema.org',
+			'@type': 'Person',
+			name: profile.name,
+			alternateName: profile.nameEn,
+			jobTitle: profile.title,
+			description: profile.bio,
+			url: SITE_URL,
+			image: DEFAULT_OG_IMAGE,
+			address: profile.location
+				? { '@type': 'PostalAddress', addressLocality: profile.location }
+				: undefined,
+			sameAs: profile.socialLinks.map((l) => l.url),
+			knowsAbout: ['Swift', 'SwiftUI', 'iOS Development', 'AI Integration', 'Self-Management']
+		}
+	};
+
+	return { articles, youtubePlaylist, seo };
 };

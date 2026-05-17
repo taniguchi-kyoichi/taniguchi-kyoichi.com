@@ -1,28 +1,38 @@
 # Kyoichi Taniguchi - iOS Engineer Portfolio
 
-> iOSエンジニア 谷口 恭一のポートフォリオサイト。Swift & SwiftUI を使ったiOSアプリ開発、OSSプロジェクト、技術記事を掲載。
+> iOSエンジニア 谷口 恭一のポートフォリオサイト。Swift & SwiftUI を使った iOS アプリ開発、認知科学ベースのセルフマネジメント領域、OSS プロジェクト、技術記事を掲載。
 
 ## About
 - Name: 谷口 恭一 (Kyoichi Taniguchi)
-- Role: iOS Engineer
-- Location: 神奈川県横浜市
-- Focus: Swift, SwiftUI, iOS native app development, AI integration
+- Role: iOS Engineer / Indie Developer
+- Location: 神奈川県横浜市 (Yokohama, Japan)
+- Focus: Swift, SwiftUI, iOS native app development, AI integration, cognitive-science-driven self-management products
 
 ## Sections
-- [Home](https://taniguchi-kyoichi.com/): プロフィール・最新記事・YouTube
+- [Home](https://taniguchi-kyoichi.com/): プロフィール・プロダクト一覧・OSS・最新記事・YouTube
 - [Writings](https://taniguchi-kyoichi.com/writings): Zenn・note の技術記事一覧
-- [Open Source](https://taniguchi-kyoichi.com/oss): OSSプロジェクト一覧 (17+)
-- [Products](https://taniguchi-kyoichi.com/products/reading-memory): iOS アプリ
+- [Open Source](https://taniguchi-kyoichi.com/oss): OSS プロジェクト一覧
+- [Products](https://taniguchi-kyoichi.com/#products): リリース済みおよび開発中のプロダクト
 
 ## Featured Products
-- 読書メモリー: AI対話型の読書管理アプリ (iOS, App Store公開中)
-- MDCanvas: Markdownリアルタイムプレビューアプリ (iOS, 開発中)
+- **読書メモリー** (Reading Memory): 読書好きのためのシンプルな読書管理 iOS アプリ。ビジュアル本棚 + チャット形式の気軽な読書メモ + 読書統計。読書好きの世界観を大切にしたデザイン。App Store 公開中。
+  https://taniguchi-kyoichi.com/products/reading-memory
+- **Rein** (iOS): 「人々がセルフマネジメントをできるようになる社会を作る」を目指す iOS アプリ。ダイエット・運動・コミュニケーション・デジタル習慣の 4 ドメインで、衝動や停滞を「直すべき欠陥」ではなく「自分を知るサイン」として扱う非対決型の設計。意志力ではなく「自分の状態とのつき合い方」を変えるアプローチ。開発中（Day 90 App Store 提出目標）。
+  https://taniguchi-kyoichi.com/products/rein
+- **Rein (Web)**: Rein iOS アプリと並走する Editorial メディア (reinself.com)。「観察 > 処方」「そっと差し出す」をエディトリアル原則として、セルフマネジメントを阻害する 4 つの社会的原因への観察と問いを Killer Essay 形式で公開。アプリ広告塔ではなく Web 単独で価値が成立する独立 surface。
+  https://reinself.com
+  https://taniguchi-kyoichi.com/products/rein-web
 
 ## Featured OSS
-- claude-code-plugins: Claude Code plugins for iOS/Go/Firebase
+- claude-code-plugins: Claude Code plugins for iOS / Go / Firebase
 - swift-design-system: SwiftUI design system with tokens
 - swift-ui-routing: Type-safe SwiftUI routing library
 - swift-statable: Swift Macro for Observable State Management
+
+## Machine-Readable Endpoints
+LLM クローラー向けに、各プロダクト・OSS ページは `.md` サフィックスでマークダウン形式でも取得可能。
+- `https://taniguchi-kyoichi.com/products/{id}.md`
+- `https://taniguchi-kyoichi.com/oss/{id}.md`
 
 ## Links
 - GitHub: https://github.com/taniguchi-kyoichi

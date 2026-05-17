@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { profile } from '$lib/data/profile';
 	import type { Product } from '$lib/types';
 
 	interface Props {
@@ -20,8 +19,6 @@
 </script>
 
 <svelte:head>
-	<title>サポート - {product.name} | {profile.name}</title>
-	<meta name="description" content="{product.name}のサポートページ" />
 	<meta name="robots" content="noindex, nofollow" />
 	{#if support.faq && support.faq.length > 0}
 		{@html `<script type="application/ld+json">${JSON.stringify({

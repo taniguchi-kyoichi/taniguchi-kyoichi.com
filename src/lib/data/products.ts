@@ -5,16 +5,16 @@ export const products: Product[] = [
 		id: 'reading-memory',
 		name: '読書メモリー',
 		description:
-			'本との出会いと対話を美しく記録する読書管理アプリ。チャット形式で読書メモを記録し、AIアシスタントと対話しながら本への理解を深められます。',
+			'本との出会いを美しく記録する、読書好きのためのシンプルな読書管理アプリ。ビジュアル本棚で蔵書を眺め、チャット形式で気軽にメモを残し、自分の読書の歩みを振り返れます。',
 		fullDescription:
-			'読書メモリーは、本棚管理・読書ノート機能を統合した、本を愛するすべての人のための読書管理アプリです。チャット形式で読書メモを記録でき、AIアシスタントと対話しながら本への理解を深めることができます。美しいビジュアル本棚で蔵書を管理し、読書統計で自分の読書傾向を把握できます。',
+			'読書メモリーは、本を愛するすべての人のための読書管理アプリです。読みたい本・読書中の本・読み終えた本を、美しいビジュアル本棚で眺めるように管理できます。\n\n気になった一節や考えたことは、チャット形式の読書メモで気軽に残せます。一冊との対話の記録が積み重なっていくことで、本との関係が深まり、後から読み返したときに当時の自分の感覚も一緒に蘇ります。\n\nバーコードスキャンで蔵書登録は数秒。ジャンルやステータス、評価別の読書統計で、自分がどんな読書をしてきたかを振り返れます。読書好きの世界観を大切に、装飾より本そのものが映えるデザインを目指しました。',
 		type: 'app',
 		status: 'production',
 		platforms: ['ios'],
 		links: {
 			appStore: 'https://apps.apple.com/jp/app/id6751159926'
 		},
-		technologies: ['Swift', 'SwiftUI', 'AI'],
+		technologies: ['Swift', 'SwiftUI'],
 		thumbnail: '/reading-memory-icon.jpg',
 		featured: true,
 		rating: 5.0,
@@ -23,12 +23,11 @@ export const products: Product[] = [
 		category: 'ブック',
 		ageRating: '4+',
 		features: [
-			'チャット形式の読書メモ機能',
-			'ビジュアル本棚管理（グリッド・リスト表示）',
+			'美しいビジュアル本棚（グリッド・リスト表示）',
+			'チャット形式の気軽な読書メモ',
 			'読書ステータス管理（読みたい・読書中・読了・中断）',
-			'バーコードスキャンで簡単書籍登録',
+			'バーコードスキャンで蔵書登録',
 			'ジャンル・ステータス・評価別の読書統計',
-			'AIアシスタントとの対話機能',
 			'ダークモード対応'
 		],
 		privacy: {
@@ -78,269 +77,61 @@ export const products: Product[] = [
 		}
 	},
 	{
-		id: 'markdown-preview',
-		name: 'MDCanvas',
+		id: 'rein',
+		name: 'Rein',
 		description:
-			'Markdownファイルをリアルタイムでプレビューできるビューアアプリ。iCloudやFilesアプリと連携し、どこからでもMarkdownを美しく表示します。',
+			'なりたい自分の、操縦席へ。意志力ではなく「自分の状態とのつき合い方」を変えるセルフマネジメント iOS アプリ。ダイエット・運動・コミュニケーション・デジタル習慣の 4 ドメインで、衝動や停滞を「直すべき欠陥」ではなく「自分を知るサイン」として扱う。',
 		fullDescription:
-			'MDCanvasは、Markdownファイルを美しくレンダリングするiOS向けビューアアプリです。iCloud DriveやFilesアプリからMarkdownファイルを開き、リアルタイムでプレビューできます。Share Extensionにも対応しており、他のアプリからMarkdownファイルを直接開くことも可能です。',
+			'Rein は「人々がセルフマネジメントをできるようになる社会」を目指す iOS アプリです。Rein (手綱) というメタファーが示すように、自分という馬を殺さず・縛らず、対話しながら方向を示します。\n\nアプローチは「治療」ではなく「同伴」。衝動も停滞も病気ではなく自分の状態が送る情報として扱い、失敗は敗北ではなく次の一歩を選ぶための手がかりとして扱います。意志力で変えるのではなく、自分の状態とのつき合い方を変えることで、長期的に「こうなりたい」と思う未来へ自分を操縦していきます。\n\n対応する 4 ドメインは、現代社会でセルフマネジメントを阻害する 4 つの原因 — アテンションエコノミー・意志力信奉・AI による専門性民主化・コミュニケーション希釈化 — に対応します。組織で発達してきた People Management の知見 (1on1 / フィードバック / 介入タイミング / バーンアウト回避) を個人に転写し、AI コンパニオンが日々のリフレクションを伴走します。\n\n「使わなくなっていくアプリが、いいアプリ。」卒業も、戻ってくるのも自由です。',
 		type: 'app',
 		status: 'development',
 		platforms: ['ios'],
-		links: {},
-		technologies: ['Swift', 'SwiftUI', 'WebKit'],
-		thumbnail: '/mdcanvas-icon.jpg',
-		featured: true,
-		price: '無料',
-		category: '仕事効率化',
-		ageRating: '4+',
-		features: [
-			'Markdownリアルタイムプレビュー',
-			'iCloud Drive / Files連携',
-			'Share Extension対応',
-			'シンタックスハイライト',
-			'ダークモード対応'
-		],
-		privacy: {
-			effectiveDate: '2026-02-11',
-			dataCollection: 'none',
-			contactEmail: 'info@taniguchi-kyoichi.com'
-		},
-		support: {
-			contactEmail: 'info@taniguchi-kyoichi.com',
-			faq: [
-				{
-					question: 'どのファイル形式に対応していますか？',
-					answer: '.md および .markdown ファイルに対応しています。'
-				},
-				{
-					question: 'iCloud以外のクラウドストレージは使えますか？',
-					answer: 'Filesアプリに対応しているクラウドストレージ（Dropbox、Google Drive等）からファイルを開くことができます。'
-				}
-			],
-			systemRequirements: 'iOS 17.0以上'
-		}
-	},
-	{
-		id: 'mindmap-ai',
-		name: 'マインドマップAI',
-		description:
-			'AIを活用した無限キャンバスのマインドマップアプリ。生成AIがアイデアを提案し、なぜなぜ分析で問題の根本原因を探ります。',
-		fullDescription:
-			'マインドマップAIは、創造的な思考と効率的なプランニングをサポートするアプリです。無限に広がるキャンバス上でマインドマップを作成でき、複数の生成AI（Claude、GPT-4、Gemini）がアイデアを提案します。なぜなぜ分析機能で問題の根本原因を深掘りでき、作成したマップは自動保存・外部ファイルへのエクスポートも可能です。',
-		type: 'app',
-		status: 'production',
-		platforms: ['ios', 'macos'],
 		links: {
-			appStore: 'https://apps.apple.com/jp/app/id6470609816'
+			web: 'https://reinself.com'
 		},
-		technologies: ['Swift', 'SwiftUI', 'AI', 'Firebase'],
-		thumbnail: '/mindmap-ai-icon.jpg',
+		technologies: ['Swift', 'SwiftUI', 'Foundation Models', 'AI', 'Firebase'],
+		thumbnail: '/rein-icon.png',
 		featured: true,
-		price: '無料（広告あり / アプリ内課金あり）',
-		category: '仕事効率化',
-		ageRating: '4+',
-		features: [
-			'無限キャンバスのマインドマップ作成',
-			'複数AIによるアイデア自動生成（Claude、GPT-4、Gemini）',
-			'なぜなぜ分析（根本原因分析）',
-			'自動保存・.mmaiファイルエクスポート',
-			'Google / Apple サインイン',
-			'クラウド同期（Firestore）',
-			'マルチプラットフォーム（iOS / macOS / visionOS）'
-		],
-		privacy: {
-			effectiveDate: '2026-02-14',
-			dataCollection: 'standard',
-			dataItems: [
-				'アカウント情報（Google/Apple Sign-In）',
-				'マインドマップデータ（Firestore クラウド同期）',
-				'AI生成履歴（サーバー経由、ログは保持しません）',
-				'広告表示のための識別子（AdMob）',
-				'アプリ利用状況（Firebase Analytics）'
-			],
-			thirdPartyServices: [
-				'Firebase Authentication（ユーザー認証）',
-				'Cloud Firestore（データ保存・同期）',
-				'Firebase Analytics（利用状況分析）',
-				'Google AdMob（広告配信）',
-				'Anthropic Claude API（AI生成 - サーバー経由）',
-				'OpenAI GPT-4 API（AI生成 - サーバー経由）',
-				'Google Gemini API（AI生成 - サーバー経由）'
-			],
-			analyticsUsed: true,
-			contactEmail: 'info@taniguchi-kyoichi.com'
-		},
-		support: {
-			contactEmail: 'info@taniguchi-kyoichi.com',
-			faq: [
-				{
-					question: 'データはどこに保存されますか？',
-					answer: 'マインドマップはFirebase（Google Cloud）上に安全に保存され、デバイス間で同期されます。また、.mmaiファイルとして端末にエクスポートすることも可能です。'
-				},
-				{
-					question: 'インターネット接続は必要ですか？',
-					answer: 'AI生成機能とクラウド同期にはインターネット接続が必要です。ローカルに保存済みのマップの閲覧・編集はオフラインでも可能です。'
-				},
-				{
-					question: 'AI生成機能はどのように動作しますか？',
-					answer: 'AI生成はサーバー側で処理されます。お客様のマインドマップの内容がAIに送信されますが、サーバーにログとして保存されることはありません。'
-				},
-				{
-					question: 'データを削除するには？',
-					answer: 'アカウント設定からアカウントと全データを完全に削除できます。この操作は取り消せません。'
-				}
-			],
-			systemRequirements: 'iOS 18.0以上 / macOS 15.0以上'
-		}
-	},
-	{
-		id: 'digital-detox',
-		name: 'デジタルデトックス',
-		description:
-			'スマホをやめた後、何をすればいいかをAIが提案するデジタルウェルネスアプリ。呼吸介入で無意識の習慣ループに気づきを促し、AI代替活動レコメンドで行動変容を支援します。',
-		fullDescription:
-			'デジタルデトックスは、行動科学に基づいたデジタルウェルネスアプリです。SNS起動前に呼吸アニメーションを表示し、無意識の習慣ループに気づきを促します。「やめる」を選択すると、時間帯・興味・過去の評価に基づいてAIが代替活動を3択で提案。節約時間やキャンセル率をダッシュボードで可視化し、継続のモチベーションを維持します。',
-		type: 'app',
-		status: 'development',
-		platforms: ['ios'],
-		links: {},
-		technologies: ['Swift', 'SwiftUI', 'AI', 'Firebase', 'HealthKit'],
-		thumbnail: '/digital-detox-icon.jpg',
-		featured: true,
-		price: '無料（アプリ内課金あり）',
+		price: '無料（プレミアム予定）',
 		category: 'ヘルスケア/フィットネス',
 		ageRating: '4+',
 		features: [
-			'呼吸介入（5秒アニメーション + やめる/開く選択）',
-			'AI代替活動レコメンド（時間帯・興味に応じた3択提案）',
-			'節約時間・キャンセル率のダッシュボード表示',
-			'使用パターン通知（キリ番での気づき促進）',
-			'HealthKit連携（歩数データ活用）',
-			'Shortcuts連携（自動介入トリガー）'
-		],
-		privacy: {
-			effectiveDate: '2026-02-15',
-			dataCollection: 'standard',
-			dataItems: [
-				'アカウント情報（Apple Sign-In）',
-				'介入セッション記録（Firestore クラウド同期）',
-				'興味カテゴリ・設定情報（Firestore クラウド同期）',
-				'ヘルスケアデータ（HealthKit経由の歩数データ ※端末内処理のみ）',
-				'アプリ利用状況（Firebase Analytics）'
-			],
-			thirdPartyServices: [
-				'Firebase Authentication（ユーザー認証）',
-				'Cloud Firestore（データ保存・同期）',
-				'Firebase Analytics（利用状況分析）',
-				'Claude API by Anthropic（AI代替活動レコメンド - サーバー経由）',
-				'RevenueCat（サブスクリプション管理）',
-				'Apple HealthKit（歩数データ取得 ※外部送信なし）'
-			],
-			analyticsUsed: true,
-			contactEmail: 'info@taniguchi-kyoichi.com'
-		},
-		support: {
-			contactEmail: 'info@taniguchi-kyoichi.com',
-			faq: [
-				{
-					question: 'どうやってSNSアプリの起動を検知するのですか？',
-					answer:
-						'iOSのショートカットアプリと連携して動作します。オンボーディングで設定ガイドを案内しますので、指定のオートメーションを作成してください。'
-				},
-				{
-					question: 'データはどこに保存されますか？',
-					answer:
-						'介入セッションの記録や設定はFirebase（Google Cloud）上に安全に保存され、デバイス間で同期されます。HealthKitのデータは端末内でのみ処理され、外部サーバーには送信されません。'
-				},
-				{
-					question: 'インターネット接続は必要ですか？',
-					answer:
-						'呼吸介入はオフラインでも動作します。AIレコメンドにはインターネット接続が必要ですが、オフライン時はローカルの定型レコメンドが表示されます。'
-				},
-				{
-					question: '無料プランとプレミアムプランの違いは？',
-					answer:
-						'無料プランではAIレコメンドが1日3回まで、ダッシュボードは当日分のみ表示されます。プレミアムプランではAIレコメンド無制限、週次/月次トレンドの分析が利用可能です。'
-				}
-			],
-			systemRequirements: 'iOS 17.0以上'
-		}
+			'4 ドメイン統合ログ（ダイエット・運動・コミュニケーション・デジタル習慣）',
+			'衝動・停滞を「自分を知るサイン」として扱う非対決型の介入設計',
+			'失敗を「次の一歩を選ぶ手がかり」として扱う Reflection ループ',
+			'People Management の知見を個人に転写した AI コンパニオン',
+			'長期方向を保つ Aspiration Engine（なりたい自分を育て続ける）',
+			'Ambient UX（疲れた日に開かなくても価値提供）',
+			'卒業可能な設計（Graduation Design 3-Mode）',
+			'観察 > 処方 / そっと差し出すエディトリアル原則',
+			'Web メディア reinself.com との連携'
+		]
 	},
 	{
-		id: 'llm-agent',
-		name: 'ゆるブレイン',
+		id: 'rein-web',
+		name: 'Rein (Web)',
 		description:
-			'お気に入りの AI とデバイスをつなぐエージェントアプリ。カレンダー、リマインダー、写真、位置情報などを自然な会話で操作できます。',
+			'Rein iOS アプリと並走する Editorial メディア。セルフマネジメントを阻害する社会的原因を観察し、押し付けではなく「そっと差し出す」エッセイと診断体験を公開する。アプリと独立した surface として単独で価値が成立するように設計されている。',
 		fullDescription:
-			'ゆるブレインは、複数の LLM プロバイダー（Claude、ChatGPT、Gemini、DeepSeek、Grok 等）に対応した AI エージェントアプリです。従来のチャット UI ではなく、キャンバス形式で思考の断片を柔軟に扱えます。カレンダー、リマインダー、連絡先、位置情報、写真、カメラ、音声入力など、デバイス機能を AI ツールとして統合。カスタムスキルやサブエージェントで用途を拡張でき、プロジェクト単位でナレッジを管理できます。',
-		type: 'app',
-		status: 'development',
-		platforms: ['ios', 'macos'],
-		links: {},
-		technologies: ['Swift', 'SwiftUI', 'AI', 'Firebase'],
-		thumbnail: '/llm-agent-icon.jpg',
-		featured: true,
-		price: '無料（アプリ内課金あり）',
-		category: 'ユーティリティ',
-		ageRating: '4+',
-		features: [
-			'マルチプロバイダー LLM 対応（Claude、ChatGPT、Gemini、DeepSeek、Grok、Groq、Mistral、OpenRouter）',
-			'デバイス統合ツール（カレンダー、リマインダー、連絡先、位置情報、写真、カメラ）',
-			'音声入力・音声認識',
-			'画像生成（DALL-E、FLUX、Imagen）',
-			'Web 検索・ページ取得',
-			'カスタムスキル・サブエージェント',
-			'プロジェクト単位のナレッジ管理',
-			'Live Activity（Dynamic Island）対応',
-			'macOS 対応（シェル実行・システム情報ツール）'
-		],
-		privacy: {
-			effectiveDate: '2026-03-16',
-			dataCollection: 'minimal',
-			dataItems: [
-				'アカウント情報（Google/Apple Sign-In / ゲスト認証）',
-				'会話メッセージ（選択した AI プロバイダーに送信）',
-				'セッション履歴・設定（端末内にのみ保存）',
-				'デバイスデータ（カレンダー・連絡先・位置情報等 — ツール実行時のみ、許可制）'
-			],
-			thirdPartyServices: [
-				'Firebase Authentication（ユーザー認証）',
-				'Anthropic Claude API（AI 会話 — プラットフォームサーバー経由）',
-				'OpenAI GPT / DALL-E API（AI 会話・画像生成 — プラットフォームサーバー経由）',
-				'Google Gemini / Imagen API（AI 会話・画像生成 — プラットフォームサーバー経由）',
-				'DeepSeek API（AI 会話 — プラットフォームサーバー経由）',
-				'xAI Grok API（AI 会話 — プラットフォームサーバー経由）',
-				'Groq API（AI 会話 — プラットフォームサーバー経由）',
-				'Mistral API（AI 会話 — プラットフォームサーバー経由）',
-				'OpenRouter（AI ルーティング — プラットフォームサーバー経由）',
-				'fal.ai FLUX（画像生成 — プラットフォームサーバー経由）'
-			],
-			analyticsUsed: false,
-			contactEmail: 'info@taniguchi-kyoichi.com'
+			'reinself.com は、Rein のミッション「セルフマネジメントを阻害する原因を、ソフトウェアで取り除く / 回避する」を Editorial で実装するメディアです。\n\n「観察 > 処方」「そっと差し出す」をエディトリアル原則として、現代社会でセルフマネジメントを阻害する 4 つの原因 — アテンションエコノミー・意志力信奉・AI による専門性民主化・コミュニケーション希釈化 — に対する観察と問いを Killer Essay 形式で公開しています。\n\nアプリの広告塔ではなく、Web 単独で収益事業として成立するように設計された独立 surface です。Astro 5 + Cloudflare Pages の SSG 配信、Admin/CMS による継続更新、診断体験 (Stripe one-time) と連携して、自分の状態を観察する入り口を提供します。',
+		type: 'web',
+		status: 'production',
+		platforms: ['web'],
+		links: {
+			web: 'https://reinself.com'
 		},
-		support: {
-			contactEmail: 'info@taniguchi-kyoichi.com',
-			faq: [
-				{
-					question: 'データはどこに保存されますか？',
-					answer: 'セッション履歴や設定はすべて端末内にのみ保存されます。会話メッセージは選択した AI プロバイダーに送信されますが、当社サーバーにログとして保存されることはありません。'
-				},
-				{
-					question: 'API キーは必要ですか？',
-					answer: 'いいえ。プラットフォームサーバー経由で AI にアクセスするため、API キーの設定は不要です。アプリ内クレジットを購入してご利用ください。'
-				},
-				{
-					question: 'デバイス機能（カレンダー・連絡先等）へのアクセスは安全ですか？',
-					answer: '各デバイス機能はツールとして提供され、利用時に iOS の標準権限ダイアログで許可が求められます。許可しない限りアクセスされません。'
-				},
-				{
-					question: 'どの AI モデルが使えますか？',
-					answer: 'Claude（Anthropic）、GPT-4o / o1（OpenAI）、Gemini（Google）、DeepSeek、Grok（xAI）、Groq、Mistral、OpenRouter 経由の各種モデルに対応しています。'
-				}
-			],
-			systemRequirements: 'iOS 26.0以上 / macOS 26.0以上'
-		}
+		technologies: ['Astro', 'TypeScript', 'Cloudflare Pages', 'MDX'],
+		thumbnail: '/rein-icon.png',
+		featured: true,
+		category: 'Editorial / メディア',
+		features: [
+			'観察 > 処方の Killer Essay（セルフマネジメントを阻害する 4 原因への観察）',
+			'押し付けない / そっと差し出すエディトリアル原則（Rein Commandments 直結）',
+			'診断体験 (Stripe one-time) との連携',
+			'iOS アプリと独立した surface（Web 単独で価値が成立）',
+			'Astro 5 SSG + Cloudflare Pages',
+			'Admin/CMS による継続更新'
+		]
 	}
 ];
 
