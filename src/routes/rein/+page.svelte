@@ -36,8 +36,7 @@
 
 			<p class="text-base leading-relaxed text-gray-700 sm:text-lg dark:text-gray-300">
 				Rein は、認知科学で日常のつまずきを言語化し、試せる選択肢を静かに並べるメディアです。<br />
-				意志の力で頑張るのではなく、自分の状態を観察して、付き合い方を少しずつ変えていく。<br />
-				姉妹となる iOS アプリ Rein と並走しています。
+				意志の力で頑張るのではなく、自分の状態を観察して、付き合い方を少しずつ変えていく。
 			</p>
 
 			<div class="mt-6 flex flex-wrap gap-3">

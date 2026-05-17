@@ -21,8 +21,8 @@
 - **Rein** (iOS): 意志じゃなくて、仕組み。ダイエット・運動・コミュニケーション・スマホ習慣のつまずきを認知科学で見直し、自分との付き合い方を変えていく iOS アプリ。開発中。
   https://taniguchi-kyoichi.com/products/rein
 
-## Sister Media
-- **Rein** (Web メディア, reinself.com): 認知科学で日常のつまずきを言語化し、試せる選択肢を静かに並べる記事を集めたメディア。Rein iOS アプリと並走。
+## Media
+- **Rein** (Web メディア, reinself.com): 認知科学で日常のつまずきを言語化し、試せる選択肢を静かに並べる記事を集めたメディア。
   https://reinself.com
   RSS: https://reinself.com/rss.xml
   Portfolio 内一覧: https://taniguchi-kyoichi.com/rein
