@@ -23,12 +23,12 @@
 	let input = $state('');
 	let scroller: HTMLDivElement | null = $state(null);
 
-	// Save messages on every change so a restore after navigation is up to date.
+	// Persist only TERMINAL (ready) conversations. Saving mid-stream would restore
+	// a frozen "loading…" skeleton (no live stream to ever resolve it).
 	$effect(() => {
-		if (!browser) return;
-		const msgs = chat.messages;
+		if (!browser || chat.status !== 'ready') return;
 		try {
-			sessionStorage.setItem(ASK_STORAGE_KEY, JSON.stringify(msgs));
+			sessionStorage.setItem(ASK_STORAGE_KEY, JSON.stringify(chat.messages));
 		} catch {
 			// quota / serialization issues are non-fatal
 		}
@@ -42,9 +42,10 @@
 		const n = page.url.searchParams.get('n');
 		if (!n || n === sessionStorage.getItem(ASK_NONCE_KEY)) return;
 		sessionStorage.setItem(ASK_NONCE_KEY, n);
+		chat.stop(); // abort any in-flight stream so the new question isn't dropped
 		chat.messages = [];
-		const q = page.url.searchParams.get('q');
-		if (q) send(q);
+		const q = page.url.searchParams.get('q')?.trim();
+		if (q) chat.sendMessage({ text: q }); // bypass the busy guard in send()
 	});
 
 	function clearChat() {
@@ -81,11 +82,14 @@
 		send(input);
 	}
 
-	// Auto-scroll to the latest message as the stream grows.
+	// Auto-scroll to the latest message as the stream grows. Reading the last
+	// message's text length makes the effect re-run on every streamed token.
 	$effect(() => {
-		// touch reactive deps
 		chat.messages.length;
 		chat.status;
+		chat.messages
+			.at(-1)
+			?.parts.reduce((n, p) => n + (p.type === 'text' ? p.text.length : 0), 0);
 		if (scroller) scroller.scrollTo({ top: scroller.scrollHeight, behavior: 'smooth' });
 	});
 </script>

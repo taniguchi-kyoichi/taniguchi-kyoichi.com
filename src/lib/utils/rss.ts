@@ -80,18 +80,29 @@ function extractThumbnail(item: RSSItem): string | undefined {
 }
 
 function parseRSSItems(xml: string, source: ArticleSource): Article[] {
-	const feed = parser.parse(xml) as RSSFeed;
-	const items = feed.rss.channel.item;
-	const itemArray = Array.isArray(items) ? items : [items];
+	// A feed can return HTTP 200 with non-RSS bodies (anti-bot HTML, Atom,
+	// maintenance pages). Guard every access so a bad feed returns [] instead of
+	// throwing and 500-ing the whole page load.
+	try {
+		const feed = parser.parse(xml) as RSSFeed;
+		const items = feed?.rss?.channel?.item;
+		if (!items) return [];
+		const itemArray = Array.isArray(items) ? items : [items];
 
-	return itemArray.map((item) => ({
-		title: item.title,
-		url: item.link,
-		publishedAt: item.pubDate,
-		description: item.description ? stripHtml(item.description) : undefined,
-		thumbnail: extractThumbnail(item),
-		source
-	}));
+		return itemArray
+			.filter((item) => item && item.title && item.link)
+			.map((item) => ({
+				title: item.title,
+				url: item.link,
+				publishedAt: item.pubDate,
+				description: item.description ? stripHtml(item.description) : undefined,
+				thumbnail: extractThumbnail(item),
+				source
+			}));
+	} catch (error) {
+		console.error(`Failed to parse RSS feed (${source})`, error);
+		return [];
+	}
 }
 
 export async function fetchArticlesFromRSS(
@@ -100,14 +111,18 @@ export async function fetchArticlesFromRSS(
 ): Promise<Article[]> {
 	const source = detectSource(feedUrl);
 
-	const response = await fetcher(feedUrl);
-	if (!response.ok) {
-		console.error(`Failed to fetch RSS feed: ${response.status}`);
+	try {
+		const response = await fetcher(feedUrl);
+		if (!response.ok) {
+			console.error(`Failed to fetch RSS feed: ${response.status} (${feedUrl})`);
+			return [];
+		}
+		const xml = await response.text();
+		return parseRSSItems(xml, source);
+	} catch (error) {
+		console.error(`Failed to fetch RSS feed: ${feedUrl}`, error);
 		return [];
 	}
-
-	const xml = await response.text();
-	return parseRSSItems(xml, source);
 }
 
 export function formatDate(dateString: string): string {

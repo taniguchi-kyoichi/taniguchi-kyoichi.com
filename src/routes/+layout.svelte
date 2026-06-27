@@ -25,7 +25,14 @@
 		if (isDebug()) document.documentElement.classList.add('debug');
 	});
 
-	const seo = $derived(page.data.seo as SEO);
+	// Fallback so error pages (which may not provide `seo`) don't crash <svelte:head>.
+	const seo = $derived(
+		(page.data.seo as SEO | undefined) ?? {
+			title: SITE_NAME,
+			description: '',
+			canonical: SITE_URL
+		}
+	);
 
 	const websiteJsonLd = {
 		'@context': 'https://schema.org',
