@@ -1,22 +1,56 @@
 <script lang="ts">
 	import { Chat } from '@ai-sdk/svelte';
 	import { page } from '$app/state';
+	import { browser } from '$app/environment';
+	import { afterNavigate } from '$app/navigation';
 	import type { ChatMessage } from '$lib/chat';
 	import MessageParts from '$lib/components/chat/MessageParts.svelte';
+	import { followupsFor } from '$lib/followups';
+	import { ASK_STORAGE_KEY, ASK_NONCE_KEY } from '$lib/askSession';
 
-	const chat = new Chat<ChatMessage>({});
+	// Restore the per-tab conversation so a card-detail round-trip doesn't lose it.
+	let restored: ChatMessage[] = [];
+	if (browser) {
+		try {
+			restored = JSON.parse(sessionStorage.getItem(ASK_STORAGE_KEY) ?? '[]');
+		} catch {
+			restored = [];
+		}
+	}
+
+	const chat = new Chat<ChatMessage>({ messages: restored });
 
 	let input = $state('');
 	let scroller: HTMLDivElement | null = $state(null);
 
-	// Auto-send a question passed from the homepage ask box (/ask?q=...), once.
-	let autoStarted = false;
+	// Save messages on every change so a restore after navigation is up to date.
 	$effect(() => {
-		if (autoStarted) return;
-		autoStarted = true;
+		if (!browser) return;
+		const msgs = chat.messages;
+		try {
+			sessionStorage.setItem(ASK_STORAGE_KEY, JSON.stringify(msgs));
+		} catch {
+			// quota / serialization issues are non-fatal
+		}
+	});
+
+	// A fresh start carries a new `?n=` nonce. Runs on mount AND on same-route
+	// navigations (e.g. opening the ⌘K palette while already on /ask), so a new
+	// question always resets the conversation. Back-nav reuses the handled nonce.
+	afterNavigate(() => {
+		if (!browser) return;
+		const n = page.url.searchParams.get('n');
+		if (!n || n === sessionStorage.getItem(ASK_NONCE_KEY)) return;
+		sessionStorage.setItem(ASK_NONCE_KEY, n);
+		chat.messages = [];
 		const q = page.url.searchParams.get('q');
 		if (q) send(q);
 	});
+
+	function clearChat() {
+		chat.messages = [];
+		if (browser) sessionStorage.removeItem(ASK_STORAGE_KEY);
+	}
 
 	const suggestions = [
 		'谷口さんってどんな人？',
@@ -27,6 +61,13 @@
 
 	const busy = $derived(chat.status === 'submitted' || chat.status === 'streaming');
 	const isEmpty = $derived(chat.messages.length === 0);
+
+	// Contextual follow-up questions after the latest answer.
+	const followups = $derived.by(() => {
+		if (chat.status !== 'ready') return [];
+		const last = chat.messages[chat.messages.length - 1];
+		return last ? followupsFor(last) : [];
+	});
 
 	function send(text: string) {
 		const t = text.trim();
@@ -51,9 +92,20 @@
 
 <section class="mx-auto flex h-[calc(100vh-8rem)] max-w-3xl flex-col px-4 py-6 md:py-8">
 	<header class="mb-4 shrink-0">
-		<h1 class="text-xl font-bold text-gray-900 md:text-2xl dark:text-white">
-			Ask AI <span class="text-primary-600 dark:text-primary-400">— 谷口恭一について聞く</span>
-		</h1>
+		<div class="flex items-start justify-between gap-3">
+			<h1 class="text-xl font-bold text-gray-900 md:text-2xl dark:text-white">
+				Ask AI <span class="text-primary-600 dark:text-primary-400">— 谷口恭一について聞く</span>
+			</h1>
+			{#if !isEmpty}
+				<button
+					type="button"
+					onclick={clearChat}
+					class="shrink-0 rounded-full border border-gray-200 px-3 py-1.5 text-xs text-gray-500 transition-colors hover:border-gray-300 hover:text-gray-700 dark:border-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+				>
+					新しい会話
+				</button>
+			{/if}
+		</div>
 		<p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
 			サイトをめぐらなくても、ここで聞けば AI
 			エージェントがプロダクト・OSS・経歴を構造化された UI で答えます。
@@ -102,6 +154,20 @@
 				</div>
 			{/if}
 		{/each}
+
+		{#if followups.length > 0}
+			<div class="flex flex-wrap gap-2 pt-1">
+				{#each followups as f (f)}
+					<button
+						type="button"
+						onclick={() => send(f)}
+						class="rounded-full border border-gray-200 bg-white px-3 py-1.5 text-sm text-gray-600 transition-colors hover:border-primary-300 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-primary-600 dark:hover:text-primary-400"
+					>
+						{f}
+					</button>
+				{/each}
+			</div>
+		{/if}
 
 		{#if chat.status === 'submitted'}
 			<div class="flex items-center gap-2 text-sm text-gray-400">

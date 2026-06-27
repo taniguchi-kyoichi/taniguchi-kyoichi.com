@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { profile } from '$lib/data/profile';
 	import ThemeToggle from './ThemeToggle.svelte';
+	import { startAsk } from '$lib/askSession';
 
 	let { isOpen = $bindable(false) }: { isOpen: boolean } = $props();
 
@@ -110,7 +111,11 @@
 				<li>
 					<a
 						href="/ask"
-						onclick={close}
+						onclick={(e) => {
+							e.preventDefault();
+							close();
+							startAsk();
+						}}
 						class="ai-button flex h-12 items-center gap-2 rounded-lg px-4 text-base font-medium text-white"
 					>
 						<span class="ai-sparkle" aria-hidden="true">✦</span> Ask AI

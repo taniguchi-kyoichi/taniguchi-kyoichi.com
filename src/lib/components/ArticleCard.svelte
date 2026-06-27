@@ -50,7 +50,7 @@
 		</p>
 	{/if}
 
-	<div class="mt-3 flex items-center gap-1 text-sm text-primary-600 sm:mt-4 dark:text-primary-400">
+	<div class="mt-auto flex items-center gap-1 pt-3 text-sm text-primary-600 dark:text-primary-400">
 		<span>記事を読む</span>
 		<svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />

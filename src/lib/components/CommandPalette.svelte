@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { palette } from '$lib/stores/commandPalette.svelte';
-	import { goto } from '$app/navigation';
 	import { fade, scale } from 'svelte/transition';
+	import { startAsk } from '$lib/askSession';
 
 	let input = $state('');
 	let inputEl: HTMLInputElement | null = $state(null);
@@ -16,7 +16,7 @@
 	function submit(q?: string) {
 		const text = (q ?? input).trim();
 		close();
-		goto(text ? `/ask?q=${encodeURIComponent(text)}` : '/ask');
+		startAsk(text); // ⌘K always starts a fresh conversation
 	}
 
 	function onKeydown(event: KeyboardEvent) {

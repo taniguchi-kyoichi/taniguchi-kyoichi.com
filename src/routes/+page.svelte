@@ -7,8 +7,8 @@
 	import OSSCard from '$lib/components/OSSCard.svelte';
 	import ArticleCard from '$lib/components/ArticleCard.svelte';
 	import { formatDate } from '$lib/utils/rss';
-	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { startAsk } from '$lib/askSession';
 
 	let { data } = $props();
 
@@ -33,8 +33,11 @@
 
 	function askAI(event: SubmitEvent) {
 		event.preventDefault();
-		const q = askInput.trim();
-		goto(q ? `/ask?q=${encodeURIComponent(q)}` : '/ask');
+		startAsk(askInput); // always a fresh conversation from the top
+	}
+
+	function askChip(q: string) {
+		startAsk(q);
 	}
 
 	// --- Typewriter placeholder for the AI ask box ---
@@ -105,7 +108,7 @@
 <!-- Hero Section -->
 <section class="relative overflow-hidden bg-white dark:bg-gray-900">
 	<div class="mx-auto max-w-4xl px-4 py-12 sm:px-6 md:py-20 lg:px-8">
-		<div class="flex flex-col items-center text-center">
+		<div class="hero-stagger flex flex-col items-center text-center">
 			{#if profile.avatar}
 				<img
 					src={profile.avatar}
@@ -187,12 +190,13 @@
 				</form>
 				<div class="mt-3 flex flex-wrap justify-center gap-2">
 					{#each askSuggestions as s (s.label)}
-						<a
-							href="/ask?q={encodeURIComponent(s.q)}"
+						<button
+							type="button"
+							onclick={() => askChip(s.q)}
 							class="rounded-full border border-gray-200 bg-white/60 px-3 py-1 text-xs text-gray-600 transition-colors hover:border-primary-300 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-800/60 dark:text-gray-400 dark:hover:border-primary-600 dark:hover:text-primary-400"
 						>
 							{s.label}
-						</a>
+						</button>
 					{/each}
 				</div>
 

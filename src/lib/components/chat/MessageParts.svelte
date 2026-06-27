@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { ChatMessage } from '$lib/chat';
-	import ProductCard from '$lib/components/ProductCard.svelte';
-	import OSSCard from '$lib/components/OSSCard.svelte';
+	import ChatProductCard from './ChatProductCard.svelte';
+	import ChatOSSCard from './ChatOSSCard.svelte';
 	import ArticleCard from '$lib/components/ArticleCard.svelte';
 	import ProfileCard from './ProfileCard.svelte';
 	import ContactCard from './ContactCard.svelte';
@@ -41,9 +41,9 @@
 	{:else if part.type === 'tool-listProducts'}
 		{#if part.state === 'output-available'}
 			{#if part.output.length > 0}
-				<div class="grid gap-3 sm:grid-cols-2">
+				<div class="carousel flex snap-x gap-3 overflow-x-auto pb-1">
 					{#each part.output as product (product.id)}
-						<ProductCard {product} />
+						<div class="w-72 shrink-0 snap-start [&>*]:h-full"><ChatProductCard {product} /></div>
 					{/each}
 				</div>
 			{:else}
@@ -57,7 +57,7 @@
 	{:else if part.type === 'tool-getProductDetail'}
 		{#if part.state === 'output-available'}
 			{#if part.output}
-				<ProductCard product={part.output} />
+				<div class="w-80 max-w-full"><ChatProductCard product={part.output} /></div>
 			{:else}
 				<p class="text-sm text-gray-500 dark:text-gray-400">そのプロダクトは見つかりませんでした。</p>
 			{/if}
@@ -68,9 +68,9 @@
 		<!-- listOSS -> grid of OSSCard -->
 	{:else if part.type === 'tool-listOSS'}
 		{#if part.state === 'output-available'}
-			<div class="grid gap-3 sm:grid-cols-2">
+			<div class="carousel flex snap-x gap-3 overflow-x-auto pb-1">
 				{#each part.output as project (project.id)}
-					<OSSCard {project} />
+					<div class="w-72 shrink-0 snap-start [&>*]:h-full"><ChatOSSCard {project} /></div>
 				{/each}
 			</div>
 		{:else if loading(part.state)}
@@ -89,9 +89,9 @@
 	{:else if part.type === 'tool-listWritings' || part.type === 'tool-listReinArticles'}
 		{#if part.state === 'output-available'}
 			{#if part.output.length > 0}
-				<div class="grid gap-3 sm:grid-cols-2">
+				<div class="carousel flex snap-x gap-3 overflow-x-auto pb-1">
 					{#each part.output as article (article.url)}
-						<ArticleCard {article} />
+						<div class="w-64 shrink-0 snap-start [&>*]:h-full"><ArticleCard {article} /></div>
 					{/each}
 				</div>
 			{:else}
@@ -105,9 +105,9 @@
 	{:else if part.type === 'tool-listVideos'}
 		{#if part.state === 'output-available'}
 			{#if part.output.length > 0}
-				<div class="grid gap-3 sm:grid-cols-2">
+				<div class="carousel flex snap-x gap-3 overflow-x-auto pb-1">
 					{#each part.output as video (video.videoId)}
-						<VideoCard {video} />
+						<div class="w-64 shrink-0 snap-start [&>*]:h-full"><VideoCard {video} /></div>
 					{/each}
 				</div>
 			{:else}
