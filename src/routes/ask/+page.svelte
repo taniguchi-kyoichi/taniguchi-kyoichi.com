@@ -180,10 +180,24 @@
 
 		{#if chat.error}
 			<div
-				class="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700 dark:border-red-900/50 dark:bg-red-900/20 dark:text-red-400"
+				class="rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-700 dark:border-red-900/50 dark:bg-red-900/20 dark:text-red-400"
 			>
-				エラーが発生しました。もう一度お試しください。
-				<button type="button" class="ml-1 underline" onclick={() => chat.clearError()}>閉じる</button>
+				<p>{chat.error.message || 'エラーが発生しました。もう一度お試しください。'}</p>
+				<div class="mt-1.5 flex gap-3">
+					<button
+						type="button"
+						class="font-medium underline hover:no-underline"
+						onclick={() => {
+							chat.clearError();
+							chat.regenerate();
+						}}
+					>
+						再試行
+					</button>
+					<button type="button" class="underline hover:no-underline" onclick={() => chat.clearError()}>
+						閉じる
+					</button>
+				</div>
 			</div>
 		{/if}
 	</div>

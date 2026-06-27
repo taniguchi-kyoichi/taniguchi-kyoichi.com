@@ -42,7 +42,9 @@ export const POST: RequestHandler = async ({ request, platform }) => {
 		system: SYSTEM,
 		messages: await convertToModelMessages(messages),
 		tools,
-		stopWhen: stepCountIs(5),
+		// 3 steps covers tool-call → (optional 2nd tool) → synthesize, while
+		// keeping neuron usage down (Workers AI free tier is 10k neurons/day).
+		stopWhen: stepCountIs(3),
 		// Safety net so a reply never cuts off mid-sentence; the prompt keeps
 		// answers short, so normal responses finish well under this.
 		maxOutputTokens: 800
@@ -50,6 +52,14 @@ export const POST: RequestHandler = async ({ request, platform }) => {
 
 	// `identity` avoids the workerd gzip-buffering issue where SSE chunks don't flush.
 	return result.toUIMessageStreamResponse({
-		headers: { 'Content-Encoding': 'identity' }
+		headers: { 'Content-Encoding': 'identity' },
+		onError: (error) => {
+			const message = error instanceof Error ? error.message : String(error);
+			// Workers AI daily free quota / capacity / rate errors → friendly copy.
+			if (/neuron|4006|capacity|429|rate.?limit|too many/i.test(message)) {
+				return 'AI が一時的に混み合っています。少し時間をおいてお試しください。';
+			}
+			return 'エラーが発生しました。もう一度お試しください。';
+		}
 	});
 };
