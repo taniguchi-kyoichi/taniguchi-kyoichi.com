@@ -64,7 +64,26 @@ export const POST: RequestHandler = async ({ request, platform }) => {
 		);
 	}
 
-	const { messages }: { messages: UIMessage[] } = await request.json();
+	// Validate the payload: reject malformed JSON, oversized histories, and
+	// oversized text so a crafted request can't burn extra inference cost.
+	let body: { messages?: UIMessage[] };
+	try {
+		body = await request.json();
+	} catch {
+		return messageStream('リクエストの形式が不正です。');
+	}
+	const messages = body?.messages;
+	if (!Array.isArray(messages) || messages.length === 0 || messages.length > 30) {
+		return messageStream('リクエストが不正です。');
+	}
+	const totalChars = messages.reduce(
+		(sum, m) =>
+			sum + (m.parts ?? []).reduce((s, p) => s + (p.type === 'text' ? (p.text?.length ?? 0) : 0), 0),
+		0
+	);
+	if (totalChars > 8000) {
+		return messageStream('メッセージが長すぎます。短く分けてお試しください。');
+	}
 
 	const workersai = createWorkersAI({ binding: ai, gateway: { id: AI_GATEWAY_ID } });
 

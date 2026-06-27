@@ -47,6 +47,12 @@
 			sameAs: profile.socialLinks.map((l) => l.url)
 		}
 	};
+
+	// Escape `<` so a value can't break out of the JSON-LD script element via a
+	// closing tag or comment sequence. Defensive — current data is author-controlled.
+	function ldJson(obj: unknown): string {
+		return JSON.stringify(obj).replace(/</g, '\\u003c');
+	}
 </script>
 
 <svelte:head>
@@ -78,10 +84,10 @@
 	{/if}
 
 	<!-- JSON-LD: WebSite (site-wide) -->
-	{@html `<script type="application/ld+json">${JSON.stringify(websiteJsonLd)}</script>`}
+	{@html `<script type="application/ld+json">${ldJson(websiteJsonLd)}</script>`}
 	<!-- JSON-LD: Page-specific -->
 	{#if seo.jsonLd}
-		{@html `<script type="application/ld+json">${JSON.stringify(seo.jsonLd)}</script>`}
+		{@html `<script type="application/ld+json">${ldJson(seo.jsonLd)}</script>`}
 	{/if}
 
 	<script>
