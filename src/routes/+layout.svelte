@@ -141,6 +141,14 @@
 							Contact
 						</a>
 					</li>
+					<li>
+						<a
+							href="/ask"
+							class="inline-flex items-center gap-1 rounded-full bg-primary-600 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-primary-700"
+						>
+							<span aria-hidden="true">✦</span> Ask AI
+						</a>
+					</li>
 				</ul>
 				<ThemeToggle />
 			</div>

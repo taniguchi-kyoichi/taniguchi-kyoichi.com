@@ -6,7 +6,12 @@ declare global {
 		// interface Locals {}
 		// interface PageData {}
 		// interface PageState {}
-		// interface Platform {}
+		interface Platform {
+			env?: {
+				/** Cloudflare Workers AI binding (configured in wrangler.toml). */
+				AI: import('@cloudflare/workers-types').Ai;
+			};
+		}
 	}
 }
 
