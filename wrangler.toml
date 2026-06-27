@@ -9,5 +9,11 @@ pages_build_output_dir = ".svelte-kit/cloudflare"
 [ai]
 binding = "AI"
 
+# KV for /api/chat abuse protection: per-IP rate limits + a global daily cap
+# so a bot can't drain the Workers AI quota (free) or run up cost (paid).
+[[kv_namespaces]]
+binding = "CHAT_LIMITS"
+id = "e1a0f7df4862482fb2cd1e9c40c4e84b"
+
 [vars]
 # Add environment variables here if needed

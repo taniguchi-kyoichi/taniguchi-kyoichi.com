@@ -1,8 +1,24 @@
-import { streamText, convertToModelMessages, stepCountIs, type UIMessage } from 'ai';
+import {
+	streamText,
+	convertToModelMessages,
+	stepCountIs,
+	createUIMessageStream,
+	createUIMessageStreamResponse,
+	type UIMessage
+} from 'ai';
 import { createWorkersAI } from 'workers-ai-provider';
 import { error } from '@sveltejs/kit';
 import { tools } from '$lib/server/tools';
+import { checkRateLimit } from '$lib/server/rateLimit';
 import type { RequestHandler } from './$types';
+
+/** A friendly, SDK-correct error stream (so the client shows the message). */
+function messageStream(text: string): Response {
+	const stream = createUIMessageStream({
+		execute: ({ writer }) => writer.write({ type: 'error', errorText: text })
+	});
+	return createUIMessageStreamResponse({ stream, headers: { 'Content-Encoding': 'identity' } });
+}
 
 // Llama 4 Scout returns *structured* tool calls and follows the JP persona well.
 // (Tested alternatives on Workers AI: llama-3.3-70b-fp8-fast emits tool calls as
@@ -31,6 +47,17 @@ export const POST: RequestHandler = async ({ request, platform }) => {
 	const ai = platform?.env?.AI;
 	if (!ai) {
 		throw error(503, 'AI binding is not available in this environment.');
+	}
+
+	// Abuse protection: per-IP rate limit + global daily cap (see rateLimit.ts).
+	const ip = request.headers.get('cf-connecting-ip') ?? 'unknown';
+	const limit = await checkRateLimit(platform?.env?.CHAT_LIMITS, ip, new Date().toISOString());
+	if (!limit.ok) {
+		return messageStream(
+			limit.reason === 'global'
+				? 'AI が一時的に混み合っています。少し時間をおいてお試しください。'
+				: '短時間に質問が多すぎます。少し待ってからお試しください。'
+		);
 	}
 
 	const { messages }: { messages: UIMessage[] } = await request.json();
