@@ -52,16 +52,14 @@ export const tools = {
 	}),
 
 	listOSS: tool({
+		// No input args on purpose: Workers AI models mis-stream boolean tool args
+		// (first call errors, then retries), so we keep the schema empty and order
+		// featured projects first instead of exposing a filter flag.
 		description:
 			'谷口が公開している OSS プロジェクトの一覧を取得する。「OSS は？」「ライブラリを作ってる？」「GitHub で何を公開してる？」などに使う。',
-		inputSchema: z.object({
-			featuredOnly: z
-				.boolean()
-				.optional()
-				.describe('代表的なものだけに絞る場合は true')
-		}),
-		execute: async ({ featuredOnly }) =>
-			ossProjects.filter((o) => !featuredOnly || o.featured)
+		inputSchema: z.object({}),
+		execute: async () =>
+			[...ossProjects].sort((a, b) => Number(b.featured ?? false) - Number(a.featured ?? false))
 	}),
 
 	getContact: tool({

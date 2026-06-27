@@ -4,8 +4,11 @@ import { error } from '@sveltejs/kit';
 import { tools } from '$lib/server/tools';
 import type { RequestHandler } from './$types';
 
-// Llama 3.3 70B (fp8, fast) supports function calling — needed for the tool loop.
-const MODEL = '@cf/meta/llama-3.3-70b-instruct-fp8-fast';
+// Llama 4 Scout returns *structured* tool calls and follows the JP persona well.
+// (Tested alternatives on Workers AI: llama-3.3-70b-fp8-fast emits tool calls as
+// plain-text JSON — never parsed; mistral-small-3.1 double-streams tool args and
+// errors. Scout is the reliable free option here.)
+const MODEL = '@cf/meta/llama-4-scout-17b-16e-instruct';
 
 const SYSTEM = `あなたは谷口恭一（Kyoichi Taniguchi）のポートフォリオサイトに常駐する AI アシスタントです。
 サイトを訪れた人の「谷口さんってどんな人？」「どんなアプリを作ってる？」といった質問に、ツールを使って答えます。

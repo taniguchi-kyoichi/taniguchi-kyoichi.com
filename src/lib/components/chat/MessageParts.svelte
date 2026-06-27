@@ -11,6 +11,13 @@
 	}
 
 	let { message }: Props = $props();
+
+	// In-progress states show a skeleton; `output-error` renders nothing because
+	// Workers AI models occasionally fail the first tool attempt and the AI SDK
+	// retries — the successful retry renders the real card.
+	function loading(state: string): boolean {
+		return state === 'input-streaming' || state === 'input-available';
+	}
 </script>
 
 {#each message.parts as part, i (i)}
@@ -23,9 +30,7 @@
 	{:else if part.type === 'tool-getProfile'}
 		{#if part.state === 'output-available'}
 			<ProfileCard profile={part.output} />
-		{:else if part.state === 'output-error'}
-			<ToolSkeleton error={part.errorText} />
-		{:else}
+		{:else if loading(part.state)}
 			<ToolSkeleton label="プロフィールを読み込み中…" />
 		{/if}
 
@@ -41,9 +46,7 @@
 			{:else}
 				<p class="text-sm text-gray-500 dark:text-gray-400">該当するプロダクトはありません。</p>
 			{/if}
-		{:else if part.state === 'output-error'}
-			<ToolSkeleton error={part.errorText} />
-		{:else}
+		{:else if loading(part.state)}
 			<ToolSkeleton label="プロダクトを探しています…" />
 		{/if}
 
@@ -55,9 +58,7 @@
 			{:else}
 				<p class="text-sm text-gray-500 dark:text-gray-400">そのプロダクトは見つかりませんでした。</p>
 			{/if}
-		{:else if part.state === 'output-error'}
-			<ToolSkeleton error={part.errorText} />
-		{:else}
+		{:else if loading(part.state)}
 			<ToolSkeleton label="プロダクトの詳細を読み込み中…" />
 		{/if}
 
@@ -69,9 +70,7 @@
 					<OSSCard {project} />
 				{/each}
 			</div>
-		{:else if part.state === 'output-error'}
-			<ToolSkeleton error={part.errorText} />
-		{:else}
+		{:else if loading(part.state)}
 			<ToolSkeleton label="OSS を探しています…" />
 		{/if}
 
@@ -79,9 +78,7 @@
 	{:else if part.type === 'tool-getContact'}
 		{#if part.state === 'output-available'}
 			<ContactCard contact={part.output} />
-		{:else if part.state === 'output-error'}
-			<ToolSkeleton error={part.errorText} />
-		{:else}
+		{:else if loading(part.state)}
 			<ToolSkeleton label="連絡先を読み込み中…" />
 		{/if}
 	{/if}

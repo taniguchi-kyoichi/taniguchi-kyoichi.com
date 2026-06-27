@@ -23,7 +23,7 @@
 		"tailwindcss": "^4.1.18",
 		"typescript": "^5.9.3",
 		"vite": "^7.2.6",
-		"wrangler": "^3.0.0"
+		"wrangler": "^4.105.0"
 	},
 	"dependencies": {
 		"@ai-sdk/svelte": "^4.0.213",
