@@ -107,6 +107,15 @@
 						Contact
 					</a>
 				</li>
+				<li>
+					<a
+						href="/ask"
+						onclick={close}
+						class="flex h-12 items-center gap-2 rounded-lg bg-primary-600 px-4 text-base font-medium text-white transition-colors hover:bg-primary-700"
+					>
+						<span aria-hidden="true">✦</span> Ask AI
+					</a>
+				</li>
 			</ul>
 		</nav>
 
