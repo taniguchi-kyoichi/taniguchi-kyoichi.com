@@ -57,7 +57,7 @@
 				<input
 					bind:this={inputEl}
 					bind:value={input}
-					placeholder="谷口について AI に聞く…"
+					placeholder="AI に質問する…"
 					aria-label="谷口について AI に質問する"
 					class="w-full rounded-full border border-transparent bg-white py-4 pl-5 pr-28 text-sm text-gray-900 shadow-2xl outline-none dark:bg-gray-800 dark:text-white"
 				/>

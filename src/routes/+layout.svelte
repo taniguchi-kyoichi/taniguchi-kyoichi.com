@@ -8,6 +8,8 @@
 	import MobileMenu from '$lib/components/MobileMenu.svelte';
 	import CommandPalette from '$lib/components/CommandPalette.svelte';
 	import { openPalette } from '$lib/stores/commandPalette.svelte';
+	import { isDebug } from '$lib/debug';
+	import { onMount } from 'svelte';
 
 	interface Props {
 		children: import('svelte').Snippet;
@@ -17,6 +19,11 @@
 	let { children }: Props = $props();
 
 	let mobileMenuOpen = $state(false);
+
+	// dev-only: `?debug` freezes animations and shows a DEBUG badge for layout work
+	onMount(() => {
+		if (isDebug()) document.documentElement.classList.add('debug');
+	});
 
 	const seo = $derived(page.data.seo as SEO);
 

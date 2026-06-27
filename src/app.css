@@ -47,10 +47,11 @@ html.dark {
 	}
 }
 
-/* Ensure minimum touch target size for interactive elements */
+/* Touch targets: ensure a comfortable tap size on touch devices, but only for
+   elements that opt in via `.tap-target`. Applying this to every a/button
+   ballooned small pill chips (text-xs) into 44px lozenges on mobile. */
 @media (pointer: coarse) {
-	a,
-	button {
+	.tap-target {
 		min-height: 44px;
 		min-width: 44px;
 	}
@@ -287,4 +288,27 @@ p {
 	.hero-stagger > * {
 		animation: none;
 	}
+}
+
+/* ── Debug mode (dev only): freeze motion so layout is easy to inspect ──── */
+html.debug *,
+html.debug *::before,
+html.debug *::after {
+	animation: none !important;
+	transition: none !important;
+}
+html.debug::after {
+	content: 'DEBUG';
+	position: fixed;
+	bottom: 8px;
+	left: 8px;
+	z-index: 9999;
+	padding: 2px 8px;
+	border-radius: 9999px;
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.05em;
+	color: #fff;
+	background: oklch(55% 0.2 25);
+	pointer-events: none;
 }

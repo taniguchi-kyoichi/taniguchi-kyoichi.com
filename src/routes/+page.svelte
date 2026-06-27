@@ -9,6 +9,7 @@
 	import { formatDate } from '$lib/utils/rss';
 	import { onMount } from 'svelte';
 	import { startAsk } from '$lib/askSession';
+	import { isDebug } from '$lib/debug';
 
 	let { data } = $props();
 
@@ -41,25 +42,26 @@
 	}
 
 	// --- Typewriter placeholder for the AI ask box ---
+	// Short examples (no long prefix) so the typing stays fully visible on mobile.
 	const askExamples = [
 		'どんなアプリを作ってる？',
 		'最近書いた記事は？',
-		'OSS活動について教えて',
-		'iOSエンジニアとしての強みは？',
-		'YouTubeでは何を話してる？'
+		'OSS活動について',
+		'iOSの強みは？',
+		'連絡を取りたい'
 	];
 
-	const STATIC_PLACEHOLDER = '谷口について AI に聞く — 例: どんなアプリを作ってる？';
+	const STATIC_PLACEHOLDER = 'AI に質問する…';
 	let typed = $state('');
 	let askFocused = $state(false);
 	let animate = $state(false);
 
-	// Static prefix while idle; the example question types/deletes after it.
 	const placeholder = $derived(
-		animate && !askFocused && !askInput ? `谷口について AI に聞く — ${typed}▌` : STATIC_PLACEHOLDER
+		animate && !askFocused && !askInput ? `${typed}▌` : STATIC_PLACEHOLDER
 	);
 
 	onMount(() => {
+		if (isDebug()) return; // debug: keep the static placeholder, no typing
 		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 		animate = true;
 
