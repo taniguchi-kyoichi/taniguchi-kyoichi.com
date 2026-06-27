@@ -119,3 +119,109 @@ p {
 	background-color: #1e293b;
 	border: 1px solid #334155;
 }
+
+/* ── AI ask field: animated gradient border + focus glow ───────────────── */
+@property --ai-angle {
+	syntax: '<angle>';
+	initial-value: 0deg;
+	inherits: false;
+}
+
+@keyframes ai-spin {
+	to {
+		--ai-angle: 360deg;
+	}
+}
+
+.ai-field {
+	position: relative;
+	border-radius: 9999px;
+	isolation: isolate;
+}
+
+/* Rotating conic-gradient ring (masked to just the border) */
+.ai-field::before {
+	content: '';
+	position: absolute;
+	inset: -1.5px;
+	border-radius: inherit;
+	padding: 1.5px;
+	background: conic-gradient(
+		from var(--ai-angle),
+		oklch(60% 0.18 250),
+		oklch(63% 0.2 290),
+		oklch(72% 0.15 220),
+		oklch(60% 0.18 250)
+	);
+	-webkit-mask:
+		linear-gradient(#000 0 0) content-box,
+		linear-gradient(#000 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	animation: ai-spin 6s linear infinite;
+	z-index: -1;
+	pointer-events: none;
+}
+
+/* Ambient glow that blooms on focus */
+.ai-field::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	box-shadow: 0 4px 24px -10px oklch(60% 0.18 270 / 0.35);
+	transition: box-shadow 0.45s ease;
+	z-index: -2;
+	pointer-events: none;
+}
+
+.ai-field:focus-within::after {
+	box-shadow: 0 8px 34px -8px oklch(62% 0.2 280 / 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ai-field::before {
+		animation: none;
+	}
+}
+
+/* ── AI ask button: gradient fill + glow + twinkling sparkle ───────────── */
+.ai-button {
+	background-image: linear-gradient(120deg, oklch(55% 0.19 262), oklch(58% 0.21 296));
+	box-shadow: 0 4px 14px -4px oklch(58% 0.2 280 / 0.5);
+	transition:
+		box-shadow 0.3s ease,
+		filter 0.3s ease;
+}
+
+.ai-button:hover {
+	filter: brightness(1.08) saturate(1.05);
+	box-shadow: 0 6px 22px -4px oklch(58% 0.2 280 / 0.72);
+}
+
+.ai-button:active {
+	filter: brightness(0.97);
+}
+
+.ai-sparkle {
+	display: inline-block;
+	animation: ai-twinkle 2.6s ease-in-out infinite;
+}
+
+@keyframes ai-twinkle {
+	0%,
+	100% {
+		opacity: 1;
+		transform: scale(1) rotate(0deg);
+	}
+	50% {
+		opacity: 0.6;
+		transform: scale(0.8) rotate(10deg);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ai-sparkle {
+		animation: none;
+	}
+}

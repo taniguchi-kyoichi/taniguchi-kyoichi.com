@@ -8,22 +8,83 @@
 	import ArticleCard from '$lib/components/ArticleCard.svelte';
 	import { formatDate } from '$lib/utils/rss';
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 
 	let { data } = $props();
 
 	let askInput = $state('');
 
-	const askSuggestions = [
-		'どんなアプリを作ってる？',
-		'最近書いた記事は？',
-		'OSS活動について'
-	];
+	const askSuggestions = ['どんなアプリを作ってる？', '最近書いた記事は？', 'OSS活動について'];
 
 	function askAI(event: SubmitEvent) {
 		event.preventDefault();
 		const q = askInput.trim();
 		goto(q ? `/ask?q=${encodeURIComponent(q)}` : '/ask');
 	}
+
+	// --- Typewriter placeholder for the AI ask box ---
+	const askExamples = [
+		'どんなアプリを作ってる？',
+		'最近書いた記事は？',
+		'OSS活動について教えて',
+		'iOSエンジニアとしての強みは？',
+		'YouTubeでは何を話してる？'
+	];
+
+	const STATIC_PLACEHOLDER = '谷口について AI に聞く — 例: どんなアプリを作ってる？';
+	let typed = $state('');
+	let askFocused = $state(false);
+	let animate = $state(false);
+
+	// Static prefix while idle; the example question types/deletes after it.
+	const placeholder = $derived(
+		animate && !askFocused && !askInput ? `谷口について AI に聞く — ${typed}▌` : STATIC_PLACEHOLDER
+	);
+
+	onMount(() => {
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		animate = true;
+
+		let cancelled = false;
+		let ex = 0;
+		let ch = 0;
+		let deleting = false;
+
+		function tick() {
+			if (cancelled) return;
+			// Pause the animation while the visitor is interacting with the field.
+			if (askFocused || askInput) {
+				setTimeout(tick, 400);
+				return;
+			}
+			const word = askExamples[ex];
+			if (!deleting) {
+				ch++;
+				typed = word.slice(0, ch);
+				if (ch === word.length) {
+					deleting = true;
+					setTimeout(tick, 1600);
+					return;
+				}
+				setTimeout(tick, 65);
+			} else {
+				ch--;
+				typed = word.slice(0, ch);
+				if (ch === 0) {
+					deleting = false;
+					ex = (ex + 1) % askExamples.length;
+					setTimeout(tick, 350);
+					return;
+				}
+				setTimeout(tick, 30);
+			}
+		}
+
+		setTimeout(tick, 700);
+		return () => {
+			cancelled = true;
+		};
+	});
 </script>
 
 <!-- Hero Section -->
@@ -93,18 +154,20 @@
 
 			<!-- AI ask box: primary way to explore this site -->
 			<div class="mt-8 w-full max-w-xl sm:mt-10">
-				<form onsubmit={askAI} class="relative">
+				<form onsubmit={askAI} class="ai-field relative">
 					<input
 						bind:value={askInput}
-						placeholder="谷口について AI に聞く — 例: どんなアプリを作ってる？"
+						{placeholder}
+						onfocus={() => (askFocused = true)}
+						onblur={() => (askFocused = false)}
 						aria-label="谷口について AI に質問する"
-						class="w-full rounded-full border border-gray-300 bg-white py-3.5 pl-5 pr-28 text-sm text-gray-900 shadow-sm outline-none transition-colors focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+						class="w-full rounded-full border border-transparent bg-white py-3.5 pl-5 pr-28 text-sm text-gray-900 outline-none dark:bg-gray-800 dark:text-white"
 					/>
 					<button
 						type="submit"
-						class="absolute right-1.5 top-1/2 inline-flex -translate-y-1/2 items-center gap-1 rounded-full bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-700"
+						class="ai-button absolute right-1.5 top-1/2 inline-flex -translate-y-1/2 items-center gap-1 rounded-full px-4 py-2 text-sm font-medium text-white"
 					>
-						<span aria-hidden="true">✦</span> 聞く
+						<span class="ai-sparkle" aria-hidden="true">✦</span> 聞く
 					</button>
 				</form>
 				<div class="mt-3 flex flex-wrap justify-center gap-2">
