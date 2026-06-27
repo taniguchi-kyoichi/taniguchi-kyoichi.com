@@ -12,7 +12,8 @@ export const load: PageServerLoad = () => {
 		ogImageAlt: SITE_NAME,
 		ogImageWidth: DEFAULT_OG_IMAGE_SIZE,
 		ogImageHeight: DEFAULT_OG_IMAGE_SIZE,
-		twitterCard: 'summary'
+		twitterCard: 'summary',
+		noindex: true
 	};
 
 	return { seo };

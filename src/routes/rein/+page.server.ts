@@ -1,5 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { fetchArticlesFromRSS } from '$lib/utils/rss';
+import { cachedFetch } from '$lib/server/external';
 import { absoluteUrl, SITE_NAME, SITE_URL } from '$lib/seo';
 import type { SEO } from '$lib/seo';
 
@@ -11,7 +12,7 @@ export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
 		'cache-control': 'public, max-age=3600, stale-while-revalidate=86400'
 	});
 
-	const articles = (await fetchArticlesFromRSS(REIN_RSS, fetch)).sort(
+	const articles = (await fetchArticlesFromRSS(REIN_RSS, cachedFetch)).sort(
 		(a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
 	);
 

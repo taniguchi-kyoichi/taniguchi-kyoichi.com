@@ -1,5 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { fetchArticlesFromRSS } from '$lib/utils/rss';
+import { cachedFetch } from '$lib/server/external';
 import { DEFAULT_OG_IMAGE, DEFAULT_OG_IMAGE_SIZE, SITE_NAME, SITE_URL } from '$lib/seo';
 import type { SEO } from '$lib/seo';
 
@@ -10,7 +11,7 @@ export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
 		'cache-control': 'public, max-age=3600, stale-while-revalidate=86400'
 	});
 
-	const articlesArrays = await Promise.all(RSS_FEEDS.map((url) => fetchArticlesFromRSS(url, fetch)));
+	const articlesArrays = await Promise.all(RSS_FEEDS.map((url) => fetchArticlesFromRSS(url, cachedFetch)));
 
 	const articles = articlesArrays
 		.flat()

@@ -115,6 +115,9 @@
 				<img
 					src={profile.avatar}
 					alt={profile.name}
+					width="460"
+					height="460"
+					fetchpriority="high"
 					class="mb-4 h-24 w-24 rounded-full object-cover shadow-lg ring-4 ring-white sm:mb-6 sm:h-28 sm:w-28 md:h-32 md:w-32 dark:ring-gray-800"
 				/>
 			{:else}
@@ -328,6 +331,9 @@
 							<img
 								src={video.thumbnail}
 								alt={video.title}
+								loading="lazy"
+								width="480"
+								height="360"
 								class="h-full w-full object-cover transition-transform group-hover:scale-105"
 							/>
 							<div class="absolute inset-0 flex items-center justify-center">

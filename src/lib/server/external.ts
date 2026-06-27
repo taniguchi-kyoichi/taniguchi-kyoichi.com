@@ -15,9 +15,9 @@ const YOUTUBE_CHANNEL_ID = 'UCmMnuEXRsrNNcW4bVeeTI8A';
 
 const ALLOWED_HOSTS = ['zenn.dev', 'note.com', 'reinself.com'];
 
-// Edge-cached fetch: external feeds change slowly, so cache 30 min to keep the
-// agent fast and avoid hammering the sources on every chat turn.
-const cachedFetch: typeof fetch = (input, init) =>
+// Edge-cached fetch: external feeds change slowly, so cache 30 min to keep both
+// the agent and the SSR page loads fast and avoid hammering the sources.
+export const cachedFetch: typeof fetch = (input, init) =>
 	fetch(input, { ...init, cf: { cacheTtl: 1800, cacheEverything: true } } as RequestInit);
 
 function byDateDesc(a: Article, b: Article): number {

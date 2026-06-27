@@ -59,6 +59,7 @@
 	<title>{seo.title}</title>
 	<meta name="description" content={seo.description} />
 	<link rel="canonical" href={seo.canonical} />
+	{#if seo.noindex}<meta name="robots" content="noindex, follow" />{/if}
 
 	<!-- Open Graph -->
 	<meta property="og:site_name" content={SITE_NAME} />

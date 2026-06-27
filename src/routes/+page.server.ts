@@ -1,6 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { env } from '$env/dynamic/private';
 import { fetchArticlesFromRSS, fetchYouTubeChannel } from '$lib/utils/rss';
+import { cachedFetch } from '$lib/server/external';
 import { profile } from '$lib/data/profile';
 import { DEFAULT_OG_IMAGE, DEFAULT_OG_IMAGE_SIZE, SITE_NAME, SITE_URL } from '$lib/seo';
 import type { SEO } from '$lib/seo';
@@ -22,9 +23,9 @@ export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
 		: Promise.resolve(null);
 
 	const [articlesArrays, youtubePlaylist, reinArticlesAll] = await Promise.all([
-		Promise.all(RSS_FEEDS.map((url) => fetchArticlesFromRSS(url, fetch))),
+		Promise.all(RSS_FEEDS.map((url) => fetchArticlesFromRSS(url, cachedFetch))),
 		youtubePromise,
-		fetchArticlesFromRSS(REIN_RSS, fetch)
+		fetchArticlesFromRSS(REIN_RSS, cachedFetch)
 	]);
 
 	const articles = articlesArrays

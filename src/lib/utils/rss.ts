@@ -143,7 +143,10 @@ export async function fetchYouTubeChannel(
 	const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${uploadsPlaylistId}&maxResults=${maxResults}&key=${apiKey}`;
 
 	try {
-		const response = await fetch(url);
+		// Edge-cache 30 min so SSR doesn't pay the YouTube API RTT (or quota) each render.
+		const response = await fetch(url, {
+			cf: { cacheTtl: 1800, cacheEverything: true }
+		} as RequestInit);
 		if (!response.ok) {
 			console.error(`Failed to fetch YouTube API: ${response.status}`);
 			return null;
