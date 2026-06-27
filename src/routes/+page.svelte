@@ -14,7 +14,22 @@
 
 	let askInput = $state('');
 
-	const askSuggestions = ['どんなアプリを作ってる？', '最近書いた記事は？', 'OSS活動について'];
+	// Short, tidy chips. They stay light-weight, while the answers they trigger
+	// pull live content (latest articles/videos) — so "freshness" lives in the
+	// response, not in cramped chip text. Video vs Rein chip depends on real data.
+	const askSuggestions = $derived.by(() => {
+		const chips: { label: string; q: string }[] = [
+			{ label: '📱 作ったアプリ', q: 'どんなアプリを作ってる？' },
+			{ label: '📝 最近の記事', q: '最近書いた記事を教えて' }
+		];
+		if (data.youtubePlaylist?.videos?.length) {
+			chips.push({ label: '▶ 最新の動画', q: '最新の YouTube 動画について教えて' });
+		} else if (data.reinArticles?.length) {
+			chips.push({ label: '📖 Rein の記事', q: 'Rein の最新記事を教えて' });
+		}
+		chips.push({ label: '🧩 OSS は？', q: 'OSS 活動について教えて' });
+		return chips;
+	});
 
 	function askAI(event: SubmitEvent) {
 		event.preventDefault();
@@ -171,12 +186,12 @@
 					</button>
 				</form>
 				<div class="mt-3 flex flex-wrap justify-center gap-2">
-					{#each askSuggestions as s (s)}
+					{#each askSuggestions as s (s.label)}
 						<a
-							href="/ask?q={encodeURIComponent(s)}"
+							href="/ask?q={encodeURIComponent(s.q)}"
 							class="rounded-full border border-gray-200 bg-white/60 px-3 py-1 text-xs text-gray-600 transition-colors hover:border-primary-300 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-800/60 dark:text-gray-400 dark:hover:border-primary-600 dark:hover:text-primary-400"
 						>
-							{s}
+							{s.label}
 						</a>
 					{/each}
 				</div>
