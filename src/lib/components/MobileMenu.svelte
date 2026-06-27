@@ -30,8 +30,10 @@
 	></div>
 {/if}
 
-<!-- Mobile menu panel -->
+<!-- Mobile menu panel: `inert` when closed so its links aren't tab-focusable off-screen -->
 <div
+	inert={!isOpen}
+	aria-hidden={!isOpen}
 	class="fixed right-0 top-0 z-50 h-full w-64 border-l border-gray-200 bg-white shadow-xl md:hidden dark:border-gray-700 dark:bg-gray-900
 		{isOpen ? 'translate-x-0' : 'translate-x-full'}
 		transition-transform duration-300 ease-in-out"

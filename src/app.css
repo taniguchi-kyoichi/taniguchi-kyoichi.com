@@ -23,8 +23,10 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-html {
-	scroll-behavior: smooth;
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		scroll-behavior: smooth;
+	}
 }
 
 body {

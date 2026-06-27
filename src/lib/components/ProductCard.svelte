@@ -30,10 +30,10 @@
 	};
 </script>
 
-<a
-	href="/products/{product.id}"
+<div
 	class="group relative flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all hover:border-primary-300 hover:shadow-lg sm:rounded-2xl dark:border-gray-700 dark:bg-gray-800 dark:hover:border-primary-600"
 >
+	<a href="/products/{product.id}" class="flex flex-1 flex-col">
 	<!-- App Icon and Header -->
 	<div class="flex items-start gap-4 p-4 sm:p-6">
 		{#if product.thumbnail}
@@ -100,14 +100,17 @@
 		</div>
 	</div>
 
-	<!-- Download Button -->
+	</a>
+
+	<!-- Store links: real links OUTSIDE the card anchor (valid, middle-clickable) -->
 	{#if product.links.appStore || product.links.googlePlay || product.links.web}
 		<div class="border-t border-gray-100 p-4 sm:px-6 dark:border-gray-700">
 			<div class="flex flex-wrap gap-2">
 				{#if product.links.appStore}
-					<button
-						type="button"
-						onclick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(product.links.appStore, '_blank'); }}
+					<a
+						href={product.links.appStore}
+						target="_blank"
+						rel="noopener noreferrer"
 						class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-gray-900 px-4 py-3 text-sm font-semibold text-white transition-all hover:bg-gray-700 hover:shadow-md dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
 					>
 						<svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
@@ -116,12 +119,13 @@
 							/>
 						</svg>
 						App Storeで入手
-					</button>
+					</a>
 				{/if}
 				{#if product.links.googlePlay}
-					<button
-						type="button"
-						onclick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(product.links.googlePlay, '_blank'); }}
+					<a
+						href={product.links.googlePlay}
+						target="_blank"
+						rel="noopener noreferrer"
 						class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-gray-900 px-4 py-3 text-sm font-semibold text-white transition-all hover:bg-gray-700 hover:shadow-md dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
 					>
 						<svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
@@ -130,18 +134,19 @@
 							/>
 						</svg>
 						Google Play
-					</button>
+					</a>
 				{/if}
 				{#if product.links.web}
-					<button
-						type="button"
-						onclick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(product.links.web, '_blank'); }}
+					<a
+						href={product.links.web}
+						target="_blank"
+						rel="noopener noreferrer"
 						class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-semibold text-gray-700 transition-all hover:bg-gray-50 hover:shadow-md dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
 					>
 						Webで開く
-					</button>
+					</a>
 				{/if}
 			</div>
 		</div>
 	{/if}
-</a>
+</div>

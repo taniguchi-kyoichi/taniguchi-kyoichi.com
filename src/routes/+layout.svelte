@@ -186,7 +186,7 @@
 			<!-- Mobile menu button -->
 			<button
 				onclick={() => (mobileMenuOpen = !mobileMenuOpen)}
-				class="flex h-10 w-10 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900 md:hidden dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
+				class="tap-target flex h-10 w-10 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900 md:hidden dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
 				aria-label={mobileMenuOpen ? 'メニューを閉じる' : 'メニューを開く'}
 				aria-expanded={mobileMenuOpen}
 			>

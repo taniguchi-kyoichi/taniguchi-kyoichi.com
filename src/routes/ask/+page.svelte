@@ -104,7 +104,7 @@
 				<button
 					type="button"
 					onclick={clearChat}
-					class="shrink-0 rounded-full border border-gray-200 px-3 py-1.5 text-xs text-gray-500 transition-colors hover:border-gray-300 hover:text-gray-700 dark:border-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+					class="tap-target shrink-0 rounded-full border border-gray-200 px-3 py-1.5 text-xs text-gray-500 transition-colors hover:border-gray-300 hover:text-gray-700 dark:border-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
 				>
 					新しい会話
 				</button>
@@ -174,7 +174,7 @@
 		{/if}
 
 		{#if chat.status === 'submitted'}
-			<div class="flex items-center gap-2 text-sm text-gray-400">
+			<div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
 				<span
 					class="h-3.5 w-3.5 animate-spin rounded-full border-2 border-gray-300 border-t-primary-600"
 				></span>
@@ -212,7 +212,8 @@
 			<input
 				bind:value={input}
 				placeholder="谷口恭一について質問する…"
-				class="flex-1 rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition-colors focus:border-primary-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+				aria-label="谷口恭一について質問する"
+				class="flex-1 rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition-colors focus:border-primary-500 focus-visible:ring-2 focus-visible:ring-primary-500/30 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
 			/>
 			{#if busy}
 				<button
@@ -232,7 +233,7 @@
 				</button>
 			{/if}
 		</div>
-		<p class="mt-2 text-center text-xs text-gray-400 dark:text-gray-500">
+		<p class="mt-2 text-center text-xs text-gray-500 dark:text-gray-500">
 			AI が生成した回答です。内容は谷口のプロフィール・プロダクト・OSS データに基づきます。
 		</p>
 	</form>

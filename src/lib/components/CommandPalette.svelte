@@ -5,6 +5,7 @@
 
 	let input = $state('');
 	let inputEl: HTMLInputElement | null = $state(null);
+	let lastFocused: HTMLElement | null = null;
 
 	const suggestions = ['どんなアプリを作ってる？', '最近書いた記事は？', 'OSS活動について', '連絡を取りたい'];
 
@@ -29,9 +30,15 @@
 		}
 	}
 
-	// Focus the field as soon as the palette opens.
+	// Focus the field when the palette opens; restore focus to the trigger on close.
 	$effect(() => {
-		if (palette.open && inputEl) inputEl.focus();
+		if (palette.open) {
+			lastFocused = document.activeElement as HTMLElement | null;
+			inputEl?.focus();
+		} else if (lastFocused) {
+			lastFocused.focus?.();
+			lastFocused = null;
+		}
 	});
 </script>
 
@@ -81,7 +88,7 @@
 				{/each}
 			</div>
 
-			<p class="mt-3 text-center text-xs text-gray-400 dark:text-gray-500">
+			<p class="mt-3 text-center text-xs text-gray-500 dark:text-gray-500">
 				<kbd class="rounded border border-gray-300 px-1 dark:border-gray-600">Enter</kbd> で送信 ·
 				<kbd class="rounded border border-gray-300 px-1 dark:border-gray-600">Esc</kbd> で閉じる
 			</p>
