@@ -16,7 +16,6 @@
 
 ## Featured Products
 - 読書メモリー: AI対話型の読書管理アプリ (iOS, App Store公開中)
-- MDCanvas: Markdownリアルタイムプレビューアプリ (iOS, 開発中)
 
 ## Featured OSS
 - claude-code-plugins: Claude Code plugins for iOS/Go/Firebase
