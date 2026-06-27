@@ -195,6 +195,16 @@
 						</a>
 					{/each}
 				</div>
+
+				<!-- ⌘K discoverability hint (desktop only — needs a keyboard) -->
+				<p class="mt-3 hidden items-center justify-center gap-1.5 text-xs text-gray-400 sm:flex dark:text-gray-500">
+					どのページでも
+					<kbd
+						class="rounded border border-gray-300 bg-gray-50 px-1.5 py-0.5 font-sans text-[11px] font-medium text-gray-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400"
+						>⌘K</kbd
+					>
+					で AI を呼び出せます
+				</p>
 			</div>
 		</div>
 	</div>

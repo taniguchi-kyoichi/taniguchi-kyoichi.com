@@ -111,9 +111,9 @@
 					<a
 						href="/ask"
 						onclick={close}
-						class="flex h-12 items-center gap-2 rounded-lg bg-primary-600 px-4 text-base font-medium text-white transition-colors hover:bg-primary-700"
+						class="ai-button flex h-12 items-center gap-2 rounded-lg px-4 text-base font-medium text-white"
 					>
-						<span aria-hidden="true">✦</span> Ask AI
+						<span class="ai-sparkle" aria-hidden="true">✦</span> Ask AI
 					</a>
 				</li>
 			</ul>

@@ -6,6 +6,8 @@
 	import type { SEO } from '$lib/seo';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 	import MobileMenu from '$lib/components/MobileMenu.svelte';
+	import CommandPalette from '$lib/components/CommandPalette.svelte';
+	import { openPalette } from '$lib/stores/commandPalette.svelte';
 
 	interface Props {
 		children: import('svelte').Snippet;
@@ -144,9 +146,17 @@
 					<li>
 						<a
 							href="/ask"
-							class="inline-flex items-center gap-1 rounded-full bg-primary-600 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-primary-700"
+							onclick={(e) => {
+								e.preventDefault();
+								openPalette();
+							}}
+							class="ai-button inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium text-white"
 						>
-							<span aria-hidden="true">✦</span> Ask AI
+							<span class="ai-sparkle" aria-hidden="true">✦</span> Ask AI
+							<kbd
+								class="ml-1 rounded bg-white/25 px-1.5 py-px font-sans text-[11px] font-semibold leading-none tracking-wide"
+								>⌘K</kbd
+							>
 						</a>
 					</li>
 				</ul>
@@ -175,6 +185,9 @@
 
 	<!-- Mobile menu: OUTSIDE header to avoid backdrop-filter containing block -->
 	<MobileMenu bind:isOpen={mobileMenuOpen} />
+
+	<!-- ⌘K AI command palette (global) -->
+	<CommandPalette />
 
 	<main>
 		{@render children()}
