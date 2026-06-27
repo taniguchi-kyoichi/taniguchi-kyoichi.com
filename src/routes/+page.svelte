@@ -7,8 +7,23 @@
 	import OSSCard from '$lib/components/OSSCard.svelte';
 	import ArticleCard from '$lib/components/ArticleCard.svelte';
 	import { formatDate } from '$lib/utils/rss';
+	import { goto } from '$app/navigation';
 
 	let { data } = $props();
+
+	let askInput = $state('');
+
+	const askSuggestions = [
+		'どんなアプリを作ってる？',
+		'最近書いた記事は？',
+		'OSS活動について'
+	];
+
+	function askAI(event: SubmitEvent) {
+		event.preventDefault();
+		const q = askInput.trim();
+		goto(q ? `/ask?q=${encodeURIComponent(q)}` : '/ask');
+	}
 </script>
 
 <!-- Hero Section -->
@@ -74,6 +89,34 @@
 						<span class="hidden xs:inline sm:inline">{link.label}</span>
 					</a>
 				{/each}
+			</div>
+
+			<!-- AI ask box: primary way to explore this site -->
+			<div class="mt-8 w-full max-w-xl sm:mt-10">
+				<form onsubmit={askAI} class="relative">
+					<input
+						bind:value={askInput}
+						placeholder="谷口について AI に聞く — 例: どんなアプリを作ってる？"
+						aria-label="谷口について AI に質問する"
+						class="w-full rounded-full border border-gray-300 bg-white py-3.5 pl-5 pr-28 text-sm text-gray-900 shadow-sm outline-none transition-colors focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+					/>
+					<button
+						type="submit"
+						class="absolute right-1.5 top-1/2 inline-flex -translate-y-1/2 items-center gap-1 rounded-full bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-700"
+					>
+						<span aria-hidden="true">✦</span> 聞く
+					</button>
+				</form>
+				<div class="mt-3 flex flex-wrap justify-center gap-2">
+					{#each askSuggestions as s (s)}
+						<a
+							href="/ask?q={encodeURIComponent(s)}"
+							class="rounded-full border border-gray-200 bg-white/60 px-3 py-1 text-xs text-gray-600 transition-colors hover:border-primary-300 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-800/60 dark:text-gray-400 dark:hover:border-primary-600 dark:hover:text-primary-400"
+						>
+							{s}
+						</a>
+					{/each}
+				</div>
 			</div>
 		</div>
 	</div>

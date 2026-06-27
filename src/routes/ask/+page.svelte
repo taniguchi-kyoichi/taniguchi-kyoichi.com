@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Chat } from '@ai-sdk/svelte';
+	import { page } from '$app/state';
 	import type { ChatMessage } from '$lib/chat';
 	import MessageParts from '$lib/components/chat/MessageParts.svelte';
 
@@ -7,6 +8,15 @@
 
 	let input = $state('');
 	let scroller: HTMLDivElement | null = $state(null);
+
+	// Auto-send a question passed from the homepage ask box (/ask?q=...), once.
+	let autoStarted = false;
+	$effect(() => {
+		if (autoStarted) return;
+		autoStarted = true;
+		const q = page.url.searchParams.get('q');
+		if (q) send(q);
+	});
 
 	const suggestions = [
 		'谷口さんってどんな人？',

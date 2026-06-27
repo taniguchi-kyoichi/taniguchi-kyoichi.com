@@ -2,8 +2,11 @@
 	import type { ChatMessage } from '$lib/chat';
 	import ProductCard from '$lib/components/ProductCard.svelte';
 	import OSSCard from '$lib/components/OSSCard.svelte';
+	import ArticleCard from '$lib/components/ArticleCard.svelte';
 	import ProfileCard from './ProfileCard.svelte';
 	import ContactCard from './ContactCard.svelte';
+	import VideoCard from './VideoCard.svelte';
+	import Markdown from './Markdown.svelte';
 	import ToolSkeleton from './ToolSkeleton.svelte';
 
 	interface Props {
@@ -23,7 +26,7 @@
 {#each message.parts as part, i (i)}
 	{#if part.type === 'text'}
 		{#if part.text.trim()}
-			<p class="whitespace-pre-wrap text-sm leading-relaxed">{part.text}</p>
+			<Markdown text={part.text} />
 		{/if}
 
 		<!-- getProfile -> ProfileCard -->
@@ -80,6 +83,38 @@
 			<ContactCard contact={part.output} />
 		{:else if loading(part.state)}
 			<ToolSkeleton label="連絡先を読み込み中…" />
+		{/if}
+
+		<!-- listWritings / listReinArticles -> grid of ArticleCard -->
+	{:else if part.type === 'tool-listWritings' || part.type === 'tool-listReinArticles'}
+		{#if part.state === 'output-available'}
+			{#if part.output.length > 0}
+				<div class="grid gap-3 sm:grid-cols-2">
+					{#each part.output as article (article.url)}
+						<ArticleCard {article} />
+					{/each}
+				</div>
+			{:else}
+				<p class="text-sm text-gray-500 dark:text-gray-400">記事を取得できませんでした。</p>
+			{/if}
+		{:else if loading(part.state)}
+			<ToolSkeleton label="記事を取得中…" />
+		{/if}
+
+		<!-- listVideos -> grid of VideoCard -->
+	{:else if part.type === 'tool-listVideos'}
+		{#if part.state === 'output-available'}
+			{#if part.output.length > 0}
+				<div class="grid gap-3 sm:grid-cols-2">
+					{#each part.output as video (video.videoId)}
+						<VideoCard {video} />
+					{/each}
+				</div>
+			{:else}
+				<p class="text-sm text-gray-500 dark:text-gray-400">動画を取得できませんでした。</p>
+			{/if}
+		{:else if loading(part.state)}
+			<ToolSkeleton label="動画を取得中…" />
 		{/if}
 	{/if}
 {/each}

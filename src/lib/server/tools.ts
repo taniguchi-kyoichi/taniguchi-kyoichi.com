@@ -3,20 +3,23 @@ import { z } from 'zod';
 import { profile, contact } from '$lib/data/profile';
 import { products } from '$lib/data/products';
 import { ossProjects } from '$lib/data/oss';
+import { getWritings, getReinArticles, getVideos } from '$lib/server/external';
 
 /**
- * Tools the AI agent can call to answer questions about Kyoichi.
+ * Tools the AI agent calls to answer questions about Kyoichi.
  *
- * Each tool returns typed, structured data sourced from the same `$lib/data/*`
- * the site itself renders from. The tool output flows back to the model AND to
- * the client, where `MessageParts.svelte` maps each `tool-<name>` part to a
- * Svelte component (generative UI). Returning full objects lets the chat reuse
- * the site's existing `ProductCard` / `OSSCard` components verbatim.
+ * Each returns typed, structured data; the client (`MessageParts.svelte`) maps
+ * each `tool-<name>` part to a Svelte component, reusing the site's own cards.
+ * Static tools read `$lib/data/*`; the `list*` content tools fetch live from
+ * external services (Zenn/note/Rein RSS, YouTube API) via `$lib/server/external`.
+ *
+ * Tool descriptions are intentionally terse English for cheap, accurate routing.
+ * Avoid boolean/number args: Workers AI models mis-stream them (first call errors,
+ * then retries). Enum and string args are fine.
  */
 export const tools = {
 	getProfile: tool({
-		description:
-			'谷口恭一の基本プロフィール（名前・肩書き・自己紹介・拠点・SNS）を取得する。「どんな人？」「自己紹介して」「経歴は？」などの質問に使う。',
+		description: "Kyoichi's profile: name, role, bio, location, socials. For 'who is he / about / background'.",
 		inputSchema: z.object({}),
 		execute: async () => ({
 			name: profile.name,
@@ -30,46 +33,55 @@ export const tools = {
 	}),
 
 	listProducts: tool({
-		description:
-			'谷口が開発したプロダクト（iOS アプリ等）の一覧を取得する。「どんなアプリを作ってる？」「プロダクトを見せて」「開発中のものは？」などに使う。',
+		description: "Kyoichi's products (iOS apps etc). For 'what apps / products'. Optional status filter.",
 		inputSchema: z.object({
-			status: z
-				.enum(['production', 'development', 'archived'])
-				.optional()
-				.describe('公開状況で絞り込む（production=公開中, development=開発中）')
+			status: z.enum(['production', 'development', 'archived']).optional().describe('filter by status')
 		}),
-		execute: async ({ status }) =>
-			products.filter((p) => !status || p.status === status)
+		execute: async ({ status }) => products.filter((p) => !status || p.status === status)
 	}),
 
 	getProductDetail: tool({
-		description:
-			'特定のプロダクトの詳細（機能・使用技術・レーティング・プライバシー方針）を ID で取得する。まず listProducts で ID を確認してから使う。',
+		description: 'Full detail of one product by id (features, tech, rating, privacy). Call listProducts first for the id.',
 		inputSchema: z.object({
-			id: z.string().describe('listProducts で得たプロダクト ID（例: reading-memory）')
+			id: z.string().describe('product id from listProducts, e.g. reading-memory')
 		}),
 		execute: async ({ id }) => products.find((p) => p.id === id) ?? null
 	}),
 
 	listOSS: tool({
-		// No input args on purpose: Workers AI models mis-stream boolean tool args
-		// (first call errors, then retries), so we keep the schema empty and order
-		// featured projects first instead of exposing a filter flag.
-		description:
-			'谷口が公開している OSS プロジェクトの一覧を取得する。「OSS は？」「ライブラリを作ってる？」「GitHub で何を公開してる？」などに使う。',
+		description: "Kyoichi's open-source projects. For 'OSS / libraries / GitHub'.",
 		inputSchema: z.object({}),
 		execute: async () =>
 			[...ossProjects].sort((a, b) => Number(b.featured ?? false) - Number(a.featured ?? false))
 	}),
 
 	getContact: tool({
-		description:
-			'谷口への連絡方法（メール・SNS）を取得する。「連絡したい」「仕事を依頼したい」「コンタクトは？」などに使う。',
+		description: "How to reach Kyoichi (email, socials). For 'contact / hire / get in touch'.",
 		inputSchema: z.object({}),
 		execute: async () => ({
 			email: contact.email,
 			message: contact.message,
 			socialLinks: profile.socialLinks
 		})
+	}),
+
+	listWritings: tool({
+		description: "Kyoichi's latest tech blog posts from Zenn and note, live. For 'articles / blog / writing'. Optional source filter.",
+		inputSchema: z.object({
+			source: z.enum(['zenn', 'note', 'all']).optional().describe('which platform; default all')
+		}),
+		execute: async ({ source }) => getWritings(source ?? 'all')
+	}),
+
+	listReinArticles: tool({
+		description: "Latest articles from Rein, Kyoichi's cognitive-science media, live. For 'Rein / media articles'.",
+		inputSchema: z.object({}),
+		execute: async () => getReinArticles()
+	}),
+
+	listVideos: tool({
+		description: "Kyoichi's latest YouTube videos, live. For 'videos / YouTube'.",
+		inputSchema: z.object({}),
+		execute: async () => getVideos()
 	})
 };
