@@ -26,6 +26,10 @@ function messageStream(text: string): Response {
 // errors. Scout is the reliable free option here.)
 const MODEL = '@cf/meta/llama-4-scout-17b-16e-instruct';
 
+// Route Workers AI through this AI Gateway for caching (free repeated prompts),
+// usage analytics, and a $10/month spend limit that hard-stops at the cap.
+const AI_GATEWAY_ID = 'portfolio-ai';
+
 const SYSTEM = `You are the AI assistant on Kyoichi Taniguchi's portfolio, answering visitors' questions (Japanese or English) about him.
 
 Treat every message as a valid question about Kyoichi — never reply that the input is incomplete or ask the visitor to clarify.
@@ -62,7 +66,7 @@ export const POST: RequestHandler = async ({ request, platform }) => {
 
 	const { messages }: { messages: UIMessage[] } = await request.json();
 
-	const workersai = createWorkersAI({ binding: ai });
+	const workersai = createWorkersAI({ binding: ai, gateway: { id: AI_GATEWAY_ID } });
 
 	const result = streamText({
 		model: workersai(MODEL),
