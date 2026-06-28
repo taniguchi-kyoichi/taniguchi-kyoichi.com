@@ -18,8 +18,8 @@ export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
 		.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
 	const seo: SEO = {
-		title: `Writings | ${SITE_NAME}`,
-		description: `${SITE_NAME}が Zenn・note で執筆した技術記事一覧（${articles.length}件）`,
+		title: `技術記事・ブログ | ${SITE_NAME}`,
+		description: `${SITE_NAME}が Zenn・note に書いた iOS / Swift / AI の技術記事一覧（${articles.length}件）。`,
 		canonical: `${SITE_URL}/writings`,
 		ogType: 'website',
 		ogImage: DEFAULT_OG_IMAGE,

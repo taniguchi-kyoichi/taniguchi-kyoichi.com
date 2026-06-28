@@ -2,7 +2,7 @@ import type { PageServerLoad } from './$types';
 import { ossProjects } from '$lib/data/oss';
 import { error } from '@sveltejs/kit';
 import { profile } from '$lib/data/profile';
-import { DEFAULT_OG_IMAGE, DEFAULT_OG_IMAGE_SIZE, SITE_NAME, SITE_URL } from '$lib/seo';
+import { DEFAULT_OG_IMAGE, DEFAULT_OG_IMAGE_SIZE, SITE_URL } from '$lib/seo';
 import type { SEO } from '$lib/seo';
 
 async function fetchReadme(
@@ -39,8 +39,13 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
 
 	const readme = await fetchReadme(project.repository, fetch);
 
+	// Front-load the package name + its one-line purpose so the SERP title carries
+	// the keywords people actually search ("swift markdown", "swift router", …),
+	// not just "name | 谷口恭一". og:site_name still carries the branding.
+	const tagline = project.description.split('。')[0];
+
 	const seo: SEO = {
-		title: `${project.name} | ${SITE_NAME}`,
+		title: `${project.name} — ${tagline}`,
 		description: project.description,
 		canonical: `${SITE_URL}/oss/${project.id}`,
 		ogType: 'website',
