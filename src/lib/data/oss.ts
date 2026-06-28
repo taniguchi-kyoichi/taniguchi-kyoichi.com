@@ -414,6 +414,18 @@ export const ossProjects: OSSProject[] = [
     topics: ["units", "type-safe", "physics"],
     featured: false,
   },
+  {
+    id: "swift-ios-recorder",
+    name: "swift-ios-recorder",
+    description:
+      "iOS のオンデバイス・ランタイムレコーダー。画面・状態・ネットワーク・AI デバッグ情報をキャプチャし Mac/MCP/AI へストリームする",
+    kind: "swift-package",
+    category: "ユーティリティ",
+    repository: "https://github.com/no-problem-dev/swift-ios-recorder",
+    language: "Swift",
+    topics: ["ios", "debugging", "mcp", "recorder"],
+    featured: false,
+  },
 ];
 
 // 種別ごとの表示ラベル（カードのバッジに使う）
