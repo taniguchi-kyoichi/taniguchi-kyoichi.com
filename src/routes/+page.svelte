@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { profile, contact } from '$lib/data/profile';
-	import { products } from '$lib/data/products';
+	import { visibleProducts, buildingInPublic } from '$lib/data/products';
 	import { featuredOSS, ossProjects } from '$lib/data/oss';
 	import SocialIcon from '$lib/components/SocialIcon.svelte';
 	import ProductCard from '$lib/components/ProductCard.svelte';
@@ -12,6 +12,9 @@
 	import { isDebug } from '$lib/debug';
 
 	let { data } = $props();
+
+	// Rein は一時的に非表示（データ・ルート・記事取得は残す）。戻すときは true に。
+	const SHOW_REIN = false;
 
 	let askInput = $state('');
 
@@ -25,8 +28,6 @@
 		];
 		if (data.youtubePlaylist?.videos?.length) {
 			chips.push({ label: '▶ 最新の動画', q: '最新の YouTube 動画について教えて' });
-		} else if (data.reinArticles?.length) {
-			chips.push({ label: '📖 Rein の記事', q: 'Rein の最新記事を教えて' });
 		}
 		chips.push({ label: '🧩 OSS は？', q: 'OSS 活動について教えて' });
 		return chips;
@@ -285,7 +286,7 @@
 </style>
 
 <!-- Products Section -->
-{#if products.length > 0}
+{#if visibleProducts.length > 0}
 	<section id="products" class="bg-gray-50 py-12 md:py-20 dark:bg-gray-800/50">
 		<div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
 			<h2 class="mb-2 text-center text-xl font-bold text-gray-900 sm:text-2xl dark:text-white">
@@ -296,7 +297,27 @@
 			</p>
 
 			<div class="grid gap-4 sm:gap-6 md:grid-cols-2">
-				{#each products as product}
+				{#each visibleProducts as product}
+					<ProductCard {product} />
+				{/each}
+			</div>
+		</div>
+	</section>
+{/if}
+
+<!-- Building in Public Section -->
+{#if buildingInPublic.length > 0}
+	<section id="building" class="bg-white py-12 md:py-20 dark:bg-gray-900">
+		<div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+			<h2 class="mb-2 text-center text-xl font-bold text-gray-900 sm:text-2xl dark:text-white">
+				Building in Public
+			</h2>
+			<p class="mb-8 text-center text-sm text-gray-600 sm:mb-12 sm:text-base dark:text-gray-400">
+				いま開発中のプロダクト。つくっている過程を公開しています
+			</p>
+
+			<div class="grid gap-4 sm:gap-6 md:grid-cols-2">
+				{#each buildingInPublic as product}
 					<ProductCard {product} />
 				{/each}
 			</div>
@@ -439,8 +460,8 @@
 	</section>
 {/if}
 
-<!-- Rein Articles Section -->
-{#if data.reinArticles && data.reinArticles.length > 0}
+<!-- Rein Articles Section (一時的に非表示: SHOW_REIN) -->
+{#if SHOW_REIN && data.reinArticles && data.reinArticles.length > 0}
 	<section id="rein" class="bg-gray-50 py-12 md:py-20 dark:bg-gray-800/50">
 		<div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
 			<div class="mb-6 flex items-center gap-3 sm:mb-8">

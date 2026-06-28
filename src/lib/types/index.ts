@@ -71,6 +71,10 @@ export interface Product {
   screenshots?: string[];
   releaseDate?: string;
   featured?: boolean;
+  /** 一覧・ナビから一時的に隠す（データ・ルートは残す） */
+  hidden?: boolean;
+  /** build in public 中。専用セクションで紹介する */
+  buildInPublic?: boolean;
   version?: string;
   rating?: number;
   ratingCount?: number;

@@ -7,15 +7,16 @@ export async function GET() {
 	const staticPages = [
 		{ url: '', priority: '1.0', changefreq: 'weekly' },
 		{ url: '/writings', priority: '0.8', changefreq: 'daily' },
-		{ url: '/oss', priority: '0.8', changefreq: 'weekly' },
-		{ url: '/rein', priority: '0.8', changefreq: 'daily' }
+		{ url: '/oss', priority: '0.8', changefreq: 'weekly' }
 	];
 
-	const productPages = products.map((p) => ({
-		url: `/products/${p.id}`,
-		priority: '0.6',
-		changefreq: 'monthly'
-	}));
+	const productPages = products
+		.filter((p) => !p.hidden)
+		.map((p) => ({
+			url: `/products/${p.id}`,
+			priority: '0.6',
+			changefreq: 'monthly'
+		}));
 
 	const ossPages = ossProjects.map((p) => ({
 		url: `/oss/${p.id}`,

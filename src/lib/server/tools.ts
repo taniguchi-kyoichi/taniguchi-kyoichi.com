@@ -37,7 +37,8 @@ export const tools = {
 		inputSchema: z.object({
 			status: z.enum(['production', 'development', 'archived']).optional().describe('filter by status')
 		}),
-		execute: async ({ status }) => products.filter((p) => !status || p.status === status)
+		execute: async ({ status }) =>
+			products.filter((p) => !p.hidden && (!status || p.status === status))
 	}),
 
 	getProductDetail: tool({

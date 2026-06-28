@@ -148,14 +148,17 @@
 							YouTube
 						</a>
 					</li>
-					<li>
-						<a
-							href="/rein"
-							class="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-						>
-							Rein
-						</a>
-					</li>
+					<!-- Rein は一時的に非表示。戻すときは true に -->
+					{#if false}
+						<li>
+							<a
+								href="/rein"
+								class="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+							>
+								Rein
+							</a>
+						</li>
+					{/if}
 					<li>
 						<a
 							href="/#contact"
