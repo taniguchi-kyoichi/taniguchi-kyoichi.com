@@ -3,11 +3,13 @@
 	import type { OSSProject } from '$lib/types';
 	import { ossKindLabel } from '$lib/data/oss';
 	import SocialIcon from '$lib/components/SocialIcon.svelte';
+	import OSSCard from '$lib/components/OSSCard.svelte';
 
 	interface Props {
 		data: {
 			project: OSSProject;
 			readme: string | null;
+			related: OSSProject[];
 		};
 	}
 
@@ -125,6 +127,21 @@
 					READMEが見つかりませんでした。GitHubリポジトリで詳細をご確認ください。
 				</p>
 			</div>
+		{/if}
+
+		<!-- Related packages: same category. Cross-links sibling detail pages so each
+		     one accrues internal links, and helps visitors keep browsing. -->
+		{#if data.related.length > 0}
+			<section class="mt-12 border-t border-gray-200 pt-10 sm:mt-16 dark:border-gray-800">
+				<h2 class="mb-6 text-lg font-bold text-gray-900 sm:text-xl dark:text-white">
+					同じカテゴリの OSS — {data.project.category}
+				</h2>
+				<div class="grid gap-4 sm:gap-6 md:grid-cols-2">
+					{#each data.related as project}
+						<OSSCard {project} />
+					{/each}
+				</div>
+			</section>
 		{/if}
 	</div>
 </article>

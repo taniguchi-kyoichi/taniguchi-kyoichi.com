@@ -39,6 +39,13 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
 
 	const readme = await fetchReadme(project.repository, fetch);
 
+	// Sibling packages in the same category. Cross-linking detail pages weaves a
+	// dense internal-link mesh (each page goes from ~1 inbound link to 5–8),
+	// which both helps these pages rank and lets visitors discover related work.
+	const related = ossProjects.filter(
+		(p) => p.id !== project.id && p.category === project.category
+	);
+
 	// Front-load the package name + its one-line purpose so the SERP title carries
 	// the keywords people actually search ("swift markdown", "swift router", …),
 	// not just "name | 谷口恭一". og:site_name still carries the branding.
@@ -66,5 +73,5 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
 		}
 	};
 
-	return { project, readme, seo };
+	return { project, readme, related, seo };
 };
