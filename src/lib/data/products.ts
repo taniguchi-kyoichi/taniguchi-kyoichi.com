@@ -118,7 +118,8 @@ export const products: Product[] = [
 			web: 'https://nowmytask.com'
 		},
 		technologies: ['Swift', 'SwiftUI', 'Cloudflare Workers', 'Workers AI'],
-		thumbnail: '/now-my-task-icon.svg',
+		thumbnail: '/now-my-task-icon.png',
+		ogImage: '/now-my-task-icon.png',
 		buildInPublic: true,
 		price: '無料（プレミアム予定）',
 		category: '仕事効率化',
