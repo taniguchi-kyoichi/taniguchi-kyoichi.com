@@ -5,7 +5,7 @@ export const profile: Profile = {
 	nameEn: 'Kyoichi Taniguchi',
 	title: 'iOS Engineer',
 	bio: 'iOSエンジニア。Swift & SwiftUI を使ったネイティブiOSアプリ開発に情熱を注いでいます。モバイルアプリケーションへのAI統合技術も探求中。',
-	avatar: '/profile.jpg',
+	avatar: '/profile.webp',
 	location: '神奈川県横浜市',
 	socialLinks: [
 		{

@@ -64,7 +64,10 @@ export interface Product {
   platforms: Platform[];
   links: ProductLinks;
   technologies: string[];
+  /** 画面表示用サムネイル。WebP で小さく配信する */
   thumbnail?: string;
+  /** OG / SNS カード用画像。WebP 非対応のクライアント向けに raster(JPG/PNG) を指定する。未指定なら thumbnail にフォールバック */
+  ogImage?: string;
   screenshots?: string[];
   releaseDate?: string;
   featured?: boolean;

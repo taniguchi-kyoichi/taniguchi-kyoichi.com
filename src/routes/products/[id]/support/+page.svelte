@@ -53,6 +53,9 @@
 					<img
 						src={product.thumbnail}
 						alt={product.name}
+						width="320"
+						height="320"
+						loading="lazy"
 						class="h-16 w-16 rounded-2xl shadow-sm"
 					/>
 				{/if}

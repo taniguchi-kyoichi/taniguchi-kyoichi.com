@@ -27,6 +27,9 @@
 		<img
 			src={product.thumbnail}
 			alt={product.name}
+			width="320"
+			height="320"
+			loading="lazy"
 			class="h-14 w-14 shrink-0 rounded-xl object-cover shadow-sm"
 		/>
 	{/if}

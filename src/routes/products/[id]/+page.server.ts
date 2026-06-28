@@ -22,7 +22,9 @@ export const load: PageServerLoad = async ({ params }) => {
 		throw error(404, 'Product not found');
 	}
 
-	const ogImage = product.thumbnail ? absoluteUrl(product.thumbnail) : DEFAULT_OG_IMAGE;
+	// SNS カードは WebP 非対応クライアントを考慮し raster の ogImage を優先。なければ thumbnail にフォールバック
+	const socialImage = product.ogImage ?? product.thumbnail;
+	const ogImage = socialImage ? absoluteUrl(socialImage) : DEFAULT_OG_IMAGE;
 
 	const seo: SEO = {
 		title: `${product.name} | ${SITE_NAME}`,
@@ -31,8 +33,8 @@ export const load: PageServerLoad = async ({ params }) => {
 		ogType: 'website',
 		ogImage,
 		ogImageAlt: product.name,
-		ogImageWidth: product.thumbnail ? undefined : DEFAULT_OG_IMAGE_SIZE,
-		ogImageHeight: product.thumbnail ? undefined : DEFAULT_OG_IMAGE_SIZE,
+		ogImageWidth: socialImage ? undefined : DEFAULT_OG_IMAGE_SIZE,
+		ogImageHeight: socialImage ? undefined : DEFAULT_OG_IMAGE_SIZE,
 		twitterCard: 'summary',
 		jsonLd: {
 			'@context': 'https://schema.org',

@@ -54,6 +54,9 @@
 					<img
 						src={data.product.thumbnail}
 						alt={data.product.name}
+						width="320"
+						height="320"
+						fetchpriority="high"
 						class="h-32 w-32 shrink-0 rounded-[28px] shadow-xl sm:h-40 sm:w-40"
 					/>
 				{/if}

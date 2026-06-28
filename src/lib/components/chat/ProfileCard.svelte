@@ -25,6 +25,9 @@
 			<img
 				src={profile.avatar}
 				alt={profile.name}
+				width="256"
+				height="256"
+				loading="lazy"
 				class="h-16 w-16 rounded-full object-cover"
 			/>
 		{/if}

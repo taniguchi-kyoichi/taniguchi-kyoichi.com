@@ -444,7 +444,7 @@
 	<section id="rein" class="bg-gray-50 py-12 md:py-20 dark:bg-gray-800/50">
 		<div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
 			<div class="mb-6 flex items-center gap-3 sm:mb-8">
-				<img src="/rein-icon.png" alt="Rein" class="h-12 w-12 rounded-xl shadow-sm sm:h-14 sm:w-14" />
+				<img src="/rein-icon.webp" alt="Rein" width="320" height="320" loading="lazy" class="h-12 w-12 rounded-xl shadow-sm sm:h-14 sm:w-14" />
 				<div>
 					<h2 class="text-xl font-bold text-gray-900 sm:text-2xl dark:text-white">Rein</h2>
 					<p class="text-xs text-gray-600 sm:text-sm dark:text-gray-400">

@@ -40,6 +40,9 @@
 			<img
 				src={product.thumbnail}
 				alt={product.name}
+				width="320"
+				height="320"
+				loading="lazy"
 				class="h-20 w-20 shrink-0 rounded-2xl shadow-md transition-transform group-hover:scale-105 sm:h-24 sm:w-24"
 			/>
 		{/if}

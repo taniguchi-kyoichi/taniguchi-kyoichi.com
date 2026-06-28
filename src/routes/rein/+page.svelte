@@ -27,7 +27,7 @@
 		<!-- Header -->
 		<header class="mb-8 sm:mb-12">
 			<div class="mb-4 flex items-center gap-3">
-				<img src="/rein-icon.png" alt="Rein" class="h-14 w-14 rounded-xl shadow-sm sm:h-16 sm:w-16" />
+				<img src="/rein-icon.webp" alt="Rein" width="320" height="320" class="h-14 w-14 rounded-xl shadow-sm sm:h-16 sm:w-16" />
 				<div>
 					<h1 class="text-2xl font-bold text-gray-900 sm:text-3xl dark:text-white">Rein</h1>
 					<p class="text-sm text-gray-600 dark:text-gray-400">意志じゃなくて、仕組み。</p>

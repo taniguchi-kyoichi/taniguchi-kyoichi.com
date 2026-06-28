@@ -20,6 +20,8 @@
 			src={video.thumbnail}
 			alt={video.title}
 			loading="lazy"
+			width="1280"
+			height="720"
 			class="h-full w-full object-cover transition-transform group-hover:scale-105"
 		/>
 		<span
