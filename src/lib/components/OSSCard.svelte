@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { OSSProject } from '$lib/types';
+	import { ossKindLabel } from '$lib/data/oss';
 	import SocialIcon from './SocialIcon.svelte';
 
 	interface Props {
@@ -28,19 +29,26 @@
 	<div class="mb-2 flex items-center gap-2 sm:mb-3">
 		<SocialIcon platform="github" class="h-4 w-4 text-gray-700 sm:h-5 sm:w-5 dark:text-gray-300" />
 		<h3 class="text-base font-semibold text-gray-900 sm:text-lg dark:text-white">{project.name}</h3>
+		<span
+			class="ml-auto shrink-0 rounded-full border border-gray-200 bg-gray-50 px-2 py-0.5 text-[10px] font-medium text-gray-500 sm:text-xs dark:border-gray-700 dark:bg-gray-900 dark:text-gray-400"
+		>
+			{ossKindLabel[project.kind]}
+		</span>
 	</div>
 
 	<p class="mb-3 flex-grow text-sm text-gray-600 sm:mb-4 dark:text-gray-300">
 		{project.description}
 	</p>
 
-	<div class="mb-3 flex items-center gap-3 sm:mb-4">
+	<div class="mb-3 flex items-center gap-2 sm:mb-4">
 		<div class="flex items-center gap-1.5">
 			<span
 				class="h-2.5 w-2.5 rounded-full sm:h-3 sm:w-3 {languageColor[project.language] ?? 'bg-gray-400'}"
 			></span>
 			<span class="text-xs text-gray-600 sm:text-sm dark:text-gray-400">{project.language}</span>
 		</div>
+		<span class="text-gray-300 dark:text-gray-600">·</span>
+		<span class="text-xs text-gray-500 sm:text-sm dark:text-gray-400">{project.category}</span>
 	</div>
 
 	{#if project.topics && project.topics.length > 0}

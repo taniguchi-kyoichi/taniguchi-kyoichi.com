@@ -247,7 +247,7 @@
 				Open Source
 			</h2>
 			<p class="mb-8 text-center text-sm text-gray-600 sm:mb-12 sm:text-base dark:text-gray-400">
-				公開しているOSSプロジェクト
+				SwiftUI・LLM エージェント・通信基盤まで、再利用可能な Swift パッケージを軸に OSS を公開しています
 			</p>
 
 			<div class="grid gap-4 sm:gap-6 md:grid-cols-2">

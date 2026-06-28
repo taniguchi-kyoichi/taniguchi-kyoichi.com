@@ -1,18 +1,12 @@
 <script lang="ts">
 	import { marked } from 'marked';
+	import type { OSSProject } from '$lib/types';
+	import { ossKindLabel } from '$lib/data/oss';
 	import SocialIcon from '$lib/components/SocialIcon.svelte';
 
 	interface Props {
 		data: {
-			project: {
-				id: string;
-				name: string;
-				description: string;
-				repository: string;
-				language: string;
-				topics?: string[];
-				homepage?: string;
-			};
+			project: OSSProject;
 			readme: string | null;
 		};
 	}
@@ -49,6 +43,15 @@
 
 		<!-- Header -->
 		<header class="mb-8 sm:mb-12">
+			<div class="mb-3 flex flex-wrap items-center gap-2">
+				<span
+					class="rounded-full border border-gray-200 bg-gray-50 px-2.5 py-0.5 text-xs font-medium text-gray-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400"
+				>
+					{ossKindLabel[data.project.kind]}
+				</span>
+				<span class="text-xs text-gray-400 dark:text-gray-500">{data.project.category}</span>
+			</div>
+
 			<div class="mb-4 flex items-center gap-3">
 				<SocialIcon platform="github" class="h-8 w-8 text-gray-700 dark:text-gray-300" />
 				<h1 class="text-2xl font-bold text-gray-900 sm:text-3xl dark:text-white">
