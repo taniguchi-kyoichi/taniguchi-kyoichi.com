@@ -90,6 +90,18 @@ export const ossProjects: OSSProject[] = [
     topics: ["agent", "skills", "skill-md"],
     featured: false,
   },
+  {
+    id: "swift-agent-runtime",
+    name: "swift-agent-runtime",
+    description:
+      "A2A 前提のオーケストレータ＋ワーカー実行環境。専門ワーカーへの委譲・並列実行・ACP ゲートウェイをパッケージルートとして提供する Swift ランタイム",
+    kind: "swift-package",
+    category: "エージェント / プロトコル",
+    repository: "https://github.com/no-problem-dev/swift-agent-runtime",
+    language: "Swift",
+    topics: ["agent", "runtime", "a2a", "acp"],
+    featured: false,
+  },
   // LLM / AI
   {
     id: "swift-llm-client",
