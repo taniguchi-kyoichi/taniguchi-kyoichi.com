@@ -2,8 +2,15 @@ import type { PageServerLoad } from './$types';
 import { ossProjects } from '$lib/data/oss';
 import { DEFAULT_OG_IMAGE, DEFAULT_OG_IMAGE_SIZE, SITE_NAME, SITE_URL } from '$lib/seo';
 import type { SEO } from '$lib/seo';
+import { resolveDoccUrls } from '$lib/server/docc';
 
-export const load: PageServerLoad = () => {
+export const load: PageServerLoad = async ({ setHeaders }) => {
+	setHeaders({
+		'cache-control': 'public, max-age=3600, stale-while-revalidate=86400'
+	});
+
+	const docc = await resolveDoccUrls(ossProjects);
+
 	const seo: SEO = {
 		title: `Open Source | ${SITE_NAME}`,
 		description: `${SITE_NAME}が公開している OSS プロジェクト一覧（${ossProjects.length}件）`,
@@ -16,5 +23,5 @@ export const load: PageServerLoad = () => {
 		twitterCard: 'summary'
 	};
 
-	return { seo };
+	return { docc, seo };
 };

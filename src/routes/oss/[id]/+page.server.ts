@@ -4,6 +4,7 @@ import { error } from '@sveltejs/kit';
 import { profile } from '$lib/data/profile';
 import { DEFAULT_OG_IMAGE, DEFAULT_OG_IMAGE_SIZE, SITE_URL } from '$lib/seo';
 import type { SEO } from '$lib/seo';
+import { resolveDoccUrls } from '$lib/server/docc';
 
 async function fetchReadme(
 	repository: string,
@@ -37,14 +38,18 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
 		throw error(404, 'Project not found');
 	}
 
-	const readme = await fetchReadme(project.repository, fetch);
-
 	// Sibling packages in the same category. Cross-linking detail pages weaves a
 	// dense internal-link mesh (each page goes from ~1 inbound link to 5–8),
 	// which both helps these pages rank and lets visitors discover related work.
 	const related = ossProjects.filter(
 		(p) => p.id !== project.id && p.category === project.category
 	);
+
+	// README + DocC links (this package and its siblings) in one parallel batch.
+	const [readme, docc] = await Promise.all([
+		fetchReadme(project.repository, fetch),
+		resolveDoccUrls([project, ...related])
+	]);
 
 	// Front-load the package name + its one-line purpose so the SERP title carries
 	// the keywords people actually search ("swift markdown", "swift router", …),
@@ -73,5 +78,5 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
 		}
 	};
 
-	return { project, readme, related, seo };
+	return { project, readme, related, docc, seo };
 };

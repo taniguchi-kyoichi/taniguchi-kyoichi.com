@@ -10,10 +10,13 @@
 			project: OSSProject;
 			readme: string | null;
 			related: OSSProject[];
+			docc: Record<string, string | null>;
 		};
 	}
 
 	let { data }: Props = $props();
+
+	const doccUrl = $derived(data.docc[data.project.id]);
 
 	const languageColor: Record<string, string> = {
 		TypeScript: 'bg-blue-500',
@@ -99,6 +102,24 @@
 					<SocialIcon platform="github" class="h-5 w-5" />
 					View on GitHub
 				</a>
+				{#if doccUrl}
+					<a
+						href={doccUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+					>
+						<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+							/>
+						</svg>
+						Documentation
+					</a>
+				{/if}
 				{#if data.project.homepage}
 					<a
 						href={data.project.homepage}
@@ -138,7 +159,7 @@
 				</h2>
 				<div class="grid gap-4 sm:gap-6 md:grid-cols-2">
 					{#each data.related as project}
-						<OSSCard {project} />
+						<OSSCard {project} doccUrl={data.docc[project.id]} />
 					{/each}
 				</div>
 			</section>

@@ -317,7 +317,7 @@
 
 			<div class="grid gap-4 sm:gap-6 md:grid-cols-2">
 				{#each featuredOSS as project}
-					<OSSCard {project} />
+					<OSSCard {project} doccUrl={data.ossDocc[project.id]} />
 				{/each}
 			</div>
 

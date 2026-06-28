@@ -2,6 +2,8 @@ import type { PageServerLoad } from './$types';
 import { env } from '$env/dynamic/private';
 import { fetchArticlesFromRSS, fetchYouTubeChannel } from '$lib/utils/rss';
 import { cachedFetch } from '$lib/server/external';
+import { resolveDoccUrls } from '$lib/server/docc';
+import { featuredOSS } from '$lib/data/oss';
 import { profile } from '$lib/data/profile';
 import { DEFAULT_OG_IMAGE, DEFAULT_OG_IMAGE_SIZE, SITE_NAME, SITE_URL } from '$lib/seo';
 import type { SEO } from '$lib/seo';
@@ -22,10 +24,11 @@ export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
 		? fetchYouTubeChannel(YOUTUBE_CHANNEL_ID, env.YOUTUBE_API_KEY, MAX_VIDEOS_ON_HOME)
 		: Promise.resolve(null);
 
-	const [articlesArrays, youtubePlaylist, reinArticlesAll] = await Promise.all([
+	const [articlesArrays, youtubePlaylist, reinArticlesAll, ossDocc] = await Promise.all([
 		Promise.all(RSS_FEEDS.map((url) => fetchArticlesFromRSS(url, cachedFetch))),
 		youtubePromise,
-		fetchArticlesFromRSS(REIN_RSS, cachedFetch)
+		fetchArticlesFromRSS(REIN_RSS, cachedFetch),
+		resolveDoccUrls(featuredOSS)
 	]);
 
 	const articles = articlesArrays
@@ -64,5 +67,5 @@ export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
 		}
 	};
 
-	return { articles, youtubePlaylist, reinArticles, seo };
+	return { articles, youtubePlaylist, reinArticles, ossDocc, seo };
 };

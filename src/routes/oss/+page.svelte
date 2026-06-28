@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { ossProjects, ossByCategory } from '$lib/data/oss';
 	import OSSCard from '$lib/components/OSSCard.svelte';
+
+	let { data } = $props();
 </script>
 
 <section class="bg-white py-12 md:py-20 dark:bg-gray-900">
@@ -35,7 +37,7 @@
 					</div>
 					<div class="grid gap-4 sm:gap-6 md:grid-cols-2">
 						{#each group.projects as project}
-							<OSSCard {project} />
+							<OSSCard {project} doccUrl={data.docc[project.id]} />
 						{/each}
 					</div>
 				</div>
