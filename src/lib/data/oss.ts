@@ -67,18 +67,6 @@ export const ossProjects: OSSProject[] = [
     featured: false,
   },
   {
-    id: "swift-agent-sdk",
-    name: "swift-agent-sdk",
-    description:
-      "Claude Code CLI を Swift から扱う SDK。ワンショット問い合わせとマルチターンセッションを型安全な async/await で提供",
-    kind: "swift-package",
-    category: "エージェント / プロトコル",
-    repository: "https://github.com/no-problem-dev/swift-agent-sdk",
-    language: "Swift",
-    topics: ["claude-code", "agent", "sdk"],
-    featured: true,
-  },
-  {
     id: "swift-agent-skills",
     name: "swift-agent-skills",
     description:
