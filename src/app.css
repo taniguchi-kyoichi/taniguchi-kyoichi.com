@@ -2,7 +2,14 @@
 @plugin '@tailwindcss/typography';
 
 @theme {
-	--font-sans: 'Inter', 'Noto Sans JP', ui-sans-serif, system-ui, sans-serif;
+	/* Latin text renders with Inter (web font). Japanese resolves to the native
+	   system font on each OS — Hiragino on Apple, Yu Gothic / Meiryo on Windows,
+	   a locally-installed Noto Sans JP on Android/Linux — so no Japanese web font
+	   is ever downloaded. */
+	--font-sans:
+		'Inter', -apple-system, BlinkMacSystemFont, 'Hiragino Sans',
+		'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic', YuGothic, Meiryo,
+		system-ui, sans-serif;
 
 	/* Custom breakpoint for extra small screens */
 	--breakpoint-xs: 475px;

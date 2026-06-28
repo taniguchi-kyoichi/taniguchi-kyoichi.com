@@ -10,10 +10,22 @@
 		<link rel="manifest" href="%sveltekit.assets%/site.webmanifest" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<!-- LCP element: preload the hero avatar so it starts before hydration. -->
+		<link rel="preload" as="image" href="%sveltekit.assets%/profile.jpg" fetchpriority="high" />
+		<!-- Inter (Latin) only — Japanese uses the native system font stack (no download).
+		     Loaded non-render-blocking via the print-media swap so it never delays paint. -->
 		<link
-			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap"
 			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+			media="print"
+			onload="this.media='all'"
 		/>
+		<noscript>
+			<link
+				rel="stylesheet"
+				href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+			/>
+		</noscript>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
