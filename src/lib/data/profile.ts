@@ -28,6 +28,23 @@ export const profile: Profile = {
 			url: 'https://youtube.com/@taniguchi-kyoichi',
 			label: 'YouTube'
 		}
+	],
+	secondaryLinks: [
+		{
+			platform: 'twitter',
+			url: 'https://x.com/x_kyoichi',
+			label: 'x.com'
+		},
+		{
+			platform: 'wantedly',
+			url: 'https://www.wantedly.com/id/taniguchi_kyoichi',
+			label: 'Wantedly'
+		},
+		{
+			platform: 'linkedin',
+			url: 'https://www.linkedin.com/in/taniguchi-kyoichi/',
+			label: 'LinkedIn'
+		}
 	]
 };
 

@@ -175,6 +175,40 @@
 				{/each}
 			</div>
 
+			{#if profile.secondaryLinks?.length}
+				<div class="group mt-3 flex flex-col items-center">
+					<button
+						type="button"
+						class="inline-flex min-h-[32px] items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 focus:bg-gray-100 focus:text-gray-700 focus:outline-none dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200 dark:focus:bg-gray-800 dark:focus:text-gray-200"
+						aria-label="Show more links"
+					>
+						<span>More</span>
+						<svg class="h-3.5 w-3.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+							<path
+								fill-rule="evenodd"
+								d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+								clip-rule="evenodd"
+							/>
+						</svg>
+					</button>
+
+					<div class="secondary-link-menu flex flex-wrap justify-center gap-1.5">
+						{#each profile.secondaryLinks as link}
+							<a
+								href={link.url}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="inline-flex min-h-[32px] items-center gap-1.5 rounded-full border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-600 shadow-sm transition-colors hover:border-primary-300 hover:bg-primary-50 hover:text-primary-700 focus:border-primary-300 focus:bg-primary-50 focus:text-primary-700 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-primary-600 dark:hover:bg-gray-700 dark:hover:text-primary-400 dark:focus:border-primary-600 dark:focus:bg-gray-700 dark:focus:text-primary-400"
+								aria-label={link.label}
+							>
+								<SocialIcon platform={link.platform} class="h-3.5 w-3.5" />
+								<span>{link.label}</span>
+							</a>
+						{/each}
+					</div>
+				</div>
+			{/if}
+
 			<!-- AI ask box: primary way to explore this site -->
 			<div class="mt-8 w-full max-w-xl sm:mt-10">
 				<form onsubmit={askAI} class="ai-field relative">
@@ -218,6 +252,37 @@
 		</div>
 	</div>
 </section>
+
+<style>
+	.secondary-link-menu {
+		max-height: 0;
+		overflow: hidden;
+		padding-top: 0;
+		opacity: 0;
+		pointer-events: none;
+		transform: translateY(-4px);
+		transition:
+			max-height 180ms ease,
+			padding-top 180ms ease,
+			opacity 150ms ease,
+			transform 150ms ease;
+	}
+
+	.group:hover .secondary-link-menu,
+	.group:focus-within .secondary-link-menu {
+		max-height: 6rem;
+		padding-top: 0.5rem;
+		opacity: 1;
+		pointer-events: auto;
+		transform: translateY(0);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.secondary-link-menu {
+			transition: none;
+		}
+	}
+</style>
 
 <!-- Products Section -->
 {#if products.length > 0}

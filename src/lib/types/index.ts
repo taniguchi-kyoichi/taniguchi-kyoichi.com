@@ -4,6 +4,7 @@ export type SocialPlatform =
   | "note"
   | "twitter"
   | "linkedin"
+  | "wantedly"
   | "youtube"
   | "email"
   | "website";
@@ -22,6 +23,7 @@ export interface Profile {
   avatar?: string;
   location?: string;
   socialLinks: SocialLink[];
+  secondaryLinks?: SocialLink[];
 }
 
 export type ProductType = "app" | "web" | "service" | "library";
