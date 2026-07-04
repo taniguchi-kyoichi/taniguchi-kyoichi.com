@@ -5,7 +5,7 @@
   "compatibility_date": "2026-07-01",
   "compatibility_flags": ["nodejs_compat"],
   "d1_databases": [
-    { "binding": "DB", "database_name": "life-index", "database_id": "TODO-after-d1-create" }
+    { "binding": "DB", "database_name": "life-index", "database_id": "cc2716ad-ea90-4d67-896b-04cf804f8c9c" }
   ],
   "vectorize": [
     { "binding": "VX", "index_name": "life-index" }

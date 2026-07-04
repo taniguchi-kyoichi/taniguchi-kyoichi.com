@@ -16,6 +16,10 @@ export interface Env {
 }
 
 const app = new Hono<{ Bindings: Env }>()
+
+// 認証対象外の生存確認（/api/* ミドルウェアの外）。デプロイ疎通用。
+app.get('/health', (c) => c.json({ ok: true, service: 'cloud-hub-api' }))
+
 app.use('/api/*', cors())
 
 // origin JWT 検証（edge を迂回した直アクセスの backstop）。service binding 経由の in-account 呼び出しは
