@@ -31,3 +31,10 @@ export function selectScopedFiles(lifeRoot: string): string[] {
   }
   return out
 }
+
+/** scope 内の git 追跡 .html（自己完結 HTML 成果物）の相対パス一覧。frontmatter は無いので dir 一致のみ。 */
+export function selectScopedArtifacts(lifeRoot: string): string[] {
+  const tracked = execFileSync('git', ['-C', lifeRoot, 'ls-files', '*.html'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
+    .split('\n').filter(Boolean)
+  return tracked.filter((p) => SCOPE.includeDirs.some((d) => p.startsWith(d)))
+}

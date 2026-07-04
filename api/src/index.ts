@@ -117,6 +117,24 @@ app.get('/api/board', async (c) => {
   return c.json(brief)
 })
 
+// HTML 成果物ギャラリー: 一覧（メタのみ）と本文（text/html で iframe render 用）。
+app.get('/api/artifacts', async (c) => {
+  try {
+    const { results } = await c.env.DB.prepare(
+      `SELECT path, title, theme, created FROM artifact ORDER BY created DESC, path`,
+    ).all()
+    return c.json(results)
+  } catch { return c.json([]) } // ingest 前は artifact テーブル未作成 → 空
+})
+
+app.get('/api/artifact', async (c) => {
+  const path = c.req.query('path')
+  if (!path) return c.text('missing path', 400)
+  const row = await c.env.DB.prepare(`SELECT html FROM artifact WHERE path = ?`).bind(path).first<{ html: string }>()
+  if (!row) return c.text('not found', 404)
+  return c.body(row.html, 200, { 'Content-Type': 'text/html; charset=utf-8' })
+})
+
 app.get('/api/health', (c) => c.json({ ok: true, service: 'cloud-hub-api' }))
 
 export default app

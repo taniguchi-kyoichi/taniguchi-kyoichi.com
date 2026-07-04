@@ -27,7 +27,16 @@ CREATE TABLE IF NOT EXISTS chunk(
   path TEXT, heading TEXT, ord INTEGER, text TEXT
 );
 
+-- HTML 成果物（自己完結HTML）。埋め込みはしない = 丸ごとレンダリングする成果物。
+-- 意味検索はソース .md 側が担い、これは "見る" 対象。html 本文を D1 に保持（repo は private ＝ raw 配信不可）。
+CREATE TABLE IF NOT EXISTS artifact(
+  path TEXT PRIMARY KEY,   -- repo 相対 .html パス
+  title TEXT, theme TEXT, created TEXT,
+  content_hash TEXT, html TEXT
+);
+
 CREATE INDEX IF NOT EXISTS idx_doc_category ON doc(category);
 CREATE INDEX IF NOT EXISTS idx_doc_created ON doc(created);
 CREATE INDEX IF NOT EXISTS idx_heading_path ON heading(path);
 CREATE INDEX IF NOT EXISTS idx_chunk_path ON chunk(path);
+CREATE INDEX IF NOT EXISTS idx_artifact_created ON artifact(created);

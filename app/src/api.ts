@@ -49,3 +49,6 @@ export interface BoardBrief {
 // board が未設定/失敗でも Home を壊さない（null を返す）
 export const board = (): Promise<BoardBrief | null> =>
   fetch('/api/board').then((r) => (r.ok ? r.json() : null)).catch(() => null)
+
+export interface Artifact { path: string; title: string; theme: string; created: string }
+export const artifacts = (): Promise<Artifact[]> => j('/api/artifacts')

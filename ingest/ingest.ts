@@ -7,7 +7,7 @@ import { readFileSync } from 'node:fs'
 import { relative, resolve } from 'node:path'
 import { createHash } from 'node:crypto'
 import matter from 'gray-matter'
-import { selectScopedFiles } from './scope.js'
+import { selectScopedFiles, selectScopedArtifacts } from './scope.js'
 
 const TOKEN = process.env.CLOUDFLARE_API_TOKEN
 const ACCT = process.env.CLOUDFLARE_ACCOUNT_ID
@@ -173,6 +173,42 @@ async function ingestDoc(doc: Doc): Promise<number> {
   return doc.chunks.length
 }
 
+// ── HTML 成果物（artifact）— 埋め込みなし、丸ごと D1 に保持して hub が render する ──
+async function ensureArtifactTable(): Promise<void> {
+  await d1(`CREATE TABLE IF NOT EXISTS artifact(path TEXT PRIMARY KEY, title TEXT, theme TEXT, created TEXT, content_hash TEXT, html TEXT)`)
+}
+
+function parseArtifact(absPath: string): { path: string; title: string; theme: string; created: string; hash: string; html: string } {
+  const html = readFileSync(absPath, 'utf8')
+  const path = relative(LIFE_ROOT, absPath)
+  const t = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1] || html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1] || path.split('/').pop()!
+  const title = t.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()
+  const seg = path.split('/')
+  const theme = seg.length >= 2 ? seg[seg.length - 2] : seg[0]   // 直上ディレクトリ名
+  const created = path.match(/(\d{4}-\d{2}-\d{2})/)?.[1] ?? ''    // ファイル名の日付（無ければ空）
+  return { path, title, theme, created, hash: sha1(html), html }
+}
+
+async function ingestArtifacts(): Promise<{ added: number; changed: number; unchanged: number; removed: number }> {
+  await ensureArtifactTable()
+  const rels = selectScopedArtifacts(LIFE_ROOT)
+  const existing = new Map<string, string>()
+  for (const r of await d1Rows<{ path: string; content_hash: string }>(`SELECT path, content_hash FROM artifact`)) existing.set(r.path, r.content_hash)
+  const seen = new Set<string>()
+  let added = 0, changed = 0, unchanged = 0, removed = 0
+  for (const rel of rels) {
+    const a = parseArtifact(resolve(LIFE_ROOT, rel))
+    seen.add(a.path)
+    if (existing.get(a.path) === a.hash) { unchanged++; continue }
+    await d1(`DELETE FROM artifact WHERE path = ?`, [a.path])
+    await d1(`INSERT INTO artifact(path,title,theme,created,content_hash,html) VALUES(?,?,?,?,?,?)`, [a.path, a.title, a.theme, a.created, a.hash, a.html])
+    if (existing.has(a.path)) changed++; else added++
+    console.log(`  [artifact] ✓ ${a.path} — ${a.title}`)
+  }
+  for (const p of existing.keys()) if (!seen.has(p)) { await d1(`DELETE FROM artifact WHERE path = ?`, [p]); removed++ }
+  return { added, changed, unchanged, removed }
+}
+
 const args = process.argv.slice(2)
 const scopeMode = args.includes('--scope')
 // --scope: scope.ts の宣言的スコープ（コア知識）を対象に incremental。それ以外は明示ファイルパスを upsert。
@@ -207,3 +243,9 @@ if (scopeMode) {
   for (const p of existing.keys()) if (!seen.has(p)) { try { await deleteDocByPath(p); removed++ } catch (e) { console.error(`  ✗ delete ${p}: ${(e as Error).message}`) } }
 }
 console.log(`\ndone: +${added} added, ~${changed} changed, =${unchanged} unchanged, -${removed} removed, ${fail} failed, ${totalChunks} chunks embedded`)
+
+// HTML 成果物の索引（scope 実行時のみ・埋め込みなしで軽い）。
+if (scopeMode) {
+  const a = await ingestArtifacts()
+  console.log(`artifacts: +${a.added} added, ~${a.changed} changed, =${a.unchanged} unchanged, -${a.removed} removed`)
+}
