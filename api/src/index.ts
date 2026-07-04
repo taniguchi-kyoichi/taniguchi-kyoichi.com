@@ -3,7 +3,7 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import {
-  ftsSearch, semanticSearch, hybridSearch, related, embedQuery, requireAccess,
+  ftsSearch, semanticSearch, hybridSearch, related, buildHome, embedQuery, requireAccess,
   type D1Like, type VectorizeLike, type AiBinding,
 } from '@cloud-hub/shared'
 
@@ -93,6 +93,12 @@ app.get('/api/related', async (c) => {
   if (!path) return c.json([])
   const limit = num(c.req.query('limit'), 10)
   return c.json(await related(c.env.DB as unknown as D1Like, c.env.VX as unknown as VectorizeLike, path, { limit }))
+})
+
+app.get('/api/home', async (c) => {
+  const d = new Date()
+  const today = `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`
+  return c.json(await buildHome(c.env.DB as unknown as D1Like, today))
 })
 
 app.get('/api/health', (c) => c.json({ ok: true, service: 'cloud-hub-api' }))

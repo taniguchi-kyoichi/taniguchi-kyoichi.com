@@ -1,0 +1,20 @@
+{
+  // Life Mirror ダッシュボード（app.）。React SPA(静的) + /api/* を api へ service binding でプロキシ。
+  // app. サブドメインに Cloudflare Access(SSO・自分のメールのみ) を貼り、人間だけを通す。
+  "name": "cloud-hub-app",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-07-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
+  },
+  "services": [
+    { "binding": "API", "service": "cloud-hub-api" }
+  ],
+  "routes": [
+    { "pattern": "app.taniguchi-kyoichi.com", "custom_domain": true }
+  ],
+  "observability": { "enabled": true }
+}

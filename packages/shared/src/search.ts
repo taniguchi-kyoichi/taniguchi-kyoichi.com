@@ -3,10 +3,13 @@
 
 export interface SearchOpts { category?: string; dateFrom?: string; dateTo?: string; limit?: number }
 
+export interface D1Stmt {
+  bind(...args: unknown[]): D1Stmt
+  all<T = unknown>(): Promise<{ results: T[] }>
+  first<T = unknown>(): Promise<T | null>
+}
 export interface D1Like {
-  prepare(sql: string): {
-    bind(...args: unknown[]): { all<T = unknown>(): Promise<{ results: T[] }>; first<T = unknown>(): Promise<T | null> }
-  }
+  prepare(sql: string): D1Stmt
 }
 export interface VectorizeLike {
   query(vector: number[], opts: { topK: number; returnMetadata?: 'all' | 'indexed' | 'none' }): Promise<{

@@ -9,6 +9,7 @@
 site/              公開 SvelteKit（Cloudflare Workers Static Assets）— apex + www
 api/               KB API Worker（D1 FTS5 trigram + Vectorize bge-m3 + Workers AI・Access JWT gate）— api.
 mcp/               remote MCP Worker（McpAgent DO → api へ service binding）— mcp.
+app/               Life Mirror ダッシュボード（React SPA + /api/* を api へプロキシ）— app.（Access SSO）
 ingest/            life の .md → bge-m3 埋め込み → D1+Vectorize upsert（ローカル/CI・op run）
 packages/shared/   D1 schema.sql / bge-m3 embed / Vectorize検索+RRF / Access JWKS 検証
 ```
@@ -77,5 +78,7 @@ op run --env-file=.env.cloudflare.tpl -- bash -c 'cd mcp && wrangler deploy'
 - **H2 ingest 実施済み（コアスコープ）**: `ingest/scope.ts` の宣言的スコープ = **knowledge/ + content/ + .claude/contexts/**（archived / frontmatter `searchable:false` 除外）。141文書/1723チャンクを bge-m3 で D1+Vectorize へ投入。**FTS/semantic/hybrid が実データで本番動作確認済み**。高価な埋め込み層はコアに限定、範囲外は非semantic手段でカバーする方針。
 - **mcp = デプロイ済み・稼働中**（`mcp.taniguchi-kyoichi.com/mcp`）: McpAgent(DO) → service binding → api。tools=search/get/outline/list/facets（related は api の /api/related 実装後に追加）。**bearer ゲート**（`MCP_AUTH_SECRET`）。initialize/tools/list/tools/call を実データで確認済み。
   - **Claude から使う**: remote MCP に URL `https://mcp.taniguchi-kyoichi.com/mcp` + header `Authorization: Bearer <op://Infra-CICD/cloud-hub mcp MCP_AUTH_SECRET/credential>` を設定。
-- **次**: Zero Trust/Access（人間 SSO + Claude Managed OAuth + api/mcp の実 AUD、`life/projects/cloud-hub/zero-trust-runbook.md`）。/api/related（Vectorize getByIds→近傍）追加も。
+- **app（Life Mirror ダッシュボード）= デプロイ済み・稼働中**（`app.taniguchi-kyoichi.com`）: React SPA + `/api/*` を service binding で api へプロキシ（INTERNAL_SECRET）。**Cloudflare Access(Zero Trust Free) の `only-me` ポリシー（administrator@taniguchi-kyoichi.com のみ）で SSO ログイン保護**。未認証は Access ログインへ 302。`/api/home`（Life Mirror データ）は buildHome を D1 移植。
+  - Zero Trust: チーム `damp-lab-3e2a`（`damp-lab-3e2a.cloudflareaccess.com`）。ログイン方法は現状 One-time PIN（IdP 未接続）。Google Workspace SSO にしたい場合は IdP を追加。
+- **次（任意）**: Google Workspace IdP 接続（Google SSO ボタン化）／api/mcp に Access+実 AUD（現状は INTERNAL_SECRET/bearer で保護済み）／差分 ingest の GitHub Action 化。
 - 再 ingest: `LIFE_ROOT=/Users/kyoichi/life op run --env-file=.env.cloudflare.tpl -- bun ingest/ingest.ts --scope`（path 単位冪等）。
