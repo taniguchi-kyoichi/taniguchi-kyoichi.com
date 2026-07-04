@@ -11,6 +11,7 @@ export interface HomeData {
     lastReflection: string | null; daysSinceReflection: number | null
     lastPlanDate: string | null; lastPlanMit: string | null
   }
+  weekly: { last: string | null; daysSince: number | null; due: boolean }
   states: Record<string, number>
   recent: { path: string; title: string; created: string | null; category: string }[]
 }
@@ -83,6 +84,14 @@ export async function buildHome(db: D1Like, today: string): Promise<HomeData> {
     lastPlanDate, lastPlanMit,
   }
 
+  // 週次リズム: knowledge/weekly/ の最新 doc の経過日数。7日以上 or 未実施なら due（静かにナッジ）。
+  const wk = await db.prepare(
+    `SELECT created FROM doc WHERE path LIKE 'knowledge/weekly/%' AND created IS NOT NULL AND created != '' ORDER BY created DESC LIMIT 1`,
+  ).first<{ created: string }>()
+  const wkDate = wk ? toISODate(wk.created) : null
+  const wkDays = wkDate ? daysBetween(today, wkDate) : null
+  const weekly = { last: wkDate, daysSince: wkDays, due: wkDate == null || (wkDays != null && wkDays >= 7) }
+
   const stRows = (await db.prepare(`SELECT COALESCE(status,'') status, COUNT(*) n FROM doc GROUP BY status`).all<{ status: string; n: number }>()).results
   const states: Record<string, number> = {}
   for (const s of stRows) if (s.status) states[s.status] = s.n
@@ -91,5 +100,5 @@ export async function buildHome(db: D1Like, today: string): Promise<HomeData> {
     `SELECT path,title,created,category FROM doc WHERE created IS NOT NULL AND created != '' ORDER BY created DESC, path LIMIT 8`,
   ).all<HomeData['recent'][number]>()).results
 
-  return { today, intent, trajectory, loop, states, recent }
+  return { today, intent, trajectory, loop, weekly, states, recent }
 }

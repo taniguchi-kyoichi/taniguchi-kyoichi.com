@@ -29,6 +29,7 @@ export interface HomeData {
     lastReflection: string | null; daysSinceReflection: number | null
     lastPlanDate: string | null; lastPlanMit: string | null
   }
+  weekly: { last: string | null; daysSince: number | null; due: boolean }
   states: Record<string, number>
   recent: { path: string; title: string; created: string | null; category: string }[]
 }

@@ -19,6 +19,8 @@ export function Home({ data, board, onStatus, onOpen }: {
   onOpen: (path: string) => void
 }) {
   const { intent, trajectory, loop, states, recent } = data
+  // api が旧版でも落ちないよう既定を用意（weekly 未返却時は静かに非 due）
+  const weekly = data.weekly ?? { last: null, daysSince: null, due: false }
   const loopGap = loop.daysSinceDay
   const loopDrift = loopGap != null && loopGap >= 2
   const reflGap = loop.daysSinceReflection
@@ -65,6 +67,24 @@ export function Home({ data, board, onStatus, onOpen }: {
           </div>
         )}
         <div className="home-lbl">reflection: {ago(reflGap)}{reflGap != null && reflGap > 30 ? '（久しく途絶）' : ''}</div>
+      </section>
+
+      {/* 週次リズム */}
+      <section className={`home-card ${weekly.due ? 'warn' : ''}`}>
+        <h2>週次リズム</h2>
+        {weekly.last == null ? (
+          <p className="home-drift">
+            週次レビューは <b>未実施</b>。<br />
+            <span className="muted"><code>/weekly</code> で今週を1本 — 四半期の North Star と日々の MIT が繋がります。</span>
+          </p>
+        ) : weekly.due ? (
+          <p className="home-drift">
+            前回の週次から <b>{ago(weekly.daysSince)}</b>（{weekly.last}）。<br />
+            <span className="muted"><code>/weekly</code> で今週を締めるタイミング。</span>
+          </p>
+        ) : (
+          <p className="muted">週次は生きています（最後: {ago(weekly.daysSince)} · {weekly.last}）。</p>
+        )}
       </section>
 
       {/* 滞留 */}
