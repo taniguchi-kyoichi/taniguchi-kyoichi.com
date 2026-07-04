@@ -18,9 +18,6 @@
   "services": [
     { "binding": "API", "service": "cloud-hub-api" }
   ],
-  "vars": {
-    "ACCESS_TEAM_DOMAIN": "https://taniguchi.cloudflareaccess.com"
-  },
   "routes": [
     { "pattern": "mcp.taniguchi-kyoichi.com", "custom_domain": true }
   ],

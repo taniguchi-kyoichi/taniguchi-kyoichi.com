@@ -64,6 +64,7 @@ op run --env-file=.env.cloudflare.tpl -- bash -c 'cd mcp && wrangler deploy'
 - **secret（Worker にサーバ側保管・wrangler.jsonc には出ない。デプロイでは消えないが、Worker 再作成時は再投入）**:
   - `YOUTUBE_API_KEY`（ホーム/AI の YouTube 動画。無いと `getVideos` が空配列）。値は 1Password `op://Prod-Apps/kyoichi-portfolio YouTube Data API/credential`
   - **api の `INTERNAL_SECRET`**（service binding mcp→api の共有シークレット。`X-Internal-Service` ヘッダ照合値。無い/不一致は Access JWT が要る）。値は 1Password `op://Infra-CICD/cloud-hub api INTERNAL_SECRET/credential`。**api と mcp の両 Worker に同値を投入**。固定値バイパス(`:1`)は塞ぎ済み
+  - **mcp の `MCP_AUTH_SECRET`**（remote MCP エンドポイントの bearer ゲート。`Authorization: Bearer <値>`）。値は 1Password `op://Infra-CICD/cloud-hub mcp MCP_AUTH_SECRET/credential`。Access/Managed OAuth を張るまでの認証。mcp Worker secret に投入済み
   - 再設定: `cd site && op read "op://Prod-Apps/kyoichi-portfolio YouTube Data API/credential" | op run --env-file=../.env.cloudflare.tpl -- wrangler secret put YOUTUBE_API_KEY`
   - 確認: `cd site && op run --env-file=../.env.cloudflare.tpl -- wrangler secret list`
 - **`git pull` してから作業**（このリポは main が SSOT。古い checkout に restructure を積むと本番を巻き戻す）。
@@ -74,5 +75,7 @@ op run --env-file=.env.cloudflare.tpl -- bash -c 'cd mcp && wrangler deploy'
 - **api = デプロイ済み・稼働中**（`api.taniguchi-kyoichi.com`）: D1 `life-index`(id `cc2716ad-ea90-4d67-896b-04cf804f8c9c`, schema 適用・trigram 実 D1 で検証済) + Vectorize `life-index`(1024/cosine) + Workers AI 結線。`/health` 200・`/api/*` は Access JWT ゲート(401)・`X-Internal-Service:1` で service binding 経路(200)。**ACCESS_AUD は placeholder**（Zero Trust 設定で実 AUD を入れて再 deploy）。
 - **mcp = 未 deploy**（McpAgent + service binding scaffold）。
 - **H2 ingest 実施済み（コアスコープ）**: `ingest/scope.ts` の宣言的スコープ = **knowledge/ + content/ + .claude/contexts/**（archived / frontmatter `searchable:false` 除外）。141文書/1723チャンクを bge-m3 で D1+Vectorize へ投入。**FTS/semantic/hybrid が実データで本番動作確認済み**。高価な埋め込み層はコアに限定、範囲外は非semantic手段でカバーする方針。
-- **mcp = 未 deploy**（McpAgent + service binding）。次: mcp deploy（INTERNAL_SECRET を mcp にも投入）→ Zero Trust/Access（人間 SSO + Claude Managed OAuth + 実 AUD、`life/projects/cloud-hub/zero-trust-runbook.md`）。
+- **mcp = デプロイ済み・稼働中**（`mcp.taniguchi-kyoichi.com/mcp`）: McpAgent(DO) → service binding → api。tools=search/get/outline/list/facets（related は api の /api/related 実装後に追加）。**bearer ゲート**（`MCP_AUTH_SECRET`）。initialize/tools/list/tools/call を実データで確認済み。
+  - **Claude から使う**: remote MCP に URL `https://mcp.taniguchi-kyoichi.com/mcp` + header `Authorization: Bearer <op://Infra-CICD/cloud-hub mcp MCP_AUTH_SECRET/credential>` を設定。
+- **次**: Zero Trust/Access（人間 SSO + Claude Managed OAuth + api/mcp の実 AUD、`life/projects/cloud-hub/zero-trust-runbook.md`）。/api/related（Vectorize getByIds→近傍）追加も。
 - 再 ingest: `LIFE_ROOT=/Users/kyoichi/life op run --env-file=.env.cloudflare.tpl -- bun ingest/ingest.ts --scope`（path 単位冪等）。

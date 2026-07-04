@@ -1,7 +1,6 @@
-// remote MCP（read の関所）。ローカル tools/life-index/src/mcp.ts のツール面をそのまま写し、
+// remote MCP（read の関所）。ローカル tools/life-index/src/mcp.ts のツール面を写し、
 // 実体は api Worker へ service binding(RPC) でプロキシする。McpAgent = DO で session/hibernation を得る。
-//
-// ⚠️ scaffold: agents SDK(v0.6.x) の McpAgent マウント API は流動的。実装時に公式 examples で serve/mount 形を確認する。
+// agents v0.0.80: McpAgent(abstract server/init) + static serve(path,{binding:'MCP_OBJECT'})。
 import { McpAgent } from 'agents/mcp'
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { z } from 'zod'
@@ -9,7 +8,8 @@ import { z } from 'zod'
 export interface Env {
   API: Fetcher            // service binding → cloud-hub-api
   MCP_OBJECT: DurableObjectNamespace
-  ACCESS_TEAM_DOMAIN: string
+  INTERNAL_SECRET: string // api と共有。X-Internal-Service で service binding 経路を通す
+  MCP_AUTH_SECRET: string // mcp エンドポイント自体の bearer ゲート（Access/OAuth を張るまでの認証）
 }
 
 const json = (data: unknown) => ({ content: [{ type: 'text' as const, text: JSON.stringify(data, null, 2) }] })
@@ -17,13 +17,13 @@ const json = (data: unknown) => ({ content: [{ type: 'text' as const, text: JSON
 export class LifeIndexMCP extends McpAgent<Env> {
   server = new McpServer({ name: 'life-index', version: '0.1.0' })
 
-  // api への内部呼び出し（service binding）。X-Internal-Service で api 側の Access を迂回。
+  // api への内部呼び出し（service binding）。共有シークレットで api 側の Access ゲートを通す。
   private async api(path: string, params: Record<string, string | undefined> = {}) {
     const qs = new URLSearchParams(
       Object.entries(params).filter(([, v]) => v != null) as [string, string][],
     ).toString()
     const res = await this.env.API.fetch(`https://api.internal${path}${qs ? '?' + qs : ''}`, {
-      headers: { 'X-Internal-Service': '1' },
+      headers: { 'X-Internal-Service': this.env.INTERNAL_SECRET },
     })
     return res.json()
   }
@@ -42,10 +42,7 @@ export class LifeIndexMCP extends McpAgent<Env> {
       limit: a.limit?.toString(),
     })))
 
-    this.server.registerTool('related', {
-      title: '類似文書', description: '指定 path に意味的に近い文書を返す。',
-      inputSchema: { path: z.string(), limit: z.number().optional() },
-    }, async (a) => json(await this.api('/api/related', { path: a.path, limit: a.limit?.toString() })))
+    // TODO: related（類似文書）は api 側に /api/related（Vectorize getByIds→近傍）を実装後に追加。
 
     this.server.registerTool('get', {
       title: '文書取得', description: 'path 指定で frontmatter 解析済み本文を取得する。',
@@ -74,4 +71,17 @@ export class LifeIndexMCP extends McpAgent<Env> {
 }
 
 // Streamable HTTP でマウント。/mcp を remote MCP エンドポイントに。
-export default LifeIndexMCP.serve('/mcp')
+const mcpHandler = LifeIndexMCP.serve('/mcp')
+
+// bearer ゲート: MCP_AUTH_SECRET があれば Authorization: Bearer 一致を要求（KB を公開露出させない）。
+// 将来 mcp. に Access/Managed OAuth を張る場合はこのゲートを外し edge 認証に委ねる。
+export default {
+  async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    const sec = env.MCP_AUTH_SECRET
+    if (sec) {
+      const auth = req.headers.get('Authorization')
+      if (auth !== `Bearer ${sec}`) return new Response('unauthorized', { status: 401 })
+    }
+    return mcpHandler.fetch(req, env, ctx)
+  },
+}
