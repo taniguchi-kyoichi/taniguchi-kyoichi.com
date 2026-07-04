@@ -3,7 +3,7 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import {
-  ftsSearch, semanticSearch, hybridSearch, embedQuery, requireAccess,
+  ftsSearch, semanticSearch, hybridSearch, related, embedQuery, requireAccess,
   type D1Like, type VectorizeLike, type AiBinding,
 } from '@cloud-hub/shared'
 
@@ -86,6 +86,13 @@ app.get('/api/doc', async (c) => {
 app.get('/api/outline', async (c) => {
   const { results } = await c.env.DB.prepare(`SELECT level, text, ord FROM heading WHERE path = ? ORDER BY ord`).bind(c.req.query('path')!).all()
   return c.json(results)
+})
+
+app.get('/api/related', async (c) => {
+  const path = c.req.query('path')
+  if (!path) return c.json([])
+  const limit = num(c.req.query('limit'), 10)
+  return c.json(await related(c.env.DB as unknown as D1Like, c.env.VX as unknown as VectorizeLike, path, { limit }))
 })
 
 app.get('/api/health', (c) => c.json({ ok: true, service: 'cloud-hub-api' }))

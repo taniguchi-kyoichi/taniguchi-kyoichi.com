@@ -42,7 +42,10 @@ export class LifeIndexMCP extends McpAgent<Env> {
       limit: a.limit?.toString(),
     })))
 
-    // TODO: related（類似文書）は api 側に /api/related（Vectorize getByIds→近傍）を実装後に追加。
+    this.server.registerTool('related', {
+      title: '類似文書', description: '指定 path に意味的に近い文書を返す（手動リンク不在を埋める意味的近傍）。',
+      inputSchema: { path: z.string(), limit: z.number().optional() },
+    }, async (a) => json(await this.api('/api/related', { path: a.path, limit: a.limit?.toString() })))
 
     this.server.registerTool('get', {
       title: '文書取得', description: 'path 指定で frontmatter 解析済み本文を取得する。',

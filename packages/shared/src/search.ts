@@ -12,6 +12,7 @@ export interface VectorizeLike {
   query(vector: number[], opts: { topK: number; returnMetadata?: 'all' | 'indexed' | 'none' }): Promise<{
     matches: { id: string; score: number; metadata?: Record<string, unknown> }[]
   }>
+  getByIds(ids: string[]): Promise<{ id: string; values?: number[]; metadata?: Record<string, unknown> }[]>
 }
 
 /** 全文（trigram FTS・bm25 ランク）。ローカル ftsSearch と同一 SQL 形（? バインドに変換）。 */
@@ -59,6 +60,27 @@ async function enrich(db: D1Like, entries: { path: string; distance: number; hea
     out.push({ ...m, distance: e.distance, matchedHeading: e.heading })
   }
   return out.slice(0, opts.limit ?? 20)
+}
+
+/** 類似文書。対象 doc の先頭チャンクの埋め込みで KNN → 近傍 doc を集約（自身を除外）。ローカル db.ts.related と同義。 */
+export async function related(db: D1Like, vx: VectorizeLike, path: string, opts: { limit?: number } = {}) {
+  const { results } = await db.prepare(`SELECT id FROM chunk WHERE path = ? ORDER BY ord LIMIT 5`).bind(path).all<{ id: string }>()
+  const ids = results.map((r) => r.id)
+  if (!ids.length) return []
+  const vecs = await vx.getByIds(ids)
+  const agg = new Map<string, number>()
+  for (const v of vecs) {
+    if (!v.values) continue
+    const { matches } = await vx.query(v.values, { topK: 12, returnMetadata: 'all' })
+    for (const m of matches) {
+      const p = String(m.metadata?.path ?? '')
+      if (!p || p === path) continue
+      const distance = 1 - m.score
+      if (!agg.has(p) || distance < agg.get(p)!) agg.set(p, distance)
+    }
+  }
+  const entries = [...agg.entries()].map(([p, d]) => ({ path: p, distance: d })).sort((a, b) => a.distance - b.distance)
+  return enrich(db, entries, { limit: opts.limit ?? 10 })
 }
 
 /** ハイブリッド: FTS と意味検索を Reciprocal Rank Fusion で融合（ローカルと同一 K=60）。 */
