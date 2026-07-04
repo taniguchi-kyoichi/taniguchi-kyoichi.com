@@ -1,14 +1,18 @@
 # cloud-hub モノレポ化 + Cloudflare 移行 runbook
 
-このリポ（kyoichi-portfolio）を **taniguchi-kyoichi.com 個人ハブのモノレポ**へ拡張する実行手順。
+> ✅ **この移行は完了しました（2026-07-04）。この runbook は役目を終えた歴史記録です。**
+> 現在の運用（デプロイ/binding/secret/ingest）の SSOT は **`AGENTS.md`**、状態は `life/projects/cloud-hub/next-session.md`。
+> 全レイヤー（site/api/mcp/app）が本番稼働、141文書 ingest 済み。以下の Step は当時の実行手順として保持。
+
+このリポ（旧 kyoichi-portfolio → **taniguchi-kyoichi.com**）を **個人ハブのモノレポ**へ拡張した実行手順。
 設計 SSOT: `life/projects/cloud-hub/architecture.md`。認証: `life/projects/cloud-hub/zero-trust-runbook.md`。
 
-## 現状（2026-07-04 更新）
+## 現状（✅ 全完了・2026-07-04）
 
-- ✅ **モノレポ化完了**（bun workspace）: `site/`(公開・Workers Static Assets)・`api/`・`mcp/`・`packages/shared/`。
-- ✅ **site の Pages→Workers cutover 完了・稼働中**: apex `taniguchi-kyoichi.com` + `www` が Worker `cloud-hub-site` で **HTTP 200**。旧 Pages プロジェクト `kyoichi-portfolio` は削除済み。apex の Pages 残骸 CNAME は削除し Worker custom domain へ付替済み。
-- ✅ **デプロイ用 API トークンを 1Password 化**（下 Step 1）。DNS/custom domain 操作も自動化可能に。
-- ⏳ **api/mcp = 未 deploy**（scaffold 済・typecheck clean）。次は Step 3–6。
+- ✅ **モノレポ化完了**（bun workspace）: `site/`・`api/`・`mcp/`・`app/`・`ingest/`・`packages/shared/`。
+- ✅ **site の Pages→Workers cutover 完了・稼働中**: apex + `www` が Worker `cloud-hub-site` で HTTP 200。旧 Pages 削除済み。
+- ✅ **デプロイ用 API トークンを 1Password 化**（下 Step 1）。
+- ✅ **api/mcp/app = deploy 完了・稼働中**（`api.`/`mcp.`/`app.`）。ingest でコア141文書投入済み。詳細は `AGENTS.md`。
 
 ## Step 1 — Cloudflare 認証（トークン運用・確立済み）
 

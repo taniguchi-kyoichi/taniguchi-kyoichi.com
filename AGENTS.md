@@ -74,7 +74,6 @@ op run --env-file=.env.cloudflare.tpl -- bash -c 'cd mcp && wrangler deploy'
 
 - site = Pages→Workers 移行 **完了・稼働中**（apex+www が cloud-hub-site Worker で 200）。**最新 main + AskAI + YouTube 全て動作確認済み**。旧 Pages プロジェクト `kyoichi-portfolio` 削除済み。
 - **api = デプロイ済み・稼働中**（`api.taniguchi-kyoichi.com`）: D1 `life-index`(id `cc2716ad-ea90-4d67-896b-04cf804f8c9c`, schema 適用・trigram 実 D1 で検証済) + Vectorize `life-index`(1024/cosine) + Workers AI 結線。`/health` 200・`/api/*` は Access JWT ゲート(401)・`X-Internal-Service:1` で service binding 経路(200)。**ACCESS_AUD は placeholder**（Zero Trust 設定で実 AUD を入れて再 deploy）。
-- **mcp = 未 deploy**（McpAgent + service binding scaffold）。
 - **H2 ingest 実施済み（コアスコープ）**: `ingest/scope.ts` の宣言的スコープ = **knowledge/ + content/ + .claude/contexts/**（archived / frontmatter `searchable:false` 除外）。141文書/1723チャンクを bge-m3 で D1+Vectorize へ投入。**FTS/semantic/hybrid が実データで本番動作確認済み**。高価な埋め込み層はコアに限定、範囲外は非semantic手段でカバーする方針。
 - **mcp = デプロイ済み・稼働中**（`mcp.taniguchi-kyoichi.com/mcp`）: McpAgent(DO) → service binding → api。tools=search/get/outline/list/facets（related は api の /api/related 実装後に追加）。**bearer ゲート**（`MCP_AUTH_SECRET`）。initialize/tools/list/tools/call を実データで確認済み。
   - **Claude から使う**: remote MCP に URL `https://mcp.taniguchi-kyoichi.com/mcp` + header `Authorization: Bearer <op://Infra-CICD/cloud-hub mcp MCP_AUTH_SECRET/credential>` を設定。
