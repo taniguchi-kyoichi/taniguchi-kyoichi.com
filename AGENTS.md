@@ -73,4 +73,6 @@ op run --env-file=.env.cloudflare.tpl -- bash -c 'cd mcp && wrangler deploy'
 - site = Pages→Workers 移行 **完了・稼働中**（apex+www が cloud-hub-site Worker で 200）。**最新 main + AskAI + YouTube 全て動作確認済み**。旧 Pages プロジェクト `kyoichi-portfolio` 削除済み。
 - **api = デプロイ済み・稼働中**（`api.taniguchi-kyoichi.com`）: D1 `life-index`(id `cc2716ad-ea90-4d67-896b-04cf804f8c9c`, schema 適用・trigram 実 D1 で検証済) + Vectorize `life-index`(1024/cosine) + Workers AI 結線。`/health` 200・`/api/*` は Access JWT ゲート(401)・`X-Internal-Service:1` で service binding 経路(200)。**ACCESS_AUD は placeholder**（Zero Trust 設定で実 AUD を入れて再 deploy）。
 - **mcp = 未 deploy**（McpAgent + service binding scaffold）。
-- **データ未投入**（H2 ingest 未実施 → 検索は空）。次: mcp deploy → Zero Trust/Access 設定（`life/projects/cloud-hub/zero-trust-runbook.md`）→ H2 ingest（git .md → D1+Vectorize、bge-m3 埋め込み）。
+- **H2 ingest 実施済み（コアスコープ）**: `ingest/scope.ts` の宣言的スコープ = **knowledge/ + content/ + .claude/contexts/**（archived / frontmatter `searchable:false` 除外）。141文書/1723チャンクを bge-m3 で D1+Vectorize へ投入。**FTS/semantic/hybrid が実データで本番動作確認済み**。高価な埋め込み層はコアに限定、範囲外は非semantic手段でカバーする方針。
+- **mcp = 未 deploy**（McpAgent + service binding）。次: mcp deploy（INTERNAL_SECRET を mcp にも投入）→ Zero Trust/Access（人間 SSO + Claude Managed OAuth + 実 AUD、`life/projects/cloud-hub/zero-trust-runbook.md`）。
+- 再 ingest: `LIFE_ROOT=/Users/kyoichi/life op run --env-file=.env.cloudflare.tpl -- bun ingest/ingest.ts --scope`（path 単位冪等）。
