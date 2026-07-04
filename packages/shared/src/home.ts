@@ -12,6 +12,7 @@ export interface HomeData {
     lastPlanDate: string | null; lastPlanMit: string | null
   }
   weekly: { last: string | null; daysSince: number | null; due: boolean }
+  index: { lastIngest: string | null; daysSince: number | null }
   states: Record<string, number>
   recent: { path: string; title: string; created: string | null; category: string }[]
 }
@@ -100,5 +101,11 @@ export async function buildHome(db: D1Like, today: string): Promise<HomeData> {
     `SELECT path,title,created,category FROM doc WHERE created IS NOT NULL AND created != '' ORDER BY created DESC, path LIMIT 8`,
   ).all<HomeData['recent'][number]>()).results
 
-  return { today, intent, trajectory, loop, weekly, states, recent }
+  // 索引の鮮度（meta.last_ingest）。ingest 前は meta 未作成 → null で耐える。
+  let lastIngest: string | null = null
+  try { lastIngest = (await db.prepare(`SELECT value FROM meta WHERE key = 'last_ingest'`).first<{ value: string }>())?.value ?? null } catch { /* meta 未作成 */ }
+  const idxDate = lastIngest ? toISODate(lastIngest) : null
+  const index = { lastIngest, daysSince: idxDate ? daysBetween(today, idxDate) : null }
+
+  return { today, intent, trajectory, loop, weekly, index, states, recent }
 }

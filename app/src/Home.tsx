@@ -21,6 +21,7 @@ export function Home({ data, board, onStatus, onOpen }: {
   const { intent, trajectory, loop, states, recent } = data
   // api が旧版でも落ちないよう既定を用意（weekly 未返却時は静かに非 due）
   const weekly = data.weekly ?? { last: null, daysSince: null, due: false }
+  const index = data.index ?? { lastIngest: null, daysSince: null }
   const loopGap = loop.daysSinceDay
   const loopDrift = loopGap != null && loopGap >= 2
   const reflGap = loop.daysSinceReflection
@@ -29,7 +30,14 @@ export function Home({ data, board, onStatus, onOpen }: {
     <div className="home">
       <div className="home-hd">
         <div className="home-date">{fmtToday(data.today)}</div>
-        <div className="home-sub">Life Mirror — 今の状態を映す</div>
+        <div className="home-sub">
+          Life Mirror — 今の状態を映す
+          <span className="home-fresh">
+            board <b>ライブ</b>
+            {index.lastIngest && <> · 索引 最終 ingest <b>{ago(index.daysSince)}</b>（{index.lastIngest.slice(0, 10)}）</>}
+            {index.daysSince != null && index.daysSince >= 7 && <span className="stale"> · 索引が古い → ローカルで <code>bun ingest --scope</code></span>}
+          </span>
+        </div>
       </div>
 
       {/* 現在地 */}

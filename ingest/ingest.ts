@@ -249,3 +249,7 @@ if (scopeMode) {
   const a = await ingestArtifacts()
   console.log(`artifacts: +${a.added} added, ~${a.changed} changed, =${a.unchanged} unchanged, -${a.removed} removed`)
 }
+
+// 索引の鮮度を記録（hub が「索引: 最終 ingest」を映す）。
+await d1(`CREATE TABLE IF NOT EXISTS meta(key TEXT PRIMARY KEY, value TEXT)`)
+await d1(`INSERT INTO meta(key,value) VALUES('last_ingest',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value`, [new Date().toISOString()])

@@ -58,6 +58,20 @@ export function App() {
     related(path).then(setRel)
   }
 
+  const [refreshing, setRefreshing] = useState(false)
+  async function refresh() {
+    // ライブ view を再取得（board は GitHub からライブ / home・成果物 は最新 ingest を反映）。
+    setRefreshing(true)
+    try {
+      await Promise.all([
+        home().then(setHomeData),
+        board().then(setBoardData),
+        facets().then((f) => { setCats(f.byCategory); setStatuses(f.byStatus); setTotal(f.total) }),
+        artifacts().then(setArts),
+      ])
+    } finally { setRefreshing(false) }
+  }
+
   const bodyHtml = useMemo(() => (sel ? md.render(sel.body) : ''), [sel])
 
   return (
@@ -77,6 +91,9 @@ export function App() {
           <button className={tab === 'index' ? 'on' : ''} onClick={() => setTab('index')}>索引</button>
           <button className={tab === 'artifacts' ? 'on' : ''} onClick={() => setTab('artifacts')}>成果物{arts ? ` ${arts.length}` : ''}</button>
         </div>
+        <button className="refresh" onClick={refresh} disabled={refreshing} title="ライブ view を再取得（board はライブ）">
+          {refreshing ? '更新中…' : '🔄 更新'}
+        </button>
       </header>
 
       <div className="cols">

@@ -40,3 +40,6 @@ CREATE INDEX IF NOT EXISTS idx_doc_created ON doc(created);
 CREATE INDEX IF NOT EXISTS idx_heading_path ON heading(path);
 CREATE INDEX IF NOT EXISTS idx_chunk_path ON chunk(path);
 CREATE INDEX IF NOT EXISTS idx_artifact_created ON artifact(created);
+
+-- 索引メタ（last_ingest 等）。hub が「索引の鮮度」を映すため。
+CREATE TABLE IF NOT EXISTS meta(key TEXT PRIMARY KEY, value TEXT);

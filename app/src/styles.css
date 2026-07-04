@@ -105,6 +105,15 @@ a.board-row:hover { border-color: var(--accent); }
 .art-frame { flex: 1; width: 100%; height: 100%; border: none; background: #fff; }
 .art-stage .center { margin: auto; }
 
+/* 更新ボタン + 索引鮮度 */
+.refresh { padding: 6px 10px; border: 1px solid var(--line); background: var(--panel); color: var(--muted); border-radius: 6px; cursor: pointer; font-size: 12px; white-space: nowrap; }
+.refresh:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.refresh:disabled { opacity: .6; cursor: default; }
+.home-fresh { display: block; font-size: 11px; color: var(--muted); margin-top: 4px; }
+.home-fresh b { color: var(--fg); font-weight: 600; }
+.home-fresh .stale { color: #d9a400; }
+.home-fresh code { background: var(--panel); padding: 1px 5px; border-radius: 4px; font-size: .92em; }
+
 .results { list-style: none; margin: 0; padding: 0; overflow-y: auto; border-right: 1px solid var(--line); }
 .results li { padding: 10px 14px; border-bottom: 1px solid var(--line); cursor: pointer; }
 .results li:hover { background: var(--panel); }
