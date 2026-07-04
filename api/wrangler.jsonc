@@ -13,8 +13,11 @@
   "ai": { "binding": "AI" },
   "vars": {
     "ACCESS_TEAM_DOMAIN": "https://taniguchi.cloudflareaccess.com",
-    "ACCESS_AUD": "TODO-after-access-app-create"
+    "ACCESS_AUD": "TODO-after-access-app-create",
+    "BOARD_OWNER": "taniguchi-kyoichi",
+    "BOARD_NUMBER": "2"
   },
+  // GITHUB_TOKEN は Worker secret（board 読み取り）。`wrangler secret put GITHUB_TOKEN`。1Password: cloud-hub api GITHUB_TOKEN
   // Custom Domain（DNS/cert 自動）。Access app を api. に貼って認証。
   "routes": [
     { "pattern": "api.taniguchi-kyoichi.com", "custom_domain": true }

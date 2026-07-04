@@ -3,7 +3,7 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import {
-  ftsSearch, semanticSearch, hybridSearch, related, buildHome, embedQuery, requireAccess,
+  ftsSearch, semanticSearch, hybridSearch, related, buildHome, embedQuery, requireAccess, fetchBoard,
   type D1Like, type VectorizeLike, type AiBinding,
 } from '@cloud-hub/shared'
 
@@ -14,6 +14,9 @@ export interface Env {
   ACCESS_TEAM_DOMAIN: string
   ACCESS_AUD: string
   INTERNAL_SECRET: string  // service binding(mcp→api)用の共有シークレット。Worker secret + 1Password
+  GITHUB_TOKEN?: string    // board 読み取り用（Worker secret）。無ければ /api/board は 503
+  BOARD_OWNER: string
+  BOARD_NUMBER: string
 }
 
 const app = new Hono<{ Bindings: Env }>()
@@ -99,6 +102,19 @@ app.get('/api/home', async (c) => {
   const d = new Date()
   const today = `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`
   return c.json(await buildHome(c.env.DB as unknown as D1Like, today))
+})
+
+// board（GitHub Projects #2）の Brief。read のみ。トークンが無い環境では 503（Home は board 無しで描画継続）。
+app.get('/api/board', async (c) => {
+  const token = c.env.GITHUB_TOKEN
+  if (!token) return c.json({ error: 'board unavailable (no GITHUB_TOKEN)' }, 503)
+  const brief = await fetchBoard(token, {
+    login: c.env.BOARD_OWNER || 'taniguchi-kyoichi',
+    number: Number(c.env.BOARD_NUMBER || '2'),
+    now: new Date().toISOString(),
+  })
+  c.header('Cache-Control', 'private, max-age=60')
+  return c.json(brief)
 })
 
 app.get('/api/health', (c) => c.json({ ok: true, service: 'cloud-hub-api' }))

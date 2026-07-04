@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import MarkdownIt from 'markdown-it'
-import { search, facets, getDoc, related, list, home, type Hit, type Doc, type Mode, type HomeData } from './api'
+import { search, facets, getDoc, related, list, home, board, type Hit, type Doc, type Mode, type HomeData, type BoardBrief } from './api'
 import { Home } from './Home'
 
 const md = new MarkdownIt({ html: false, linkify: true, breaks: false })
@@ -18,10 +18,12 @@ export function App() {
   const [rel, setRel] = useState<Hit[]>([])
   const [loading, setLoading] = useState(false)
   const [homeData, setHomeData] = useState<HomeData | null>(null)
+  const [boardData, setBoardData] = useState<BoardBrief | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => { facets().then((f) => { setCats(f.byCategory); setStatuses(f.byStatus); setTotal(f.total) }) }, [])
   useEffect(() => { home().then(setHomeData) }, [])
+  useEffect(() => { board().then(setBoardData) }, [])
 
   // アイドル（無検索・無フィルタ・未選択）は Home（状態の鏡）を表示
   const showHome = !q.trim() && !category && !status && !sel && homeData != null
@@ -90,7 +92,7 @@ export function App() {
         </nav>
 
         {showHome ? (
-          <Home data={homeData!} onStatus={setStatus} onOpen={open} />
+          <Home data={homeData!} board={boardData} onStatus={setStatus} onOpen={open} />
         ) : (
         <>
         <ul className="results">

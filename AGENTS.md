@@ -66,6 +66,7 @@ op run --env-file=.env.cloudflare.tpl -- bash -c 'cd mcp && wrangler deploy'
   - `YOUTUBE_API_KEY`（ホーム/AI の YouTube 動画。無いと `getVideos` が空配列）。値は 1Password `op://Prod-Apps/kyoichi-portfolio YouTube Data API/credential`
   - **api の `INTERNAL_SECRET`**（service binding mcp→api の共有シークレット。`X-Internal-Service` ヘッダ照合値。無い/不一致は Access JWT が要る）。値は 1Password `op://Infra-CICD/cloud-hub api INTERNAL_SECRET/credential`。**api と mcp の両 Worker に同値を投入**。固定値バイパス(`:1`)は塞ぎ済み
   - **mcp の `MCP_AUTH_SECRET`**（remote MCP エンドポイントの bearer ゲート。`Authorization: Bearer <値>`）。値は 1Password `op://Infra-CICD/cloud-hub mcp MCP_AUTH_SECRET/credential`。Access/Managed OAuth を張るまでの認証。mcp Worker secret に投入済み
+  - **api の `GITHUB_TOKEN`**（board #2 の read。`/api/board` が GitHub Projects v2 を GraphQL で読む）。値は 1Password `op://Infra-CICD/cloud-hub api GITHUB_TOKEN/credential`（no-problem-kyoichi PAT・project+repo scope）。api Worker secret。**read 専用の流用**（将来 fine-grained read-only PAT へ差替可）。無いと `/api/board` は 503（Home は board 無しで描画継続）
   - 再設定: `cd site && op read "op://Prod-Apps/kyoichi-portfolio YouTube Data API/credential" | op run --env-file=../.env.cloudflare.tpl -- wrangler secret put YOUTUBE_API_KEY`
   - 確認: `cd site && op run --env-file=../.env.cloudflare.tpl -- wrangler secret list`
 - **`git pull` してから作業**（このリポは main が SSOT。古い checkout に restructure を積むと本番を巻き戻す）。

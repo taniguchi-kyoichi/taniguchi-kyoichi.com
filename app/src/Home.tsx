@@ -1,4 +1,4 @@
-import type { HomeData } from './api'
+import type { HomeData, BoardBrief, BoardItem } from './api'
 
 const WD = ['日', '月', '火', '水', '木', '金', '土']
 function fmtToday(s: string): string {
@@ -12,8 +12,9 @@ function ago(n: number | null): string {
   return `${n}日前`
 }
 
-export function Home({ data, onStatus, onOpen }: {
+export function Home({ data, board, onStatus, onOpen }: {
   data: HomeData
+  board: BoardBrief | null
   onStatus: (s: string) => void
   onOpen: (path: string) => void
 }) {
@@ -42,6 +43,9 @@ export function Home({ data, onStatus, onOpen }: {
           </div>
         )}
       </section>
+
+      {/* 今の進行（board #2） */}
+      {board && <BoardSection board={board} />}
 
       {/* 日次ループ */}
       <section className={`home-card ${loopDrift ? 'warn' : ''}`}>
@@ -94,5 +98,60 @@ export function Home({ data, onStatus, onOpen }: {
         </div>
       </section>
     </div>
+  )
+}
+
+function BoardRow({ it }: { it: BoardItem }) {
+  const meta = it.repo ? it.repo.replace(/^no-problem-dev\//, '').replace(/^taniguchi-kyoichi\//, '') : 'draft'
+  const inner = (
+    <>
+      <span className="t">{it.title}</span>
+      <span className="m">{meta}</span>
+    </>
+  )
+  return it.url
+    ? <a className="board-row" href={it.url} target="_blank" rel="noreferrer">{inner}</a>
+    : <div className="board-row draft">{inner}</div>
+}
+
+function BoardSection({ board }: { board: BoardBrief }) {
+  const { counts, wip, wipLimit } = board
+  const wipOver = wip > wipLimit
+  const warn = wipOver || board.stale.length > 0
+  return (
+    <section className={`home-card ${warn ? 'warn' : ''}`}>
+      <h2>今の進行 — board</h2>
+
+      <div className="board-lead">いま回している</div>
+      {board.inProgress.length ? (
+        <div className="board-list">{board.inProgress.map((it, i) => <BoardRow key={i} it={it} />)}</div>
+      ) : (
+        <p className="muted board-empty">アクティブに回しているものは無し。<span className="muted">次を <b>Ready</b> から引くタイミング。</span></p>
+      )}
+
+      {board.inReview.length > 0 && (
+        <>
+          <div className="board-lead">承認待ち<span className="muted"> — あなたの確認で Done に進む</span></div>
+          <div className="board-list">{board.inReview.map((it, i) => <BoardRow key={i} it={it} />)}</div>
+        </>
+      )}
+
+      {board.ready.length > 0 && (
+        <>
+          <div className="board-lead">次に引ける（Ready {counts.ready}）</div>
+          <div className="board-list">{board.ready.map((it, i) => <BoardRow key={i} it={it} />)}</div>
+        </>
+      )}
+
+      <div className="board-counts">
+        <span className={wipOver ? 'over' : ''}>WIP <b>{wip}/{wipLimit}</b></span>
+        <span>Ready <b>{counts.ready}</b></span>
+        <span>Blocked <b>{counts.blocked}</b></span>
+        <span>Backlog <b>{counts.backlog}</b></span>
+      </div>
+      {board.stale.length > 0 && (
+        <div className="home-lbl">⚠ CLOSED なのに列に残る <b>{board.stale.length}</b> 件 — board 掃除の合図</div>
+      )}
+    </section>
   )
 }
