@@ -24,6 +24,7 @@ Thumbs.db
 .env.*
 !.env.example
 !.env.tpl
+!.env.cloudflare.tpl   # op:// 参照のみ（秘密値なし）。AI/CI が op run で使う
 
 # Vite
 vite.config.js.timestamp-*

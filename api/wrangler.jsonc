@@ -1,0 +1,23 @@
+{
+  // KB API Worker — D1(FTS5 trigram) + Vectorize(bge-m3) + Workers AI。api. サブドメインで Access 認証配信。
+  "name": "cloud-hub-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-07-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "d1_databases": [
+    { "binding": "DB", "database_name": "life-index", "database_id": "TODO-after-d1-create" }
+  ],
+  "vectorize": [
+    { "binding": "VX", "index_name": "life-index" }
+  ],
+  "ai": { "binding": "AI" },
+  "vars": {
+    "ACCESS_TEAM_DOMAIN": "https://taniguchi.cloudflareaccess.com",
+    "ACCESS_AUD": "TODO-after-access-app-create"
+  },
+  // Custom Domain（DNS/cert 自動）。Access app を api. に貼って認証。
+  "routes": [
+    { "pattern": "api.taniguchi-kyoichi.com", "custom_domain": true }
+  ],
+  "observability": { "enabled": true }
+}

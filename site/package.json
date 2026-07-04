@@ -1,0 +1,38 @@
+{
+	"name": "@cloud-hub/site",
+	"private": true,
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"dev": "op run --env-file=.env.tpl -- vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"prepare": "svelte-kit sync || echo ''",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"deploy": "bun run build && wrangler deploy",
+		"cf:preview": "wrangler dev"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-cloudflare": "^7.2.6",
+		"@sveltejs/kit": "^2.49.1",
+		"@sveltejs/vite-plugin-svelte": "^6.2.1",
+		"@tailwindcss/vite": "^4.1.18",
+		"svelte": "^5.45.6",
+		"svelte-check": "^4.3.4",
+		"tailwindcss": "^4.1.18",
+		"typescript": "^5.9.3",
+		"vite": "^7.2.6",
+		"wrangler": "^4.105.0"
+	},
+	"dependencies": {
+		"@ai-sdk/svelte": "^4.0.213",
+		"@tailwindcss/typography": "^0.5.19",
+		"ai": "^6.0.213",
+		"dompurify": "^3.4.11",
+		"fast-xml-parser": "^5.3.3",
+		"marked": "^17.0.1",
+		"workers-ai-provider": "^3.2.1",
+		"zod": "^4"
+	}
+}

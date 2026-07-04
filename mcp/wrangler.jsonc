@@ -1,0 +1,28 @@
+{
+  // remote MCP Worker（read の関所）。McpAgent = Durable Object（session/hibernation）。
+  // api Worker へ service binding(RPC) で到達 = Access 迂回・トークン不要・最速。
+  // mcp. サブドメインに Access app + Managed OAuth を貼り、Claude が OAuth でログインする。
+  "name": "cloud-hub-mcp",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-07-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "durable_objects": {
+    "bindings": [
+      { "name": "MCP_OBJECT", "class_name": "LifeIndexMCP" }
+    ]
+  },
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["LifeIndexMCP"] }
+  ],
+  // service binding: mcp → api（in-account RPC）。api 側は X-Internal-Service で Access を通す。
+  "services": [
+    { "binding": "API", "service": "cloud-hub-api" }
+  ],
+  "vars": {
+    "ACCESS_TEAM_DOMAIN": "https://taniguchi.cloudflareaccess.com"
+  },
+  "routes": [
+    { "pattern": "mcp.taniguchi-kyoichi.com", "custom_domain": true }
+  ],
+  "observability": { "enabled": true }
+}

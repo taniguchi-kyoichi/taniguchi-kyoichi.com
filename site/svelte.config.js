@@ -5,13 +5,10 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 const config = {
 	preprocess: vitePreprocess(),
 	kit: {
+		// Workers Static Assets 出力。target は site/wrangler.jsonc の main+assets で決まる（Pages ではなく Workers）。
 		adapter: adapter({
 			platformProxy: {
 				remoteBindings: false
-			},
-			routes: {
-				include: ['/*'],
-				exclude: ['<all>']
 			}
 		})
 	}

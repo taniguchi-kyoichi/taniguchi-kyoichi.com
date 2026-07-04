@@ -42,11 +42,11 @@ preview:
 # Deployment
 deploy:
 	$(BUN) run build
-	$(BUNX) wrangler pages deploy .svelte-kit/cloudflare --commit-message "$$(git log -1 --pretty=%s)"
+	$(BUNX) wrangler deploy
 
 cf-preview:
 	$(BUN) run build
-	$(BUNX) wrangler pages dev .svelte-kit/cloudflare
+	$(BUNX) wrangler dev
 
 # Maintenance
 clean:
