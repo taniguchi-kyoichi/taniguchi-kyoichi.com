@@ -69,6 +69,29 @@ async function vectorizeUpsert(rows: { id: string; values: number[]; metadata: R
   })
 }
 
+/** D1 の SELECT。results を返す。 */
+async function d1Rows<T = any>(sql: string, params: unknown[] = []): Promise<T[]> {
+  const j = await cf(`/d1/database/${D1_ID}/query`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ sql, params }),
+  })
+  return (j.result?.[0]?.results ?? []) as T[]
+}
+
+/** Vectorize から id 群を削除。 */
+async function vectorizeDeleteByIds(ids: string[]): Promise<void> {
+  if (!ids.length) return
+  await cf(`/vectorize/v2/indexes/${VECTORIZE}/delete_by_ids`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ids }),
+  })
+}
+
+/** path の doc を D1 + Vectorize から完全削除。 */
+async function deleteDocByPath(path: string): Promise<void> {
+  const rows = await d1Rows<{ id: string }>(`SELECT id FROM chunk WHERE path = ?`, [path])
+  await vectorizeDeleteByIds(rows.map((r) => r.id))
+  for (const t of ['doc', 'doc_fts', 'heading', 'link', 'chunk']) await d1(`DELETE FROM ${t} WHERE ${t === 'link' ? 'src' : 'path'} = ?`, [path])
+}
+
 const sha1 = (s: string) => createHash('sha1').update(s).digest('hex')
 
 interface Heading { level: number; text: string; ord: number }
@@ -151,23 +174,36 @@ async function ingestDoc(doc: Doc): Promise<number> {
 }
 
 const args = process.argv.slice(2)
-// --scope: scope.ts の宣言的スコープ（コア知識）を対象に。それ以外は明示ファイルパス。
-const files = args.includes('--scope')
+const scopeMode = args.includes('--scope')
+// --scope: scope.ts の宣言的スコープ（コア知識）を対象に incremental。それ以外は明示ファイルパスを upsert。
+const files = scopeMode
   ? selectScopedFiles(LIFE_ROOT).map((rel) => resolve(LIFE_ROOT, rel))
   : args.filter((a) => !a.startsWith('--')).map((a) => resolve(a))
 if (!files.length) { console.error('usage: bun ingest/ingest.ts (--scope | <file.md ...>)'); process.exit(1) }
 
-console.log(`ingest: ${files.length} files${args.includes('--scope') ? ' (scope=core)' : ''}`)
-let totalChunks = 0, ok = 0, fail = 0
+// incremental: 既存 content_hash と比較し、本文不変はスキップ（埋め込みを回避）。
+const existing = new Map<string, string>()
+for (const r of await d1Rows<{ path: string; content_hash: string }>(`SELECT path, content_hash FROM doc`)) existing.set(r.path, r.content_hash)
+
+console.log(`ingest: ${files.length} files${scopeMode ? ' (scope=core, incremental)' : ''}, ${existing.size} already indexed`)
+const seen = new Set<string>()
+let added = 0, changed = 0, unchanged = 0, removed = 0, totalChunks = 0, fail = 0
 for (let i = 0; i < files.length; i++) {
   try {
     const doc = parseDoc(files[i])
+    seen.add(doc.path)
+    if (existing.get(doc.path) === sha1(doc.body)) { unchanged++; continue }
     const n = await ingestDoc(doc)
-    totalChunks += n; ok++
-    if (ok % 10 === 0 || files.length < 20) console.log(`  [${i + 1}/${files.length}] ✓ ${doc.path} (${n} chunks)`)
+    totalChunks += n
+    if (existing.has(doc.path)) changed++; else added++
+    if ((added + changed) % 10 === 0 || files.length < 20) console.log(`  [${i + 1}/${files.length}] ✓ ${doc.path} (${n} chunks)`)
   } catch (e) {
     fail++
     console.error(`  [${i + 1}/${files.length}] ✗ ${files[i]}: ${(e as Error).message}`)
   }
 }
-console.log(`\ndone: ${ok} ok, ${fail} failed, ${totalChunks} chunks embedded+upserted`)
+// scope 実行時のみ削除を反映（全体像が分かるため）。スコープ外/削除された path を index から除去。
+if (scopeMode) {
+  for (const p of existing.keys()) if (!seen.has(p)) { try { await deleteDocByPath(p); removed++ } catch (e) { console.error(`  ✗ delete ${p}: ${(e as Error).message}`) } }
+}
+console.log(`\ndone: +${added} added, ~${changed} changed, =${unchanged} unchanged, -${removed} removed, ${fail} failed, ${totalChunks} chunks embedded`)
