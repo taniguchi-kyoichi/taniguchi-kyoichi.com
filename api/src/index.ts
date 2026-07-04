@@ -13,6 +13,7 @@ export interface Env {
   AI: AiBinding
   ACCESS_TEAM_DOMAIN: string
   ACCESS_AUD: string
+  INTERNAL_SECRET: string  // service binding(mcp→api)用の共有シークレット。Worker secret + 1Password
 }
 
 const app = new Hono<{ Bindings: Env }>()
@@ -25,10 +26,18 @@ app.use('/api/*', cors())
 // origin JWT 検証（edge を迂回した直アクセスの backstop）。service binding 経由の in-account 呼び出しは
 // Access を通らないので、内部呼び出しは X-Internal ヘッダ+相互合意で通す設計（mcp からの service binding 用）。
 app.use('/api/*', async (c, next) => {
-  if (c.req.header('X-Internal-Service') === '1') return next() // service binding（in-account, Access 迂回）
+  // service binding（in-account, Access 迂回）は共有シークレット一致で通す。header の固定値ではない＝spoof 不可。
+  const sec = c.env.INTERNAL_SECRET
+  if (sec && c.req.header('X-Internal-Service') === sec) return next()
   const cfg = { teamDomain: c.env.ACCESS_TEAM_DOMAIN, aud: c.env.ACCESS_AUD }
   try { await requireAccess(c.req.raw, cfg) } catch (e) { return e as Response }
   return next()
+})
+
+// エラーは console へ（wrangler tail で観測）。レスポンスにスタックを漏らさない。
+app.onError((err, c) => {
+  console.error('api error:', (err as Error)?.stack || err)
+  return c.text('Internal Server Error', 500)
 })
 
 const num = (v: string | undefined, d?: number) => (v ? Number(v) : d)

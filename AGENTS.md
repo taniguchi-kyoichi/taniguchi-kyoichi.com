@@ -9,8 +9,19 @@
 site/              公開 SvelteKit（Cloudflare Workers Static Assets）— apex + www
 api/               KB API Worker（D1 FTS5 trigram + Vectorize bge-m3 + Workers AI・Access JWT gate）— api.
 mcp/               remote MCP Worker（McpAgent DO → api へ service binding）— mcp.
+ingest/            life の .md → bge-m3 埋め込み → D1+Vectorize upsert（ローカル/CI・op run）
 packages/shared/   D1 schema.sql / bge-m3 embed / Vectorize検索+RRF / Access JWKS 検証
 ```
+
+## ingest（H2・検索データ投入）
+
+```
+op run --env-file=.env.cloudflare.tpl -- bun ingest/ingest.ts <file.md ...>
+# 例: op run --env-file=.env.cloudflare.tpl -- bun ingest/ingest.ts /Users/kyoichi/life/projects/cloud-hub/*.md
+```
+- life の .md をパース→チャンク(見出し境界+1500字)→Workers AI `@cf/baai/bge-m3`(1024)で埋め込み→**D1**(doc/doc_fts/heading/chunk)+**Vectorize**(id=`sha1(path)#ord`, metadata{path,heading})へ upsert。path 単位で冪等(全消し→入れ直し)。
+- **公開 Worker に書込口は開けない**。ingest は全てトークン(REST)で直書き。
+- ⚠️ 全 ingest はチャンク毎の D1 REST + Workers AI neuron(無料 1万/日) を消費。大量時はバッチ最適化と日次分割を検討。
 
 - パッケージマネージャ = **bun**（root が workspace、単一 `bun.lock`）。`bun install` を root で。
 - 各 Worker は `wrangler`（v4）。`bun --filter @cloud-hub/<site|api|mcp> <dev|deploy|typecheck>`。
@@ -52,6 +63,7 @@ op run --env-file=.env.cloudflare.tpl -- bash -c 'cd mcp && wrangler deploy'
   - `compatibility_date=2025-04-01` + `nodejs_compat`（AI SDK の AsyncLocalStorage）
 - **secret（Worker にサーバ側保管・wrangler.jsonc には出ない。デプロイでは消えないが、Worker 再作成時は再投入）**:
   - `YOUTUBE_API_KEY`（ホーム/AI の YouTube 動画。無いと `getVideos` が空配列）。値は 1Password `op://Prod-Apps/kyoichi-portfolio YouTube Data API/credential`
+  - **api の `INTERNAL_SECRET`**（service binding mcp→api の共有シークレット。`X-Internal-Service` ヘッダ照合値。無い/不一致は Access JWT が要る）。値は 1Password `op://Infra-CICD/cloud-hub api INTERNAL_SECRET/credential`。**api と mcp の両 Worker に同値を投入**。固定値バイパス(`:1`)は塞ぎ済み
   - 再設定: `cd site && op read "op://Prod-Apps/kyoichi-portfolio YouTube Data API/credential" | op run --env-file=../.env.cloudflare.tpl -- wrangler secret put YOUTUBE_API_KEY`
   - 確認: `cd site && op run --env-file=../.env.cloudflare.tpl -- wrangler secret list`
 - **`git pull` してから作業**（このリポは main が SSOT。古い checkout に restructure を積むと本番を巻き戻す）。

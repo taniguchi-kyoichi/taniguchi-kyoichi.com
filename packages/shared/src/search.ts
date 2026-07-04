@@ -34,7 +34,8 @@ export async function ftsSearch(db: D1Like, q: string, opts: SearchOpts = {}) {
 
 /** 意味検索。Vectorize KNN（chunk 粒度）→ metadata.path で doc 単位に min 距離集約 → D1 でメタ enrich。 */
 export async function semanticSearch(db: D1Like, vx: VectorizeLike, qvec: number[], opts: SearchOpts = {}) {
-  const topK = (opts.limit ?? 20) * 6
+  // Vectorize v2: returnMetadata:'all' の topK 上限は 50。chunk→doc 集約に十分。
+  const topK = Math.min((opts.limit ?? 20) * 6, 50)
   const { matches } = await vx.query(qvec, { topK, returnMetadata: 'all' })
   const best = new Map<string, { path: string; heading?: string; distance: number }>()
   for (const m of matches) {

@@ -8,6 +8,7 @@
     "site",
     "api",
     "mcp",
+    "ingest",
     "packages/*"
   ],
   "scripts": {

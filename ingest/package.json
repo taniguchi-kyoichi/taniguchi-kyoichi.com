@@ -1,0 +1,10 @@
+{
+  "name": "@cloud-hub/ingest",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "life の .md を Workers AI(bge-m3) で埋め込み D1+Vectorize へ upsert する ingest。ローカル/CI 実行。トークンは op run で注入",
+  "dependencies": {
+    "gray-matter": "^4.0.3"
+  }
+}
