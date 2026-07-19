@@ -78,6 +78,96 @@ export const products: Product[] = [
 		}
 	},
 	{
+		id: 'gohobi-shukan',
+		name: 'ごほうび習慣',
+		description:
+			'習慣を達成するたびに「ごほうびのお金」が貯まり、好きなごほうびと交換できる。ゲーム感覚で自己管理が続く、シンプルな習慣化アプリ。',
+		fullDescription:
+			'ごほうび習慣は、続けたい習慣に「ごほうび」をひもづけて、ゲームのように楽しく続けるためのアプリです。運動・勉強・早寝など、達成したい習慣を決めて金額を設定すると、こなすたびに仮想のお金が貯まっていきます。\n\n貯まったお金は、自分へのごほうび（好きなものややりたいこと）と交換できます。続けるほど貯まる継続ボーナス、時間で貯めるタイマー、毎日のリマインダーで、モチベーションを自然に保てます。\n\n3年間の休眠を経て、クラウドバックアップ・多端末同期・デザインを刷新して近代化しました。データはこの端末に自動でバックアップされ、Pro（買い切り）で Google / Apple 連携すると、機種変更や再インストールをまたいで全端末に同期できます。',
+		type: 'app',
+		status: 'production',
+		platforms: ['ios'],
+		links: {
+			appStore: 'https://apps.apple.com/jp/app/id1671700938'
+		},
+		technologies: ['Flutter', 'Dart', 'Cloudflare Workers', 'D1', 'Firebase'],
+		thumbnail: '/gohobi-shukan-icon.png',
+		ogImage: '/gohobi-shukan-icon.png',
+		featured: true,
+		rating: 4.7,
+		ratingCount: 73,
+		price: '無料（買い切り Pro あり）',
+		category: 'ライフスタイル',
+		ageRating: '4+',
+		features: [
+			'習慣の達成でごほうびのお金が貯まる',
+			'貯めたお金を、自分へのごほうびと交換',
+			'続けるほど増える継続ボーナス',
+			'時間で貯めるタイマーと、毎日のリマインダー',
+			'この端末に自動バックアップ（無料）',
+			'Pro（買い切り）で広告削除＋Google / Apple 連携の多端末同期'
+		],
+		privacy: {
+			effectiveDate: '2026-07-19',
+			dataCollection: 'standard',
+			dataItems: [
+				'アカウント情報（匿名サインイン。任意で Google / Apple 連携）',
+				'習慣・ごほうび・達成／交換の記録（クラウドにバックアップ・同期）',
+				'購入状態（RevenueCat）',
+				'広告識別子（無料版の広告配信のみ）'
+			],
+			thirdPartyServices: [
+				'Firebase Authentication（匿名 + Google / Apple サインイン）',
+				'Cloudflare Workers / D1（データのバックアップ・同期）',
+				'RevenueCat（アプリ内課金の管理）',
+				'Google AdMob（広告配信・無料版のみ）'
+			],
+			analyticsUsed: false,
+			contactEmail: 'info@taniguchi-kyoichi.com'
+		},
+		support: {
+			contactEmail: 'info@taniguchi-kyoichi.com',
+			faq: [
+				{
+					question: 'どうやってお金が貯まりますか？',
+					answer:
+						'続けたい習慣を登録して1回あたりの金額を決めると、その習慣を達成するたびに仮想のお金が貯まります。続けるほど増える継続ボーナスもあります。'
+				},
+				{
+					question: '貯まったお金は現実のお金ですか？',
+					answer:
+						'いいえ。アプリ内だけの仮想のごほうびで、現金として引き出すことはできません。貯めたお金は、自分で決めた「ごほうび」と交換して、続けるモチベーションに使います。'
+				},
+				{
+					question: 'データはどこに保存されますか？',
+					answer:
+						'この端末に自動でバックアップされ、うっかり削除しても元に戻せます。機種変更や別の端末との共有は、Pro（買い切り）で Google または Apple にサインインすると有効になります。'
+				},
+				{
+					question: '機種変更してもデータを引き継げますか？',
+					answer:
+						'Pro を購入して設定画面から Google または Apple でサインインすると、データが全端末に同期され、機種変更や再インストールをまたいでも引き継げます。新しい端末では、同じ Apple ID で購入を復元してから同じアカウントでサインインしてください。'
+				},
+				{
+					question: 'Pro（買い切り）で何ができますか？',
+					answer:
+						'買い切りの Pro で、①すべての広告を非表示 ②Google / Apple 連携による多端末同期・データの永続化 が使えるようになります。サブスクではなく、一度の購入でずっと使えます。'
+				},
+				{
+					question: '購入を復元するには？',
+					answer:
+						'設定画面の「購入を復元」から復元できます。以前に Pro を購入した Apple ID でサインインした状態で実行してください。'
+				},
+				{
+					question: 'リマインダーの通知が届きません',
+					answer:
+						'iOS の「設定」→「通知」→「ごほうび習慣」で通知が許可されているかご確認ください。習慣ごとの通知は、習慣の編集画面から曜日と時刻を設定できます。'
+				}
+			],
+			systemRequirements: 'iOS 15.0以上'
+		}
+	},
+	{
 		id: 'rein',
 		name: 'Rein',
 		description:
