@@ -3,22 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "description": "taniguchi-kyoichi.com — 個人クラウドハブ モノレポ（公開 site + 認証付き api/mcp）。設計 SSOT: life/projects/cloud-hub/architecture.md",
+  "description": "taniguchi-kyoichi.com — 公開ポートフォリオ（site）",
   "workspaces": [
-    "site",
-    "api",
-    "mcp",
-    "app",
-    "ingest",
-    "packages/*"
+    "site"
   ],
   "scripts": {
     "dev:site": "bun --filter @cloud-hub/site dev",
-    "dev:api": "bun --filter @cloud-hub/api dev",
-    "dev:mcp": "bun --filter @cloud-hub/mcp dev",
-    "typecheck": "bun --filter '*' run typecheck",
-    "deploy:site": "bun --filter @cloud-hub/site deploy",
-    "deploy:api": "bun --filter @cloud-hub/api deploy",
-    "deploy:mcp": "bun --filter @cloud-hub/mcp deploy"
+    "deploy:site": "bun --filter @cloud-hub/site deploy"
   }
 }

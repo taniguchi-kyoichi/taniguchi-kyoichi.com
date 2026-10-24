@@ -1,40 +1,23 @@
-# AGENTS.md — taniguchi-kyoichi.com（cloud-hub モノレポ）
+# AGENTS.md — taniguchi-kyoichi.com
 
-**taniguchi-kyoichi.com 個人クラウドハブのモノレポ**。公開ポートフォリオ(site) + 認証付き知識基盤(api/mcp) を1ドメインに束ねる。
-移行手順: `MIGRATION.md`。
+**taniguchi-kyoichi.com の公開ポートフォリオ**（`site/`）。
+2026-10-24 に認証付きの知識基盤（api / mcp / app / ingest）を廃止し、Worker・D1・Vectorize とともに外した。
 
 ## 構成（bun workspace）
 
 ```
 site/              公開 SvelteKit（Cloudflare Workers Static Assets）— apex + www
-api/               KB API Worker（D1 FTS5 trigram + Vectorize bge-m3 + Workers AI・Access JWT gate）— api.
-mcp/               remote MCP Worker（McpAgent DO → api へ service binding）— mcp.
-app/               Life Mirror ダッシュボード（React SPA + /api/* を api へプロキシ）— app.（Access SSO）
-ingest/            life の .md → bge-m3 埋め込み → D1+Vectorize upsert（ローカル/CI・with-secrets）
-packages/shared/   D1 schema.sql / bge-m3 embed / Vectorize検索+RRF / Access JWKS 検証
 ```
-
-## ingest（H2・検索データ投入）
-
-```
-export CLOUDFLARE_ACCOUNT_ID=<下の Account ID> LIFE_ROOT=$HOME/life
-with-secrets --attended --profile infra bun ingest/ingest.ts <file.md ...>
-with-secrets --attended --profile infra bun ingest/ingest.ts --scope   # ingest/scope.ts の宣言範囲を丸ごと
-```
-- `CLOUDFLARE_ACCOUNT_ID` と `LIFE_ROOT` は ingest.ts が読むが profile には入っていないので自分で渡す。`LIFE_ROOT` の既定値 `/Users/kyoichi/life` はこの環境に存在しない
-- life の .md をパース→チャンク(見出し境界+1500字)→Workers AI `@cf/baai/bge-m3`(1024)で埋め込み→**D1**(doc/doc_fts/heading/chunk)+**Vectorize**(id=`sha1(path)#ord`, metadata{path,heading})へ upsert。path 単位で冪等(全消し→入れ直し)。
-- **公開 Worker に書込口は開けない**。ingest は全てトークン(REST)で直書き。
-- ⚠️ 全 ingest はチャンク毎の D1 REST + Workers AI neuron(無料 1万/日) を消費。大量時はバッチ最適化と日次分割を検討。
 
 - パッケージマネージャ = **bun**（root が workspace、単一 `bun.lock`）。`bun install` を root で。
-- 各 Worker は `wrangler`（v4）。`bun --filter @cloud-hub/<site|api|mcp> <dev|deploy|typecheck>`。
+- Worker は `wrangler`（v4）。`bun --filter @cloud-hub/site <dev|deploy|check>`。
 
 ## Cloudflare 認証（重要・AI エージェントはこれを使う）
 
 **秘密に触る経路は `with-secrets` だけ。** `op read` / `op run` を直接叩かない（値が会話ログに残る）。秘密値をコードや .env に直書きしない。
 
 - デプロイ/DNS: `with-secrets --attended --profile infra <cmd>`（`CLOUDFLARE_API_TOKEN` を注入。wrangler は自動で読む。インフラを触る鍵なので `--attended` 必須）
-- 必要なスコープ: Account = Workers Scripts / D1 / Vectorize / Workers AI（編集）、Zone(taniguchi-kyoichi.com) = DNS / Workers Routes（編集）
+- 必要なスコープ: Account = Workers Scripts / Workers AI / Workers KV（編集）、Zone(taniguchi-kyoichi.com) = DNS / Workers Routes（編集）
 - Account ID: `4a8cea39f86248f053042ff4bf02c172` / Zone ID: `d3c2a2c40f9e24c540d975b6ab2c89d9`
 - DNS/custom domain の API 操作（wrangler で不足時）はこのトークンで REST を叩く（例: custom domain 付替、レコード削除）。
 
@@ -61,17 +44,12 @@ lastmod / noindex / robots メタの重複 / h1 の数 / title 幅 / www リダ�
 PR をマージしても本番が 8/8 より前のまま止まっていた（ストックレーダーがホームに出ず、
 詳細ページだけ生きていた）。**マージした ≠ 本番がそうなっている。**
 
-api / mcp は自動化していない（Access の設定と絡む）ので、下記を手で叩く。
-
 ```
 # site（apex + www・Workers Static Assets）— 通常は CD に任せる
 with-secrets --attended --profile infra bash -c 'cd site && bun run build && wrangler deploy'
-# api / mcp
-with-secrets --attended --profile infra bash -c 'cd api && wrangler deploy'
-with-secrets --attended --profile infra bash -c 'cd mcp && wrangler deploy'
 ```
 
-デプロイ後は **incognito で apex 200 スモーク**（Access に apex を飲ませない）:
+デプロイ後は apex 200 スモーク:
 `curl -sI https://taniguchi-kyoichi.com | head -1  # → HTTP/2 200`
 
 ## ⚠️ site が依存する binding / secret（落とすと機能が消える）
@@ -89,9 +67,6 @@ with-secrets --attended --profile infra bash -c 'cd mcp && wrangler deploy'
   - 変更したら 7 問スモーク（人物 / アプリ / OSS / 連絡 / 記事 / 動画 / 英語）で **tool-output-available が出ること**まで確認する。`/api/chat` を curl すると生の SSE が読める
 - **secret（Worker にサーバ側保管・wrangler.jsonc には出ない。デプロイでは消えないが、Worker 再作成時は再投入）**:
   - `YOUTUBE_API_KEY`（site。ホーム/AI の YouTube 動画。無いと `getVideos` が空配列）
-  - **api の `INTERNAL_SECRET`**（service binding mcp→api の共有シークレット。`X-Internal-Service` ヘッダ照合値。無い/不一致は Access JWT が要る）。**api と mcp の両 Worker に同値を投入**。固定値バイパス(`:1`)は塞ぎ済み
-  - **mcp の `MCP_AUTH_SECRET`**（remote MCP エンドポイント `https://mcp.taniguchi-kyoichi.com/mcp` の bearer ゲート。`Authorization: Bearer <値>`）
-  - **api の `GITHUB_TOKEN`**（`/api/board` が GitHub Projects #2 を GraphQL で読むためのもの。無いと `/api/board` は 503 で、Home は board 無しで描画を続ける）。**board #2 は削除済み**なので、この経路と app の board 表示は読む先を失っている（コードは残っている）
-  - 再設定: これらの値は `with-secrets` のどの profile にも入っていない。人間が `cd <site|api|mcp> && with-secrets --attended --profile infra wrangler secret put <NAME>` を実行し、プロンプトに値を貼る
+  - 再設定: この値は `with-secrets` のどの profile にも入っていない。人間が `cd site && with-secrets --attended --profile infra wrangler secret put <NAME>` を実行し、プロンプトに値を貼る
   - 確認: `cd site && with-secrets --attended --profile infra wrangler secret list`
 - **`git pull` してから作業**（このリポは main が SSOT。古い checkout に restructure を積むと本番を巻き戻す）。
