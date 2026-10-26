@@ -54,6 +54,24 @@ export interface SupportConfig {
   systemRequirements?: string;
 }
 
+/** 自動更新サブスクリプションの条件。利用規約のページ（/products/<id>/terms）とサポートのページに出す */
+export interface SubscriptionConfig {
+  /** アプリの中の呼び名（例: プレミアム） */
+  planName: string;
+  /** 日本の価格。例: { period: '年額', price: '¥6,000' } */
+  prices: { period: string; price: string }[];
+  /** 無料で使える範囲 */
+  free: string[];
+  /** 有料で増えるもの */
+  paid: string[];
+  /** 購入を復元する手順（アプリの画面の言葉のまま） */
+  restoreSteps: string[];
+  /** 英語の手順。画面の言葉は日本語のまま「」で残す */
+  restoreStepsEn: string[];
+  /** 補足（旧プランの扱いなど） */
+  notes?: string[];
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -84,6 +102,7 @@ export interface Product {
   features?: string[];
   privacy?: PrivacyConfig;
   support?: SupportConfig;
+  subscription?: SubscriptionConfig;
 }
 
 // OSS の種別。今は Swift パッケージ中心だが、将来 Claude Code プラグインや

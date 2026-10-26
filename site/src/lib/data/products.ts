@@ -32,7 +32,7 @@ export const products: Product[] = [
 			'ダークモード対応'
 		],
 		privacy: {
-			effectiveDate: '2026-02-14',
+			effectiveDate: '2026-10-26',
 			dataCollection: 'standard',
 			dataItems: [
 				'アカウントを識別するための ID（Apple または Google のサインイン）',
@@ -45,9 +45,9 @@ export const products: Product[] = [
 			thirdPartyServices: [
 				'Google（サインイン、データの保管、利用状況の分析）',
 				'Apple（サインイン）',
-				'Anthropic（本についての AI との対話）',
+				'Google Gemini（本についての AI との対話と要約）',
 				'RevenueCat（サブスクリプションの管理）',
-				'書籍情報の検索サービス（本を探すときに、書名や ISBN を送ります）'
+				'楽天ブックス・Google ブックス（本を探すときに、書名や ISBN を送ります）'
 			],
 			analyticsUsed: true,
 			contactEmail: 'info@taniguchi-kyoichi.com'
@@ -70,100 +70,138 @@ export const products: Product[] = [
 				},
 				{
 					question: '無料プランとプレミアムプランの違いは？',
-					answer: '無料プランでは月10冊まで登録可能です。プレミアムプラン（月額¥600 / 年額¥6,000）では登録冊数無制限で全機能をご利用いただけます。'
+					answer:
+						'無料プランでは、本を合計10冊まで登録できます。バーコードでの登録・読書メモ・基本の統計も無料です。プレミアムプラン（年額¥6,000 / 月額¥600）では、本の登録が無制限になり、AI との対話メモ・AI の要約・詳しい統計が使えます。'
 				}
 			],
 			systemRequirements: 'iOS 17.0以上'
+		},
+		subscription: {
+			planName: 'プレミアムプラン',
+			prices: [
+				{ period: '年額', price: '¥6,000' },
+				{ period: '月額', price: '¥600' }
+			],
+			free: [
+				'本の登録（合計10冊まで）',
+				'バーコードでの登録',
+				'読書メモ・読書の記録・バッジ',
+				'基本の統計'
+			],
+			paid: ['本の登録が無制限', 'AI との対話メモ', 'AI の要約', '詳しい統計'],
+			restoreSteps: [
+				'「プロフィール」タブを開く',
+				'「プレミアムプランにアップグレード」を押す',
+				'「購入を復元」を押す'
+			],
+			restoreStepsEn: [
+				'Open the 「プロフィール」 (Profile) tab',
+				'Tap 「プレミアムプランにアップグレード」 (Upgrade to Premium Plan)',
+				'Tap 「購入を復元」 (Restore purchases)'
+			]
 		}
 	},
 	{
 		id: 'gohobi-shukan',
 		name: 'ごほうび習慣',
 		description:
-			'習慣を達成するたびに「ごほうびのお金」が貯まり、好きなごほうびと交換できる。ゲーム感覚で自己管理が続く、シンプルな習慣化アプリ。',
+			'毎日の習慣が、ごほうびを取りに行くゲームになる。達成するたびにほしいものが近づき、届いたら自分にごほうびを。広告のない習慣化アプリ。',
 		fullDescription:
-			'ごほうび習慣は、続けたい習慣に「ごほうび」をひもづけて、ゲームのように楽しく続けるためのアプリです。運動・勉強・早寝など、達成したい習慣を決めて金額を設定すると、こなすたびに仮想のお金が貯まっていきます。\n\n貯まったお金は、自分へのごほうび（好きなものややりたいこと）と交換できます。続けるほど貯まる継続ボーナス、時間で貯めるタイマー、毎日のリマインダーで、モチベーションを自然に保てます。\n\n3年間の休眠を経て、クラウドバックアップ・多端末同期・デザインを刷新して近代化しました。データはこの端末に自動でバックアップされ、Pro（買い切り）で Google / Apple 連携すると、機種変更や再インストールをまたいで全端末に同期できます。',
+			'ごほうび習慣は、続けたい習慣に「ごほうび」をひもづけて、ゲームのように続けるためのアプリです。運動・勉強・早起きなど、続けたいことを決めて1回ぶんの値を決めると、達成するたびにほしいものが近づいていきます。\n\nごほうびに届いたら、がんばった自分にごほうびを。数字はアプリの中だけのもので、現金やポイントにはなりません。続けるほど増える継続ボーナス、時間で進めるタイマー、毎日のリマインダーで、気持ちが切れにくくなります。\n\n3.0 で SwiftUI で作り直し、広告をやめました。記録はこの端末に保存され、匿名のアカウントでバックアップされます。Premium で Apple または Google とつなぐと、複数の端末で同期でき、機種を変えても続きから使えます。',
 		type: 'app',
 		status: 'production',
 		platforms: ['ios'],
 		links: {
 			appStore: 'https://apps.apple.com/jp/app/id1671700938'
 		},
-		technologies: ['Flutter', 'Dart', 'Cloudflare Workers', 'D1', 'Firebase'],
+		technologies: ['Swift', 'SwiftUI', 'Cloudflare Workers', 'D1', 'Firebase'],
 		thumbnail: '/gohobi-shukan-icon.png',
 		ogImage: '/gohobi-shukan-icon.png',
 		featured: true,
 		rating: 4.7,
 		ratingCount: 73,
-		price: '無料（買い切り Pro あり）',
+		price: '無料（Premium あり）',
 		category: 'ライフスタイル',
 		ageRating: '4+',
 		features: [
-			'習慣の達成でごほうびのお金が貯まる',
-			'貯めたお金を、自分へのごほうびと交換',
+			'習慣を達成するたびに、ごほうびが近づく',
+			'届いたら、自分へのごほうびと交換',
 			'続けるほど増える継続ボーナス',
-			'時間で貯めるタイマーと、毎日のリマインダー',
-			'この端末に自動バックアップ（無料）',
-			'Pro（買い切り）で広告削除＋Google / Apple 連携の多端末同期'
+			'時間で進めるタイマーと、毎日のリマインダー',
+			'広告なし',
+			'Premium で Apple / Google とつないで、複数の端末で同期'
 		],
 		privacy: {
-			effectiveDate: '2026-07-19',
+			effectiveDate: '2026-10-26',
 			dataCollection: 'standard',
 			dataItems: [
-				'アカウントを識別するための ID（端末内で作られる匿名の ID。任意で Apple または Google と連携）',
+				'アカウントを識別するための ID（端末内で作られる匿名の ID。Apple または Google とつないだときはその ID）',
+				'メールアドレス（Apple または Google とつないだときだけ。サインインのために使います）',
 				'登録した習慣・ごほうびと、達成や交換の記録',
-				'Pro の購入状態',
-				'広告識別子（無料版の広告配信にのみ使います）'
+				'購入の記録（Premium と、以前の「広告削除」）',
+				'アプリ内の操作の記録（改善のために使います。広告には使いません）'
 			],
 			thirdPartyServices: [
-				'Google（サインイン、無料版の広告配信）',
+				'Google（サインイン）',
 				'Apple（サインイン）',
-				'Cloudflare（データの保管とバックアップ）',
-				'RevenueCat（アプリ内課金の管理）'
+				'Cloudflare（記録のバックアップと同期、操作の記録の保管）',
+				'RevenueCat（サブスクリプションの管理、Apple の検索広告から入れたかどうかの計測）'
 			],
-			analyticsUsed: false,
+			analyticsUsed: true,
 			contactEmail: 'info@taniguchi-kyoichi.com'
 		},
 		support: {
 			contactEmail: 'info@taniguchi-kyoichi.com',
 			faq: [
 				{
-					question: 'どうやってお金が貯まりますか？',
+					question: 'ごほうびはどうやって近づきますか？',
 					answer:
-						'続けたい習慣を登録して1回あたりの金額を決めると、その習慣を達成するたびに仮想のお金が貯まります。続けるほど増える継続ボーナスもあります。'
+						'続けたい習慣を登録して1回ぶんの値を決めると、その習慣を達成するたびにごほうびが近づきます。続けるほど増える継続ボーナスもあります。'
 				},
 				{
-					question: '貯まったお金は現実のお金ですか？',
+					question: 'アプリの中の数字は現実のお金ですか？',
 					answer:
-						'いいえ。アプリ内だけの仮想のごほうびで、現金として引き出すことはできません。貯めたお金は、自分で決めた「ごほうび」と交換して、続けるモチベーションに使います。'
+						'いいえ。アプリの中だけの数字で、現金やポイントとして引き出すことはできません。自分で決めた「ごほうび」と交換して、続ける気持ちに使います。'
 				},
 				{
 					question: 'データはどこに保存されますか？',
 					answer:
-						'この端末に自動でバックアップされ、うっかり削除しても元に戻せます。機種変更や別の端末との共有は、Pro（買い切り）で Google または Apple にサインインすると有効になります。'
+						'この端末に保存され、匿名のアカウントでサーバーにもバックアップされます（無料）。Premium で Apple または Google とつなぐと、複数の端末で同期でき、機種を変えても引き継げます。'
 				},
 				{
 					question: '機種変更してもデータを引き継げますか？',
 					answer:
-						'Pro を購入して設定画面から Google または Apple でサインインすると、データが全端末に同期され、機種変更や再インストールをまたいでも引き継げます。新しい端末では、同じ Apple ID で購入を復元してから同じアカウントでサインインしてください。'
+						'Premium で Apple または Google とつないでおくと引き継げます。新しい端末では、同じ Apple ID で購入を復元してから、同じアカウントでつないでください。'
 				},
 				{
-					question: 'Pro（買い切り）で何ができますか？',
+					question: '以前に「広告削除」を買いました',
 					answer:
-						'買い切りの Pro で、①すべての広告を非表示 ②Google / Apple 連携による多端末同期・データの永続化 が使えるようになります。サブスクではなく、一度の購入でずっと使えます。'
-				},
-				{
-					question: '購入を復元するには？',
-					answer:
-						'設定画面の「購入を復元」から復元できます。以前に Pro を購入した Apple ID でサインインした状態で実行してください。'
+						'3.0 から広告は無くなりました。以前に「広告削除」を買った方は、そのまま Premium を使えます。新しい端末では「購入を復元」を押してください。'
 				},
 				{
 					question: 'リマインダーの通知が届きません',
 					answer:
-						'iOS の「設定」→「通知」→「ごほうび習慣」で通知が許可されているかご確認ください。習慣ごとの通知は、習慣の編集画面から曜日と時刻を設定できます。'
+						'iOS の「設定」→「通知」→「ごほうび習慣」で通知が許可されているか確かめてください。習慣ごとの通知は、習慣の編集画面から曜日と時刻を決められます。'
 				}
 			],
-			systemRequirements: 'iOS 15.0以上'
+			systemRequirements: 'iOS 17.0以上'
+		},
+		subscription: {
+			planName: 'Premium',
+			prices: [
+				{ period: '年額', price: '¥5,000' },
+				{ period: '月額', price: '¥1,000' }
+			],
+			free: [
+				'習慣とごほうびの登録（件数の上限なし）',
+				'達成と交換、継続ボーナス',
+				'タイマーとリマインダー',
+				'記録のクラウドバックアップ（匿名のアカウント）'
+			],
+			paid: ['Apple または Google とつないで、複数の端末で同期', '機種を変えても続きから使える'],
+			restoreSteps: ['「設定」を開く', '「購入を復元」を押す'],
+			restoreStepsEn: ['Open 「設定」 (Settings) in the app', 'Tap 「購入を復元」 (Restore purchases)'],
+			notes: ['以前に買い切りの「広告削除」を買った方は、追加の支払いなしで Premium を使えます']
 		}
 	},
 	{
@@ -243,6 +281,7 @@ export const products: Product[] = [
 			],
 			thirdPartyServices: [
 				'Google（サインイン、利用状況の分析、レシートと商品名の読み取り）',
+				'Yahoo! JAPAN（バーコードから商品名を調べるときに、バーコードの番号を送ります）',
 				'Apple（サインイン、通知の配信）',
 				'Cloudflare（データと写真の保管、世帯のあいだの同期）',
 				'RevenueCat（サブスクリプションの管理）'
@@ -275,6 +314,120 @@ export const products: Product[] = [
 				}
 			],
 			systemRequirements: 'iOS 26.0以上'
+		},
+		subscription: {
+			planName: 'ふたりプラン',
+			prices: [
+				{ period: '年額', price: '¥6,000' },
+				{ period: '月額', price: '¥800' }
+			],
+			free: [
+				'ひとりで使うときの全機能（日用品の登録・切れかけの予測・1タップの記録・通知・ウィジェット・買い物前のチェック・レシートの読み取り）'
+			],
+			paid: ['パートナーと1つの在庫リストを共有（世帯のどちらか1人が入れば、ふたりで使えます）'],
+			restoreSteps: ['「設定」を開く', '「アカウント」を押す', '「購入を復元」を押す'],
+			restoreStepsEn: [
+				'Open 「設定」 (Settings) in the app',
+				'Tap 「アカウント」 (Account)',
+				'Tap 「購入を復元」 (Restore purchases)'
+			]
+		}
+	},
+	{
+		id: 'jibun-bgm',
+		name: 'じぶんBGM',
+		description:
+			'作業中も、生活の中でも、BGMを流しっぱなしに。定番のBGMは押せばすぐ鳴り、曲と環境音を重ねて自分のBGMとして残せる iOS アプリ。',
+		fullDescription:
+			'じぶんBGMは、作業中も生活の中でも、音を止めずに流しておくためのアプリです。朝のカフェミュージックや夜のジャズバーなど、定番のBGMは押せばすぐに鳴ります。\n\n曲に雨や焚き火、波の音を重ねて音量を決めれば、自分のBGMとして保存できます。集中するときは長さを決めてタイマーを動かすと、音が鳴っている時間だけを数えます。\n\nロック画面とコントロールセンターから、アプリを開かずにいつものBGMを流せます。音はオフラインでも鳴り続けます。広告はなく、再生時間の制限もありません。',
+		type: 'app',
+		status: 'development',
+		platforms: ['ios'],
+		links: {},
+		technologies: ['Swift', 'SwiftUI', 'AVAudioEngine', 'Cloudflare Workers', 'D1', 'R2', 'Firebase'],
+		thumbnail: '/jibun-bgm-icon.png',
+		ogImage: '/jibun-bgm-icon.jpg',
+		featured: true,
+		price: '無料（プレミアムあり）',
+		category: 'ミュージック',
+		ageRating: '4+',
+		features: [
+			'定番のBGMは押せばすぐに鳴る',
+			'曲と環境音を重ねて、自分のBGMとして保存（プレミアム）',
+			'鳴っている時間だけを数える集中タイマー',
+			'ロック画面・コントロールセンター・ウィジェットから流せる',
+			'オフラインでも鳴り続ける',
+			'広告なし・再生時間の制限なし'
+		],
+		privacy: {
+			effectiveDate: '2026-10-26',
+			dataCollection: 'minimal',
+			dataItems: [
+				'匿名のインストール ID（初回の起動で端末が作るランダムな文字列。アカウントとは結び付けません）',
+				'アプリ内の操作の記録（例: 画面を開いた、BGMを流した。値は数の範囲や決まった語だけで、BGMの名前や入力した文字は送りません）',
+				'サインインしたときだけ: メールアドレスとユーザー ID（有料プランを別の端末に引き継ぐためだけに使います）',
+				'有料プランの期限（サインインしているときはユーザー ID と一緒に）',
+				'音の配信のときに、接続元の IP アドレス（配信と不正利用の防止のため）',
+				'作ったBGM・お気に入り・集中の記録・外観の設定は端末の中だけに保存し、送りません',
+				'広告 ID（IDFA）は読みません。広告もトラッキングもありません'
+			],
+			thirdPartyServices: [
+				'Google Firebase Authentication（Apple または Google でサインインしたときだけ）',
+				'Apple（サインイン）',
+				'Cloudflare（音とカタログの配信、操作の記録の保管）',
+				'RevenueCat（サブスクリプションの管理）'
+			],
+			analyticsUsed: true,
+			contactEmail: 'info@taniguchi-kyoichi.com'
+		},
+		support: {
+			contactEmail: 'info@taniguchi-kyoichi.com',
+			faq: [
+				{
+					question: '無料でどこまで使えますか？',
+					answer:
+						'定番のBGMを流す・タイマー・ロック画面とコントロールセンターからの操作は無料です。曲と環境音を重ねて自分のBGMを保存すること、ウィジェットで流すBGMを選ぶことはプレミアム（年額¥6,000 / 月額¥1,200）です。'
+				},
+				{
+					question: 'インターネットにつながっていなくても鳴りますか？',
+					answer: '一度読み込んだ音は、オフラインでも鳴り続けます。'
+				},
+				{
+					question: 'サインインは必要ですか？',
+					answer:
+						'いいえ。サインインしなくても、すべての機能を使えます。サインインが要るのは、有料プランを別の端末に引き継ぐときだけです。'
+				},
+				{
+					question: 'アカウントを削除するには？',
+					answer:
+						'BGMの一覧の右上の人のアイコンから「アカウント」を開き、「アカウントを削除」を押してください。端末に保存したBGMは端末に残ります。'
+				}
+			],
+			systemRequirements: 'iOS 27.0以上'
+		},
+		subscription: {
+			planName: 'プレミアム',
+			prices: [
+				{ period: '年額', price: '¥6,000' },
+				{ period: '月額', price: '¥1,200' }
+			],
+			free: [
+				'定番のBGMを流す',
+				'集中タイマー',
+				'ロック画面・コントロールセンターからの操作',
+				'広告なし・再生時間の制限なし'
+			],
+			paid: ['曲と環境音を重ねて、自分のBGMとして保存', 'ウィジェットで流すBGMを選ぶ'],
+			restoreSteps: [
+				'BGMの一覧の右上の人のアイコンから「アカウント」を開く',
+				'「プラン」の「有料にする」を押す',
+				'「購入を復元」を押す'
+			],
+			restoreStepsEn: [
+				'On the BGM list, tap the person icon at the top right to open 「アカウント」 (Account)',
+				'Under 「プラン」 (Plan), tap 「有料にする」 (Upgrade)',
+				'Tap 「購入を復元」 (Restore purchases)'
+			]
 		}
 	}
 ];

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Product } from '$lib/types';
+	import SubscriptionHelp from '$lib/components/SubscriptionHelp.svelte';
 
 	interface Props {
 		data: {
@@ -112,6 +113,10 @@
 					</section>
 				{/if}
 
+				{#if product.subscription}
+					<SubscriptionHelp subscription={product.subscription} appName={product.name} lang="ja" />
+				{/if}
+
 				<!-- Contact -->
 				<section>
 					<h2 class="mb-3 text-lg font-semibold text-gray-900 dark:text-white">
@@ -130,22 +135,66 @@
 					</p>
 				</section>
 
-				<!-- Privacy link -->
-				{#if product.privacy}
+				<!-- Privacy and terms -->
+				{#if product.privacy || product.subscription}
 					<section>
 						<h2 class="mb-3 text-lg font-semibold text-gray-900 dark:text-white">
-							プライバシーポリシー
+							プライバシーポリシーと利用規約
 						</h2>
-						<p>
-							<a
-								href="/products/{product.id}/privacy"
-								class="text-primary-600 hover:underline dark:text-primary-400"
-							>
-								プライバシーポリシーはこちら
-							</a>
-						</p>
+						<ul class="list-inside list-disc space-y-1">
+							{#if product.privacy}
+								<li>
+									<a
+										href="/products/{product.id}/privacy"
+										class="text-primary-600 hover:underline dark:text-primary-400"
+									>
+										プライバシーポリシー
+									</a>
+								</li>
+							{/if}
+							{#if product.subscription}
+								<li>
+									<a
+										href="/products/{product.id}/terms"
+										class="text-primary-600 hover:underline dark:text-primary-400"
+									>
+										利用規約とサブスクリプションの条件
+									</a>
+								</li>
+							{/if}
+						</ul>
 					</section>
 				{/if}
+
+				<!-- English -->
+				<section lang="en" class="space-y-4 border-t border-gray-200 pt-8 dark:border-gray-700">
+					<h2 class="text-lg font-semibold text-gray-900 dark:text-white">Support (English)</h2>
+					<p>
+						For bugs, questions, or requests, email
+						<a
+							href="mailto:{support.contactEmail}"
+							class="text-primary-600 hover:underline dark:text-primary-400">{support.contactEmail}</a
+						>. For a bug, please include your iPhone model, iOS version, and what happened.
+					</p>
+					{#if product.subscription}
+						<SubscriptionHelp subscription={product.subscription} appName={product.name} lang="en" />
+					{/if}
+					<p>
+						{#if product.privacy}
+							<a
+								href="/products/{product.id}/privacy"
+								class="text-primary-600 hover:underline dark:text-primary-400">Privacy Policy</a
+							>
+						{/if}
+						{#if product.subscription}
+							·
+							<a
+								href="/products/{product.id}/terms"
+								class="text-primary-600 hover:underline dark:text-primary-400">Terms of Use</a
+							>
+						{/if}
+					</p>
+				</section>
 			</div>
 		</div>
 	</div>
