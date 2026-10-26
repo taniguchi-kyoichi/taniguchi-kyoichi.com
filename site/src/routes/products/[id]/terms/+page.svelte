@@ -74,6 +74,11 @@
 						<li>期間が終わる24時間前までに解約しないと、同じ期間・同じ価格で自動で更新されます</li>
 						<li>更新の代金は、期間が終わる前の24時間以内に請求されます</li>
 						<li>解約と管理は iPhone の「設定」→ 自分の名前 →「サブスクリプション」から行えます</li>
+						{#if subscription.trial}
+							<li>
+								{subscription.trial.period}は、はじめの{subscription.trial.days}日間を無料で試せます。お試しの終わる24時間前までに解約しないと、そのまま有料の{subscription.trial.period}に切り替わり、代金が請求されます
+							</li>
+						{/if}
 					</ul>
 					{#if subscription.notes}
 						<ul class="mt-3 list-inside list-disc space-y-1">
@@ -109,6 +114,11 @@
 						Payment is charged to your Apple ID at confirmation of purchase. The subscription renews
 						automatically unless cancelled at least 24 hours before the end of the current period; renewal is
 						charged within 24 hours before the period ends.
+						{#if subscription.trial}
+							The {subscription.trial.periodEn} plan starts with a {subscription.trial.days}-day free trial. Unless you
+							cancel at least 24 hours before the trial ends, it converts to the paid {subscription.trial.periodEn}
+							plan and you are charged.
+						{/if}
 					</p>
 					<div class="mt-4 space-y-4">
 						<SubscriptionHelp {subscription} appName={product.name} lang="en" />

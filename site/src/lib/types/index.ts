@@ -70,6 +70,8 @@ export interface SubscriptionConfig {
   restoreStepsEn: string[];
   /** 補足（旧プランの扱いなど） */
   notes?: string[];
+  /** 無料のお試し。例: 年額に 7 日間 */
+  trial?: { days: number; period: string; periodEn: string };
 }
 
 export interface Product {
