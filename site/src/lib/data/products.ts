@@ -72,7 +72,7 @@ export const products: Product[] = [
 				{
 					question: '無料とメモリープラスの違いは？',
 					answer:
-						'無料では、本を合計10冊まで登録できます（バーコードでの登録もこの10冊に含まれます）。メモ、前のメモの振り返り（手紙）、本棚、「今日読んだ」の記録、バッジ、基本の統計も無料です。メモリープラス（年額¥6,000／月額¥600）では、本の登録が無制限になり、AIの聞き手（書いたメモにAIが問いを返します）、AI要約、詳しい統計（ジャンル・気分・読書カレンダー）、年間の振り返り（Year in Books）が使えます。年額は、はじめの1か月を無料で試せます。'
+						'無料では、本を合計10冊まで登録できます（バーコードでの登録もこの10冊に含まれます）。メモ、前のメモの振り返り（手紙）、本棚、「今日読んだ」の記録、バッジ、基本の統計も無料です。AIの聞き手も1回だけ無料で試せます。メモリープラス（年額¥6,000／月額¥600）では、本の登録が無制限になり、AIの聞き手（書いたメモにAIが問いを返します）、AI要約、詳しい統計（ジャンル・気分・読書カレンダー）、年間の振り返り（Year in Books）が使えます。年額は、はじめの1か月を無料で試せます。'
 				}
 			],
 			systemRequirements: 'iOS 17.0以上'
@@ -87,6 +87,7 @@ export const products: Product[] = [
 				'本の登録（合計10冊まで。バーコードでの登録もこの10冊に含まれます）',
 				'メモと、前のメモの振り返り（手紙）',
 				'本棚と、「今日読んだ」の記録',
+				'AIの聞き手を1回だけ試せる',
 				'バッジ',
 				'基本の統計'
 			],
@@ -149,7 +150,7 @@ export const products: Product[] = [
 					{
 						question: 'What is the difference between free and Memory Plus?',
 						answer:
-							'For free, you can add up to 10 books in total (books added by barcode count toward these 10). Notes, looking back on earlier notes (letters), My Library, "Read today" records, badges and basic statistics are also free. With Memory Plus (¥6,000 per year / ¥600 per month), you can add unlimited books and use the AI listener (AI answers your notes with questions), AI summary, detailed statistics (genres, moods and a reading calendar) and Year in Books. The annual plan is free to try for the first month.'
+							'For free, you can add up to 10 books in total (books added by barcode count toward these 10). Notes, looking back on earlier notes (letters), My Library, "Read today" records, badges and basic statistics are also free. You can also try the AI listener once for free. With Memory Plus (¥6,000 per year / ¥600 per month), you can add unlimited books and use the AI listener (AI answers your notes with questions), AI summary, detailed statistics (genres, moods and a reading calendar) and Year in Books. The annual plan is free to try for the first month.'
 					}
 				],
 				systemRequirements: 'iOS 17.0 or later'
@@ -164,6 +165,7 @@ export const products: Product[] = [
 					'Adding books (up to 10 books in total; books added by barcode count toward these 10)',
 					'Notes, and looking back on earlier notes (letters)',
 					'My Library, and "Read today" records',
+					'Try the AI listener once',
 					'Badges',
 					'Basic statistics'
 				],
