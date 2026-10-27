@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Product, ProductEnglish } from '$lib/types';
-	import { legalPath } from '$lib/legal';
+	import { legalPath, trialSpanEn } from '$lib/legal';
 	import SubscriptionHelp from '$lib/components/SubscriptionHelp.svelte';
 	import LegalNavEn from '$lib/components/LegalNavEn.svelte';
 
@@ -78,7 +78,7 @@
 						<li>You can cancel and manage the subscription in the iPhone Settings app → your name → Subscriptions</li>
 						{#if trial}
 							<li>
-								The {trial.periodEn} plan is free to try for the first {trial.days} days. Unless you cancel at least
+								The {trial.periodEn} plan is free to try for the first {trialSpanEn(trial)}. Unless you cancel at least
 								24 hours before the trial ends, it switches to the paid {trial.periodEn} plan and you are charged
 							</li>
 						{/if}

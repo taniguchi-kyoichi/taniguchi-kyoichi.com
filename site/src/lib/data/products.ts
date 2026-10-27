@@ -32,7 +32,7 @@ export const products: Product[] = [
 			'ダークモード対応'
 		],
 		privacy: {
-			effectiveDate: '2026-10-26',
+			effectiveDate: '2026-10-28',
 			dataCollection: 'standard',
 			dataItems: [
 				'アカウントを識別するための ID（Apple または Google のサインイン）',
@@ -43,11 +43,12 @@ export const products: Product[] = [
 				'アプリ内の操作の記録（改善のために使います）'
 			],
 			thirdPartyServices: [
-				'Google（サインイン、データの保管、利用状況の分析）',
+				'Cloudflare（本・記録・メモの保管、課金までの流れの計測。計測はアプリを入れた端末ごとのIDで行い、アカウントのIDは送りません）',
+				'Google（サインイン、利用状況の分析。1.4.0以前の版のアプリのデータの保管）',
 				'Apple（サインイン）',
-				'Google Gemini（本についての AI との対話と要約）',
+				'Google Gemini（本についてのAIとの対話と要約）',
 				'RevenueCat（サブスクリプションの管理）',
-				'楽天ブックス・Google ブックス（本を探すときに、書名や ISBN を送ります）'
+				'楽天ブックス・Googleブックス・openBD・Open Library（本を探すときに、書名やISBNを送ります）'
 			],
 			analyticsUsed: true,
 			contactEmail: 'info@taniguchi-kyoichi.com'
@@ -66,29 +67,37 @@ export const products: Product[] = [
 				},
 				{
 					question: 'アカウントやデータを削除するには？',
-					answer: 'プロフィール画面の「アカウント削除」からアカウントと全データを完全に削除できます。この操作は取り消せません。'
+					answer: 'プロフィール画面の「アカウントを削除」からアカウントと全データを完全に削除できます。この操作は取り消せません。'
 				},
 				{
-					question: '無料プランとプレミアムプランの違いは？',
+					question: '無料とメモリープラスの違いは？',
 					answer:
-						'無料プランでは、本を合計10冊まで登録できます。バーコードでの登録・読書メモ・基本の統計も無料です。プレミアムプラン（年額¥6,000 / 月額¥600）では、本の登録が無制限になり、AI との対話メモ・AI の要約・詳しい統計が使えます。'
+						'無料では、本を合計10冊まで登録できます（バーコードでの登録もこの10冊に含まれます）。メモ、前のメモの振り返り（手紙）、本棚、「今日読んだ」の記録、バッジ、基本の統計も無料です。メモリープラス（年額¥6,000／月額¥600）では、本の登録が無制限になり、AIの聞き手（書いたメモにAIが問いを返します）、AI要約、詳しい統計（ジャンル・気分・読書カレンダー）、年間の振り返り（Year in Books）が使えます。年額は、はじめの1か月を無料で試せます。'
 				}
 			],
 			systemRequirements: 'iOS 17.0以上'
 		},
 		subscription: {
-			planName: 'プレミアムプラン',
+			planName: 'メモリープラス',
 			prices: [
 				{ period: '年額', price: '¥6,000' },
 				{ period: '月額', price: '¥600' }
 			],
 			free: [
-				'本の登録（合計10冊まで）',
-				'バーコードでの登録',
-				'読書メモ・読書の記録・バッジ',
+				'本の登録（合計10冊まで。バーコードでの登録もこの10冊に含まれます）',
+				'メモと、前のメモの振り返り（手紙）',
+				'本棚と、「今日読んだ」の記録',
+				'バッジ',
 				'基本の統計'
 			],
-			paid: ['本の登録が無制限', 'AI との対話メモ', 'AI の要約', '詳しい統計'],
+			paid: [
+				'本の登録が無制限',
+				'AIの聞き手（書いたメモにAIが問いを返す・AI対話メモ）',
+				'AI要約',
+				'詳しい統計（ジャンル・気分・読書カレンダー）',
+				'年間の振り返り（Year in Books）'
+			],
+			trial: { length: 1, unit: 'month', period: '年額', periodEn: 'annual' },
 			restoreSteps: [
 				'「プロフィール」タブを開く',
 				'「プレミアムプランにアップグレード」を押す',
@@ -99,6 +108,74 @@ export const products: Product[] = [
 				'Tap 「プレミアムプランにアップグレード」 (Upgrade to Premium Plan)',
 				'Tap 「購入を復元」 (Restore purchases)'
 			]
+		},
+		en: {
+			name: 'Reading Memory',
+			privacy: {
+				dataItems: [
+					'An ID to identify your account (Sign in with Apple or Google)',
+					'The books you add, and your reading records',
+					'The notes you write about books, and your exchanges with AI',
+					'Nickname and profile photo',
+					'Reading goals, and records of reaching them',
+					'Records of actions in the app (used to improve the app)'
+				],
+				thirdPartyServices: [
+					'Cloudflare (storage of books, records and notes, and measuring the steps up to a purchase. This measurement uses an ID for each device the app is installed on, and does not send your account ID)',
+					'Google (sign-in and usage analytics; storage of data for app versions 1.4.0 and earlier)',
+					'Apple (sign-in)',
+					'Google Gemini (conversations with AI about books, and summaries)',
+					'RevenueCat (subscription management)',
+					'Rakuten Books, Google Books, openBD and Open Library (when you search for a book, the title or ISBN is sent)'
+				]
+			},
+			support: {
+				faq: [
+					{
+						question: 'Where is my data stored?',
+						answer:
+							'Your reading records and notes are stored on the server and synced between your devices. When you sign in, you can get back to the same records from any device.'
+					},
+					{
+						question: 'Do I need an internet connection?',
+						answer:
+							'Yes, you need an internet connection to sign in and to sync your data. While offline you can still view cached data, but adding or editing requires an online connection.'
+					},
+					{
+						question: 'How do I delete my account and data?',
+						answer:
+							'You can permanently delete your account and all of your data from "Delete Account" on the profile screen. This cannot be undone.'
+					},
+					{
+						question: 'What is the difference between free and Memory Plus?',
+						answer:
+							'For free, you can add up to 10 books in total (books added by barcode count toward these 10). Notes, looking back on earlier notes (letters), My Library, "Read today" records, badges and basic statistics are also free. With Memory Plus (¥6,000 per year / ¥600 per month), you can add unlimited books and use the AI listener (AI answers your notes with questions), AI summary, detailed statistics (genres, moods and a reading calendar) and Year in Books. The annual plan is free to try for the first month.'
+					}
+				],
+				systemRequirements: 'iOS 17.0 or later'
+			},
+			subscription: {
+				planName: 'Memory Plus',
+				prices: [
+					{ period: 'Yearly', price: '¥6,000' },
+					{ period: 'Monthly', price: '¥600' }
+				],
+				free: [
+					'Adding books (up to 10 books in total; books added by barcode count toward these 10)',
+					'Notes, and looking back on earlier notes (letters)',
+					'My Library, and "Read today" records',
+					'Badges',
+					'Basic statistics'
+				],
+				paid: [
+					'Unlimited books',
+					'AI listener (AI answers your notes with questions; AI chat notes)',
+					'AI summary',
+					'Detailed statistics (genres, moods and a reading calendar)',
+					'Year in Books'
+				],
+				restoreSteps: ['Open the "Profile" tab', 'Tap "Upgrade to Premium Plan"', 'Tap "Restore purchases"']
+			}
 		}
 	},
 	{
@@ -206,7 +283,7 @@ export const products: Product[] = [
 				'Apple または Google とつないで、複数の端末で同期',
 				'機種を変えても続きから使える'
 			],
-			trial: { days: 7, period: '年額', periodEn: 'annual' },
+			trial: { length: 7, unit: 'day', period: '年額', periodEn: 'annual' },
 			restoreSteps: ['「設定」を開く', '「購入を復元」を押す'],
 			restoreStepsEn: ['Open 「設定」 (Settings) in the app', 'Tap 「購入を復元」 (Restore purchases)'],
 			notes: [
@@ -421,7 +498,7 @@ export const products: Product[] = [
 				'レシートの読み取りが無制限',
 				'家族と1つの在庫リストを共有（世帯の誰か1人が入れば、世帯のみんなで使えます）'
 			],
-			trial: { days: 7, period: '年額', periodEn: 'annual' },
+			trial: { length: 7, unit: 'day', period: '年額', periodEn: 'annual' },
 			restoreSteps: ['「設定」を開く', '「アカウント」を押す', '「購入を復元」を押す'],
 			restoreStepsEn: [
 				'Open 「設定」 (Settings) in the app',
