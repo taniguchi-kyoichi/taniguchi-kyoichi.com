@@ -70,8 +70,18 @@ export interface SubscriptionConfig {
   restoreStepsEn: string[];
   /** 補足（旧プランの扱いなど） */
   notes?: string[];
-  /** 無料のお試し。例: 年額に 7 日間 */
-  trial?: { days: number; period: string; periodEn: string };
+  /** 無料のお試し。例: 年額に 7 日間 / 年額に 1 か月 */
+  trial?: SubscriptionTrial;
+}
+
+/** App Store の introductory offer の無料期間。長さは日か月で数える */
+export interface SubscriptionTrial {
+  length: number;
+  unit: "day" | "month";
+  /** お試しが付くプラン（日本語の画面の言葉）。例: 年額 */
+  period: string;
+  /** 英語の文に入れる形。例: annual */
+  periodEn: string;
 }
 
 export interface Product {

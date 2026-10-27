@@ -1,4 +1,4 @@
-import type { Product } from '$lib/types';
+import type { Product, SubscriptionTrial } from '$lib/types';
 import { DEFAULT_OG_IMAGE, DEFAULT_OG_IMAGE_SIZE, SITE_URL } from '$lib/seo';
 import type { SEO } from '$lib/seo';
 
@@ -50,4 +50,20 @@ export function englishLegalSeo(product: Product & { en: NonNullable<Product['en
 		twitterCard: 'summary',
 		noindex: true
 	};
+}
+
+/** 日本語の無料期間。「はじめの◯◯を無料で試せます」に入る形（7日間 / 1か月） */
+export function trialLengthJa(trial: SubscriptionTrial): string {
+	return trial.unit === 'day' ? `${trial.length}日間` : `${trial.length}か月`;
+}
+
+/** 英語の無料期間。「for the first ◯◯」に入る形（7 days / month / 3 months） */
+export function trialSpanEn(trial: SubscriptionTrial): string {
+	if (trial.length === 1) return trial.unit;
+	return `${trial.length} ${trial.unit}s`;
+}
+
+/** 英語の無料期間。「a ◯◯ free trial」に入る形（7-day / 1-month） */
+export function trialAdjectiveEn(trial: SubscriptionTrial): string {
+	return `${trial.length}-${trial.unit}`;
 }

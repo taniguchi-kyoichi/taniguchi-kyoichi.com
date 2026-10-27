@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { legalPath } from '$lib/legal';
+	import { legalPath, trialAdjectiveEn, trialLengthJa } from '$lib/legal';
 	import type { Product } from '$lib/types';
 	import SubscriptionHelp from '$lib/components/SubscriptionHelp.svelte';
 
@@ -87,7 +87,7 @@
 						<li>解約と管理は iPhone の「設定」→ 自分の名前 →「サブスクリプション」から行えます</li>
 						{#if subscription.trial}
 							<li>
-								{subscription.trial.period}は、はじめの{subscription.trial.days}日間を無料で試せます。お試しの終わる24時間前までに解約しないと、そのまま有料の{subscription.trial.period}に切り替わり、代金が請求されます
+								{subscription.trial.period}は、はじめの{trialLengthJa(subscription.trial)}を無料で試せます。お試しの終わる24時間前までに解約しないと、そのまま有料の{subscription.trial.period}に切り替わり、代金が請求されます
 							</li>
 						{/if}
 					</ul>
@@ -126,7 +126,7 @@
 						automatically unless cancelled at least 24 hours before the end of the current period; renewal is
 						charged within 24 hours before the period ends.
 						{#if subscription.trial}
-							The {subscription.trial.periodEn} plan starts with a {subscription.trial.days}-day free trial. Unless you
+							The {subscription.trial.periodEn} plan starts with a {trialAdjectiveEn(subscription.trial)} free trial. Unless you
 							cancel at least 24 hours before the trial ends, it converts to the paid {subscription.trial.periodEn}
 							plan and you are charged.
 						{/if}
