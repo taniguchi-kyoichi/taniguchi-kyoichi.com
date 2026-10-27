@@ -33,12 +33,20 @@ function canonicalRedirect(event: RequestEvent): string | null {
 	return `https://${CANONICAL_HOST}${event.url.pathname}${event.url.search}`;
 }
 
+/** `<html lang>`。英語のページは /en/ の下にだけ置く（今は法務・サポートの面だけ）。 */
+function pageLanguage(pathname: string): 'ja' | 'en' {
+	return pathname === '/en' || pathname.startsWith('/en/') ? 'en' : 'ja';
+}
+
 export const handle: Handle = async ({ event, resolve }) => {
 	// 308（301 ではなく）にするのは、メソッドを保つため。/api/* が www に来ても壊れない。
 	const redirect = canonicalRedirect(event);
 	if (redirect) return new Response(null, { status: 308, headers: { location: redirect } });
 
-	const response = await resolve(event);
+	const lang = pageLanguage(event.url.pathname);
+	const response = await resolve(event, {
+		transformPageChunk: ({ html }) => html.replace('%lang%', lang)
+	});
 	response.headers.set('Content-Security-Policy', CSP);
 	response.headers.set('X-Frame-Options', 'DENY');
 	response.headers.set('X-Content-Type-Options', 'nosniff');

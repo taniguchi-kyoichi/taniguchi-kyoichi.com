@@ -70,10 +70,15 @@
 		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
 	{/if}
 	{#if !isError}<link rel="canonical" href={seo.canonical} />{/if}
+	{#if !isError && seo.alternates}
+		{#each seo.alternates as alternate}
+			<link rel="alternate" hreflang={alternate.hreflang} href={alternate.href} />
+		{/each}
+	{/if}
 
 	<!-- Open Graph -->
 	<meta property="og:site_name" content={SITE_NAME} />
-	<meta property="og:locale" content="ja_JP" />
+	<meta property="og:locale" content={seo.locale ?? 'ja_JP'} />
 	<meta property="og:type" content={seo.ogType ?? 'website'} />
 	<meta property="og:url" content={seo.canonical} />
 	<meta property="og:title" content={seo.title} />

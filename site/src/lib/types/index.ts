@@ -105,6 +105,28 @@ export interface Product {
   privacy?: PrivacyConfig;
   support?: SupportConfig;
   subscription?: SubscriptionConfig;
+  /**
+   * 法務・サポートの英語のページ（/en/products/<id>/terms|privacy|support）の文面。
+   * 日本語のページの訳で、意味を足し引きしない。無ければ英語のページは 404。
+   */
+  en?: ProductEnglish;
+}
+
+/** 日本語のデータ（privacy / support / subscription）のうち、文面の項目だけを英語にしたもの */
+export interface ProductEnglish {
+  /** App Store の英語の表示名 */
+  name: string;
+  privacy?: Pick<PrivacyConfig, "dataItems" | "thirdPartyServices">;
+  support?: Pick<SupportConfig, "faq" | "systemRequirements">;
+  subscription?: {
+    planName: string;
+    prices: { period: string; price: string }[];
+    free: string[];
+    paid: string[];
+    /** アプリの英語の画面の言葉で書いた手順 */
+    restoreSteps: string[];
+    notes?: string[];
+  };
 }
 
 // OSS の種別。今は Swift パッケージ中心だが、将来 Claude Code プラグインや

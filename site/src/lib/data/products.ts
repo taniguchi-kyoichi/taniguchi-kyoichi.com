@@ -202,6 +202,80 @@ export const products: Product[] = [
 			restoreSteps: ['「設定」を開く', '「購入を復元」を押す'],
 			restoreStepsEn: ['Open 「設定」 (Settings) in the app', 'Tap 「購入を復元」 (Restore purchases)'],
 			notes: ['以前に買い切りの「広告削除」を買った方は、追加の支払いなしで Premium を使えます']
+		},
+		en: {
+			name: 'Reward Habits',
+			privacy: {
+				dataItems: [
+					'An ID to identify your account (an anonymous ID created on your device; when you connect Apple or Google, that ID)',
+					'Email address (only when you connect Apple or Google; used for sign-in)',
+					'The habits and rewards you add, and records of completions and exchanges',
+					'Purchase records (Premium, and the earlier "Remove Ads")',
+					'Records of actions in the app (used to improve the app; not used for advertising)'
+				],
+				thirdPartyServices: [
+					'Google (sign-in)',
+					'Apple (sign-in)',
+					'Cloudflare (backup and sync of records, storage of action records)',
+					'RevenueCat (subscription management, and measuring whether the app was installed from Apple Search Ads)'
+				]
+			},
+			support: {
+				faq: [
+					{
+						question: 'How does a reward get closer?',
+						answer:
+							'Add a habit you want to keep and set the value of one completion. Each time you complete that habit, your reward gets closer. There is also a streak bonus that grows the longer you keep going.'
+					},
+					{
+						question: 'Are the numbers in the app real money?',
+						answer:
+							'No. The numbers exist only inside the app and cannot be withdrawn as cash or points. You exchange them for "rewards" you choose yourself, to help you keep going.'
+					},
+					{
+						question: 'Where is my data stored?',
+						answer:
+							'It is stored on this device and also backed up to the server with an anonymous account (free). With Premium, you can connect Apple or Google to sync across multiple devices and carry your data over when you change phones.'
+					},
+					{
+						question: 'Can I keep my data when I change phones?',
+						answer:
+							'Yes, if you connect Apple or Google with Premium. On the new device, restore your purchase with the same Apple ID, then connect the same account.'
+					},
+					{
+						question: 'I bought "Remove Ads" before',
+						answer:
+							'Ads were removed in 3.0. If you bought "Remove Ads" before, you can keep using Premium as is. On a new device, tap "Restore purchases".'
+					},
+					{
+						question: 'Reminder notifications do not arrive',
+						answer:
+							'In iOS Settings → Notifications → Reward Habits, check that notifications are allowed. For each habit, you can set the days and time of its notification on the habit\'s edit screen.'
+					}
+				],
+				systemRequirements: 'iOS 17.0 or later'
+			},
+			subscription: {
+				planName: 'Premium',
+				prices: [
+					{ period: 'Yearly', price: '¥5,000' },
+					{ period: 'Monthly', price: '¥1,000' }
+				],
+				free: [
+					'Adding habits and rewards (no limit on the number)',
+					'Completions and exchanges, and the streak bonus',
+					'Timer and reminders',
+					'Cloud backup of your records (anonymous account)'
+				],
+				paid: [
+					'Connect Apple or Google to sync across multiple devices',
+					'Continue where you left off after changing phones'
+				],
+				restoreSteps: ['Open "Settings"', 'Tap "Restore purchases"'],
+				notes: [
+					'If you bought the earlier one-time "Remove Ads" purchase, you can use Premium at no additional cost'
+				]
+			}
 		}
 	},
 	{
