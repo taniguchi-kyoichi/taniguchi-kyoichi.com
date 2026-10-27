@@ -14,6 +14,10 @@ export interface SEO {
 	jsonLd?: unknown;
 	/** Set for thin/JS-only routes (e.g. /ask) to keep them out of the index. */
 	noindex?: boolean;
+	/** og:locale。未指定なら ja_JP */
+	locale?: 'ja_JP' | 'en_US';
+	/** 同じ中身の別の言語のページ（hreflang）。自分自身も含めて並べる */
+	alternates?: { hreflang: string; href: string }[];
 }
 
 export const SITE_URL = 'https://taniguchi-kyoichi.com';

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { legalPath } from '$lib/legal';
 	import type { Product } from '$lib/types';
 	import SubscriptionHelp from '$lib/components/SubscriptionHelp.svelte';
 
@@ -20,6 +21,16 @@
 
 <article class="min-h-screen bg-gray-50 dark:bg-gray-900">
 	<div class="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+		{#if product.en}
+			<a
+				href={legalPath(product.id, 'terms', 'en')}
+				hreflang="en"
+				lang="en"
+				class="float-right mb-6 text-sm text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+			>
+				English
+			</a>
+		{/if}
 		<a
 			href="/products/{product.id}"
 			class="mb-6 inline-flex items-center gap-1 text-sm text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"

@@ -5,9 +5,14 @@
 		subscription: SubscriptionConfig;
 		appName: string;
 		lang: 'ja' | 'en';
+		/**
+		 * 英語だけのページ（/en/...）に置くとき true。見出しを h2 にし、日本語の節を省かずに訳した文面を出す。
+		 * false は日本語のページの末尾の英語の節（h3・要約）。
+		 */
+		standalone?: boolean;
 	}
 
-	let { subscription, appName, lang }: Props = $props();
+	let { subscription, appName, lang, standalone = false }: Props = $props();
 
 	const heading = 'mb-3 text-lg font-semibold text-gray-900 dark:text-white';
 </script>
@@ -40,6 +45,36 @@
 				href="https://reportaproblem.apple.com/"
 				class="text-primary-600 hover:underline dark:text-primary-400">Apple が受け付けています</a
 			>。
+		</p>
+	</section>
+{:else if standalone}
+	<section>
+		<h2 class={heading}>Restore purchases</h2>
+		<p class="mb-2">If you change phones or reinstall the app, you can get your paid plan back with these steps.</p>
+		<ol class="list-inside list-decimal space-y-1">
+			{#each subscription.restoreStepsEn as step}
+				<li>{step}</li>
+			{/each}
+		</ol>
+		<p class="mt-2">You must be signed in with the same Apple ID you used to buy.</p>
+	</section>
+
+	<section>
+		<h2 class={heading}>Manage or cancel your subscription</h2>
+		<p class="mb-2">
+			Subscriptions are managed by Apple's App Store. You cannot cancel from inside the app.
+		</p>
+		<ol class="list-inside list-decimal space-y-1">
+			<li>Open the iPhone Settings app</li>
+			<li>Tap your name at the top</li>
+			<li>Tap Subscriptions, and choose "{appName}"</li>
+		</ol>
+		<p class="mt-2">
+			If you cancel at least 24 hours before the renewal date, you will not be charged for the next period. After you cancel, you can keep using the paid plan until the end of the period you have already paid for. Refunds are
+			<a
+				href="https://reportaproblem.apple.com/"
+				class="text-primary-600 hover:underline dark:text-primary-400">handled by Apple</a
+			>.
 		</p>
 	</section>
 {:else}
