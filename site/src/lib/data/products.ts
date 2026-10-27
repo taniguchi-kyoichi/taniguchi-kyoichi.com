@@ -189,19 +189,30 @@ export const products: Product[] = [
 		subscription: {
 			planName: 'Premium',
 			prices: [
-				{ period: '年額', price: '¥5,000' },
-				{ period: '月額', price: '¥1,000' }
+				{ period: '年額', price: '¥6,000' },
+				{ period: '月額', price: '¥800' }
 			],
 			free: [
-				'習慣とごほうびの登録（件数の上限なし）',
+				'習慣は3つまで、ごほうびは上限なし',
 				'達成と交換、継続ボーナス',
 				'タイマーとリマインダー',
+				'記録のグラフは直近の7日',
 				'記録のクラウドバックアップ（匿名のアカウント）'
 			],
-			paid: ['Apple または Google とつないで、複数の端末で同期', '機種を変えても続きから使える'],
+			paid: [
+				'習慣をいくつでも',
+				'ホーム画面のウィジェット',
+				'記録のグラフを全期間',
+				'Apple または Google とつないで、複数の端末で同期',
+				'機種を変えても続きから使える'
+			],
+			trial: { days: 7, period: '年額', periodEn: 'annual' },
 			restoreSteps: ['「設定」を開く', '「購入を復元」を押す'],
 			restoreStepsEn: ['Open 「設定」 (Settings) in the app', 'Tap 「購入を復元」 (Restore purchases)'],
-			notes: ['以前に買い切りの「広告削除」を買った方は、追加の支払いなしで Premium を使えます']
+			notes: [
+				'2026年10月26日までに使い始めた方は、追加の支払いなしで Premium を使えます',
+				'以前に買い切りの「広告削除」を買った方は、追加の支払いなしで Premium を使えます'
+			]
 		},
 		en: {
 			name: 'Reward Habits',
@@ -258,21 +269,26 @@ export const products: Product[] = [
 			subscription: {
 				planName: 'Premium',
 				prices: [
-					{ period: 'Yearly', price: '¥5,000' },
-					{ period: 'Monthly', price: '¥1,000' }
+					{ period: 'Yearly', price: '¥6,000' },
+					{ period: 'Monthly', price: '¥800' }
 				],
 				free: [
-					'Adding habits and rewards (no limit on the number)',
+					'Up to 3 habits, and any number of rewards',
 					'Completions and exchanges, and the streak bonus',
 					'Timer and reminders',
+					'History charts for the last 7 days',
 					'Cloud backup of your records (anonymous account)'
 				],
 				paid: [
+					'Any number of habits',
+					'Home Screen widget',
+					'History charts for all time',
 					'Connect Apple or Google to sync across multiple devices',
 					'Continue where you left off after changing phones'
 				],
 				restoreSteps: ['Open "Settings"', 'Tap "Restore purchases"'],
 				notes: [
+					'If you started using the app on or before October 26, 2026, you can use Premium at no additional cost',
 					'If you bought the earlier one-time "Remove Ads" purchase, you can use Premium at no additional cost'
 				]
 			}
