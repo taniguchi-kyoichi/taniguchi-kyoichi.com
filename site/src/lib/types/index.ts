@@ -45,7 +45,15 @@ export interface PrivacyConfig {
   dataItems?: string[];
   thirdPartyServices?: string[];
   analyticsUsed?: boolean;
+  /** 目的・法的根拠・移転・保存期間・削除と開示の求め方など、アプリごとに書く節。「第三者サービス」の後に順に出す */
+  sections?: PrivacySection[];
   contactEmail: string;
+}
+
+export interface PrivacySection {
+  title: string;
+  paragraphs?: string[];
+  items?: string[];
 }
 
 export interface SupportConfig {
@@ -126,7 +134,7 @@ export interface Product {
 export interface ProductEnglish {
   /** App Store の英語の表示名 */
   name: string;
-  privacy?: Pick<PrivacyConfig, "dataItems" | "thirdPartyServices">;
+  privacy?: Pick<PrivacyConfig, "dataItems" | "thirdPartyServices" | "sections">;
   support?: Pick<SupportConfig, "faq" | "systemRequirements">;
   subscription?: {
     planName: string;
