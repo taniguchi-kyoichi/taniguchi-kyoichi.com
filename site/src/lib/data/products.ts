@@ -232,7 +232,7 @@ export const products: Product[] = [
 				{
 					title: '運営者',
 					paragraphs: [
-						'ごほうび習慣は、日本に住む個人開発者の谷口恭一が運営しています。EU一般データ保護規則（GDPR）などでいう、データの管理者にあたります。連絡先はこのページの最後にあります。'
+						'ごほうび習慣は、日本に住む個人開発者が運営しています。EU一般データ保護規則（GDPR）などでいう、データの管理者にあたります。連絡先はこのページの最後にあります。'
 					]
 				},
 				{
@@ -364,7 +364,7 @@ export const products: Product[] = [
 					{
 						title: 'Who we are',
 						paragraphs: [
-							'Reward Habits is run by Kyoichi Taniguchi, an individual developer based in Japan, who is the controller of your data under the EU General Data Protection Regulation (GDPR) and similar laws. Contact details are at the end of this page.'
+							'Reward Habits is run by an individual developer based in Japan, who is the controller of your data under the EU General Data Protection Regulation (GDPR) and similar laws. Contact details are at the end of this page.'
 						]
 					},
 					{
