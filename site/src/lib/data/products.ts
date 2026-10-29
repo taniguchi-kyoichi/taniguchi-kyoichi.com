@@ -211,22 +211,72 @@ export const products: Product[] = [
 			'Premium で Apple / Google とつないで、複数の端末で同期'
 		],
 		privacy: {
-			effectiveDate: '2026-10-26',
+			effectiveDate: '2026-10-29',
 			dataCollection: 'standard',
 			dataItems: [
-				'アカウントを識別するための ID（端末内で作られる匿名の ID。Apple または Google とつないだときはその ID）',
-				'メールアドレス（Apple または Google とつないだときだけ。サインインのために使います）',
-				'登録した習慣・ごほうびと、達成や交換の記録',
-				'購入の記録（Premium と、以前の「広告削除」）',
-				'アプリ内の操作の記録（改善のために使います。広告には使いません）'
+				'アカウントを識別するためのID（初めて開いたときに作られる匿名のID。AppleまたはGoogleとつないだときは、そのアカウントのID）',
+				'メールアドレス（AppleまたはGoogleとつないだときだけ。サインインのために使います）',
+				'登録した習慣・ごほうび・目標と、達成や交換の記録（バックアップと同期のため）',
+				'アプリ内の操作の記録（アプリを開いた・習慣を達成した・Premiumの画面を見た、など）と、アプリの版、端末の言語と地域。習慣やごほうびの名前、金額、入力した文は含みません',
+				'購入の記録（無料体験の開始・購入・更新・解約・返金と、その金額と通貨。以前の「広告削除」を含みます）と、Appleの検索広告からアプリを入れたかどうか',
+				'通知のための端末の情報（プッシュ通知のトークン、時間帯、言語、アプリの版、通知を許可しているかどうか）'
 			],
 			thirdPartyServices: [
-				'Google（サインイン）',
-				'Apple（サインイン）',
-				'Cloudflare（記録のバックアップと同期、操作の記録の保管）',
-				'RevenueCat（サブスクリプションの管理、Apple の検索広告から入れたかどうかの計測）'
+				'Google Firebase Authentication（アカウントのIDの発行とサインイン。Googleでのサインインを含みます）',
+				'Apple（Appleでのサインイン、プッシュ通知の配信、App Storeでの支払い）',
+				'Cloudflare（記録のバックアップと同期、操作の記録・購入の記録・通知の端末の情報の保管、通知の送信）',
+				'RevenueCat（サブスクリプションの管理、Appleの検索広告からアプリを入れたかどうかの計測）'
 			],
 			analyticsUsed: true,
+			sections: [
+				{
+					title: '運営者',
+					paragraphs: [
+						'ごほうび習慣は、日本に住む個人開発者の谷口恭一が運営しています。EU一般データ保護規則（GDPR）などでいう、データの管理者にあたります。連絡先はこのページの最後にあります。'
+					]
+				},
+				{
+					title: '使う目的と法的根拠',
+					paragraphs: [
+						'集めた情報は次の目的にだけ使います。広告には使いません。情報を売ることも、ほかの会社のアプリやWebサイトをまたいで追跡することもしません。目的ごとに「:」の後ろに書いたのが、EU・英国などにお住まいの方についてのGDPRの法的根拠です。'
+					],
+					items: [
+						'アプリを提供するため（サインイン、記録のバックアップと同期、Premium、許可された通知の配信）: 利用者との契約の履行（GDPR第6条1項(b)）',
+						'アプリの使われ方を知って改善するため、どこからアプリを入れて購入に至ったかを測るため: 私たちの正当な利益（同項(f)）。記録の中身を含まない、利用者への影響が小さい情報に絞っています'
+					]
+				},
+				{
+					title: '預け先とEUの外への移転',
+					paragraphs: [
+						'私たちは日本にいて、情報の保管と処理を上の「第三者サービス」の各社（Google・Apple・Cloudflare・RevenueCat）に任せています。各社のサーバーは米国や日本など、EUの外にあります。',
+						'日本はEUから十分な保護の水準があると認められています（十分性認定）。米国などへの移転は、各社が用意するEUの標準契約条項（SCC）や、EU・米国データプライバシーフレームワークなどの仕組みで保護されます。'
+					]
+				},
+				{
+					title: '保存する期間',
+					items: [
+						'アカウントと、習慣・ごほうび・目標・達成と交換の記録: アカウントがあるあいだ。アカウントを削除すると消します',
+						'操作の記録と購入の記録: アプリの改善と売上の把握に要るあいだ。アカウントを削除したあとは、あなたのIDを無作為なIDに置き換え、あなたと結びつかない形で残します',
+						'通知の端末の情報: サインアウトしたとき、アカウントを削除したとき、Appleがその端末にもう届かないと答えたときに消します',
+						'RevenueCatとAppleが持つ購入の記録は、各社の決まりに従って保管されます'
+					]
+				},
+				{
+					title: 'アカウントの削除',
+					paragraphs: [
+						'アプリの「設定」→「アカウントを削除」で、いつでもアカウントを削除できます。サインインのアカウントと、サーバーとこの端末にある習慣・ごほうび・目標・達成と交換の記録、通知の端末の情報が消えます。元に戻せません。',
+						'操作の記録と購入の記録は、あなたのIDを無作為なIDに置き換えて残します。これらに習慣やごほうびの名前、金額、入力した文は含まれません。',
+						'アカウントを削除してもPremiumは解約されず、Appleからの請求が続きます。先にApp Storeで解約してください。アプリを消すだけでは、サーバーの記録は消えません。'
+					]
+				},
+				{
+					title: '開示・削除などの求め方',
+					paragraphs: [
+						'自分の情報の開示・訂正・削除・利用の制限・利用への異議・データの持ち出しを求めることができます。下のメールアドレスにご連絡ください。原則として1か月以内にお答えします。本人の確認のため、いくつかお尋ねすることがあります。',
+						'EU・英国などにお住まいの方は、お住まいの国のデータ保護の監督機関に苦情を申し立てることもできます。'
+					]
+				}
+			],
 			contactEmail: 'info@taniguchi-kyoichi.com'
 		},
 		support: {
@@ -297,17 +347,67 @@ export const products: Product[] = [
 			name: 'Reward Habits',
 			privacy: {
 				dataItems: [
-					'An ID to identify your account (an anonymous ID created on your device; when you connect Apple or Google, that ID)',
+					'An ID to identify your account (an anonymous ID created when you first open the app; when you connect Apple or Google, the ID of that account)',
 					'Email address (only when you connect Apple or Google; used for sign-in)',
-					'The habits and rewards you add, and records of completions and exchanges',
-					'Purchase records (Premium, and the earlier "Remove Ads")',
-					'Records of actions in the app (used to improve the app; not used for advertising)'
+					'The habits, rewards and goals you add, and records of completions and exchanges (to back them up and sync them)',
+					'Records of actions in the app (such as opening the app, completing a habit, or viewing the Premium screen), with the app version and the language and region of your device. They do not contain the names of your habits or rewards, amounts, or text you type',
+					'Purchase records (start of a free trial, purchases, renewals, cancellations and refunds, with the amount and currency; including the earlier "Remove Ads"), and whether the app was installed from Apple Search Ads',
+					'Device information for notifications (the push notification token, time zone, language, app version, and whether notifications are allowed)'
 				],
 				thirdPartyServices: [
-					'Google (sign-in)',
-					'Apple (sign-in)',
-					'Cloudflare (backup and sync of records, storage of action records)',
+					'Google Firebase Authentication (issuing the account ID and sign-in, including sign-in with Google)',
+					'Apple (Sign in with Apple, delivery of push notifications, and payment on the App Store)',
+					'Cloudflare (backup and sync of records; storage of action records, purchase records and device information for notifications; sending notifications)',
 					'RevenueCat (subscription management, and measuring whether the app was installed from Apple Search Ads)'
+				],
+				sections: [
+					{
+						title: 'Who we are',
+						paragraphs: [
+							'Reward Habits is run by Kyoichi Taniguchi, an individual developer based in Japan, who is the controller of your data under the EU General Data Protection Regulation (GDPR) and similar laws. Contact details are at the end of this page.'
+						]
+					},
+					{
+						title: 'Why we use your information, and our legal bases',
+						paragraphs: [
+							'We use the information only for the purposes below. We do not use it for advertising, we do not sell it, and we do not track you across other companies\' apps or websites. The text after each purpose is the GDPR legal basis for people in the EU, the UK and similar regions.'
+						],
+						items: [
+							'To provide the app (sign-in, backup and sync of your records, Premium, and the notifications you allow): performance of our contract with you (GDPR Article 6(1)(b))',
+							'To understand how the app is used and improve it, and to measure where installs and purchases come from: our legitimate interests (Article 6(1)(f)). We limit this to information that does not include the content of your records and has little impact on you'
+						]
+					},
+					{
+						title: 'Service providers and transfers outside the EU',
+						paragraphs: [
+							'We are based in Japan, and we use the companies listed under "Third-party services" above (Google, Apple, Cloudflare and RevenueCat) to store and process the information. Their servers are outside the EU, including in the United States and Japan.',
+							'The EU recognizes Japan as providing an adequate level of protection (an adequacy decision). Transfers to the United States and other countries are protected by the safeguards each provider offers, such as the EU Standard Contractual Clauses (SCCs) or the EU-U.S. Data Privacy Framework.'
+						]
+					},
+					{
+						title: 'How long we keep it',
+						items: [
+							'Your account and your habits, rewards, goals, and completion and exchange records: while you have an account. They are deleted when you delete your account',
+							'Action records and purchase records: as long as needed to improve the app and understand revenue. After you delete your account, we replace your ID with a random ID and keep them in a form that is no longer linked to you',
+							'Device information for notifications: deleted when you sign out, when you delete your account, or when Apple reports that the device can no longer be reached',
+							'Purchase records held by RevenueCat and Apple are kept under each company\'s own rules'
+						]
+					},
+					{
+						title: 'Deleting your account',
+						paragraphs: [
+							'You can delete your account at any time in the app under Settings → Delete Account (「設定」→「アカウントを削除」 in Japanese). This deletes your sign-in account; your habits, rewards, goals, and completion and exchange records on the server and on this device; and the device information for notifications. It cannot be undone.',
+							'Action records and purchase records are kept with your ID replaced by a random ID. They do not contain the names of your habits or rewards, amounts, or text you type.',
+							'Deleting your account does not cancel Premium, and Apple will keep billing you. Cancel it in the App Store first. Deleting the app alone does not delete your records on the server.'
+						]
+					},
+					{
+						title: 'Requesting access, deletion and more',
+						paragraphs: [
+							'You can ask us to give you access to, correct, or delete your information, to restrict or stop using it, or to give you a copy to take elsewhere. Email us at the address below. We will normally reply within one month. We may ask you a few questions to confirm that the account is yours.',
+							'If you live in the EU, the UK or a similar region, you can also complain to the data protection authority in your country.'
+						]
+					}
 				]
 			},
 			support: {

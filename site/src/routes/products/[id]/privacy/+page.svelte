@@ -96,6 +96,22 @@
 					</section>
 				{/if}
 
+				{#each privacy.sections ?? [] as section}
+					<section>
+						<h2 class="mb-3 text-lg font-semibold text-gray-900 dark:text-white">{section.title}</h2>
+						{#each section.paragraphs ?? [] as paragraph}
+							<p class="mb-3 last:mb-0">{paragraph}</p>
+						{/each}
+						{#if section.items && section.items.length > 0}
+							<ul class="list-inside list-disc space-y-1">
+								{#each section.items as item}
+									<li>{item}</li>
+								{/each}
+							</ul>
+						{/if}
+					</section>
+				{/each}
+
 				<!-- アナリティクス -->
 				<section>
 					<h2 class="mb-3 text-lg font-semibold text-gray-900 dark:text-white">アナリティクス</h2>

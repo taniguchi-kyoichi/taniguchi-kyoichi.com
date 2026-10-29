@@ -15,6 +15,7 @@
 	const privacy = product.privacy!;
 	const dataItems = data.en.privacy?.dataItems;
 	const thirdPartyServices = data.en.privacy?.thirdPartyServices;
+	const sections = data.en.privacy?.sections ?? [];
 
 	const collectionSummary: Record<string, string> = {
 		none: 'does not collect any of your personal information.',
@@ -75,6 +76,22 @@
 						<p class="mt-3">The privacy policy of each service provider applies to the use of these services.</p>
 					</section>
 				{/if}
+
+				{#each sections as section}
+					<section>
+						<h2 class={heading}>{section.title}</h2>
+						{#each section.paragraphs ?? [] as paragraph}
+							<p class="mb-3 last:mb-0">{paragraph}</p>
+						{/each}
+						{#if section.items && section.items.length > 0}
+							<ul class="list-inside list-disc space-y-1">
+								{#each section.items as item}
+									<li>{item}</li>
+								{/each}
+							</ul>
+						{/if}
+					</section>
+				{/each}
 
 				<section>
 					<h2 class={heading}>Analytics</h2>
