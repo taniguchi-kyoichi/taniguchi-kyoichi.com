@@ -32,25 +32,77 @@ export const products: Product[] = [
 			'ダークモード対応'
 		],
 		privacy: {
-			effectiveDate: '2026-10-28',
+			effectiveDate: '2026-11-01',
 			dataCollection: 'standard',
 			dataItems: [
-				'アカウントを識別するための ID（Apple または Google のサインイン）',
-				'登録した本と、読書の記録',
-				'本について書いたメモと、AI とのやりとり',
+				'アカウントを識別するためのID（AppleまたはGoogleでのサインイン）。メールアドレスはサインインの仕組み（Google Firebase Authentication）が持ち、読書の記録には保存しません',
+				'登録した本と、読書の記録（読んだ日、読んだページ、評価、読後の気持ち、読書カード）',
+				'本について書いた付箋・ノート・メモ（以前の版でAIが返した言葉も含みます）',
+				'ページの写真（ページを撮って文字を読み取るときだけ。読み取りのあいだサーバーを通り、保存しません）',
 				'ニックネームとプロフィール画像',
-				'読書の目標と、達成の記録',
-				'アプリ内の操作の記録（改善のために使います）'
+				'アプリ内の操作の記録（アプリを開いた・本を探した・メモリープラスの画面を見た、など）と、アプリの版、端末の言語と地域'
 			],
 			thirdPartyServices: [
-				'Cloudflare（本・記録・メモの保管、課金までの流れの計測。計測はアプリを入れた端末ごとのIDで行い、アカウントのIDは送りません）',
-				'Google（サインイン、利用状況の分析。1.4.0以前の版のアプリのデータの保管）',
-				'Apple（サインイン）',
-				'Google Gemini（本についてのAIとの対話と要約）',
-				'RevenueCat（サブスクリプションの管理）',
+				'Google Firebase Authentication（アカウントのIDの発行とサインイン。Googleでのサインインを含みます）',
+				'Google Analytics for Firebase（アプリの使われ方の分析）',
+				'Google Cloud（1.4.0以前の版のアプリのデータの保管。アカウントを削除すると消します）',
+				'Apple（Appleでのサインイン、App Storeでの支払い）',
+				'Cloudflare（本・記録・メモ・プロフィール画像の保管、課金までの流れの計測。計測はアプリを入れた端末ごとのIDで行い、アカウントのIDは送りません）',
+				'Anthropic（Claude。ページを撮ったときに、写真と端末が読み取った文字をサーバーから送り、本文を文の単位に組み直すことと、選んだ行を要点に整えることに使います）',
+				'Google Gemini（本の要約を作るときに、その本について書いたメモを送ります）',
+				'RevenueCat（サブスクリプションの管理、Appleの検索広告からアプリを入れたかどうかの計測）',
+				'Slack（運営者への通知。新しく登録したときのアカウントのIDとニックネーム）',
 				'楽天ブックス・Googleブックス・openBD・Open Library（本を探すときに、書名やISBNを送ります）'
 			],
 			analyticsUsed: true,
+			sections: [
+				{
+					title: '運営者',
+					paragraphs: [
+						'読書メモリーは、日本に住む個人開発者が運営しています。EU一般データ保護規則（GDPR）などでいう、データの管理者にあたります。連絡先はこのページの最後にあります。'
+					]
+				},
+				{
+					title: '使う目的と法的根拠',
+					paragraphs: [
+						'集めた情報は次の目的にだけ使います。広告には使いません。情報を売ることも、ほかの会社のアプリやWebサイトをまたいで追跡することもしません。書いたメモやページの写真をAIの学習のために渡すこともしません。目的ごとに「:」の後ろに書いたのが、EU・英国などにお住まいの方についてのGDPRの法的根拠です。'
+					],
+					items: [
+						'アプリを提供するため（サインイン、本と記録とメモの保管と同期、ページの読み取り、要点と要約、メモリープラス）: 利用者との契約の履行（GDPR第6条1項(b)）',
+						'アプリの使われ方を知って改善するため、どこからアプリを入れて購入に至ったかを測るため: 私たちの正当な利益（同項(f)）。書いたメモや本の中身を含まない、利用者への影響が小さい情報に絞っています'
+					]
+				},
+				{
+					title: '預け先とEUの外への移転',
+					paragraphs: [
+						'私たちは日本にいて、情報の保管と処理を上の「第三者サービス」の各社に任せています。各社のサーバーは米国や日本など、EUの外にあります。',
+						'日本はEUから十分な保護の水準があると認められています（十分性認定）。米国などへの移転は、各社が用意するEUの標準契約条項（SCC）や、EU・米国データプライバシーフレームワークなどの仕組みで保護されます。'
+					]
+				},
+				{
+					title: '保存する期間',
+					items: [
+						'アカウントと、本・読書の記録・付箋・ノート・メモ・プロフィール画像: アカウントがあるあいだ。アカウントを削除すると消します',
+						'ページの写真: 私たちのサーバーには保存しません。読み取りのあいだAnthropicに送り、Anthropicでは同社の決まりに従って扱われます',
+						'操作の記録: アプリの改善に要るあいだ。アカウントのIDではなく、アプリを入れた端末ごとのIDと結びついています',
+						'RevenueCat・Apple・Googleが持つ購入の記録と分析の記録は、各社の決まりに従って保管されます'
+					]
+				},
+				{
+					title: 'アカウントの削除',
+					paragraphs: [
+						'アプリの「設定」→「アカウントを削除」で、いつでもアカウントを削除できます。サインインのアカウントと、サーバーにある本・読書の記録・付箋・ノート・メモ・プロフィール画像、1.4.0以前の版のデータが消えます。元に戻せません。',
+						'アカウントを削除してもメモリープラスは解約されず、Appleからの請求が続きます。先にApp Storeで解約してください。アプリを消すだけでは、サーバーの記録は消えません。'
+					]
+				},
+				{
+					title: '開示・削除などの求め方',
+					paragraphs: [
+						'自分の情報の開示・訂正・削除・利用の制限・利用への異議・データの持ち出しを求めることができます。下のメールアドレスにご連絡ください。原則として1か月以内にお答えします。本人の確認のため、いくつかお尋ねすることがあります。',
+						'EU・英国などにお住まいの方は、お住まいの国のデータ保護の監督機関に苦情を申し立てることもできます。'
+					]
+				}
+			],
 			contactEmail: 'info@taniguchi-kyoichi.com'
 		},
 		support: {
@@ -67,15 +119,15 @@ export const products: Product[] = [
 				},
 				{
 					question: 'アカウントやデータを削除するには？',
-					answer: 'プロフィール画面の「アカウントを削除」からアカウントと全データを完全に削除できます。この操作は取り消せません。'
+					answer: '「設定」タブの「アカウントを削除」からアカウントと全データを完全に削除できます。この操作は取り消せません。'
 				},
 				{
 					question: '無料とメモリープラスの違いは？',
 					answer:
-						'無料では、本を合計10冊まで登録できます（バーコードでの登録もこの10冊に含まれます）。メモ、前のメモの振り返り（手紙）、本棚、「今日読んだ」の記録、バッジ、基本の統計も無料です。AIの聞き手も1回だけ無料で試せます。メモリープラス（年額¥6,000／月額¥600）では、本の登録が無制限になり、AIの聞き手（書いたメモにAIが問いを返します）、AI要約、詳しい統計（ジャンル・気分・読書カレンダー）、年間の振り返り（Year in Books）が使えます。年額は、はじめの1か月を無料で試せます。'
+						'本の登録は無料で、冊数の上限はありません。付箋・ノート・ページの文字の読み取り・読書カードとはんこ・カレンダー・ウィジェットも無料でずっと使えます。メモリープラス（年額¥6,000／月額¥600）では、撮ったページの選んだ行を要点に整えること、ノートの言葉をほかの本からも引く索引、1年のまとめ、詳しい統計、書いたメモの要約が使えます。無料のお試しはありません。'
 				}
 			],
-			systemRequirements: 'iOS 17.0以上'
+			systemRequirements: 'iOS 26.0以上'
 		},
 		subscription: {
 			planName: 'メモリープラス',
@@ -84,50 +136,101 @@ export const products: Product[] = [
 				{ period: '月額', price: '¥600' }
 			],
 			free: [
-				'本の登録（合計10冊まで。バーコードでの登録もこの10冊に含まれます）',
-				'メモと、前のメモの振り返り（手紙）',
-				'本棚と、「今日読んだ」の記録',
-				'AIの聞き手を1回だけ試せる',
-				'バッジ',
-				'基本の統計'
+				'本の登録（冊数の上限はありません。タイトルの検索とバーコードの読み取り）',
+				'付箋とノート、ページを撮って文字を読み取り、選んだ行をノートに足すこと',
+				'読書カードとはんこ、年ごとのカード箱',
+				'読んだ日のカレンダー、続けた日数、基本の統計、バッジ',
+				'前に書いたメモの振り返り、ウィジェット',
+				'ノートの言葉の索引（ほかの本は、冊数と1行目まで）'
 			],
 			paid: [
-				'本の登録が無制限',
-				'AIの聞き手（書いたメモにAIが問いを返す・AI対話メモ）',
-				'AI要約',
-				'詳しい統計（ジャンル・気分・読書カレンダー）',
-				'年間の振り返り（Year in Books）'
+				'撮ったページの、選んだ行を要点に整える（AIを使います）',
+				'ノートの言葉を、ほかの本からも引く索引（全部の行）',
+				'1年のまとめ（その年に読んだ本と書いたことをまとめて見返す）',
+				'詳しい統計（月ごとの読了数・ジャンル・評価・読後の気持ち）',
+				'書いたメモの要約（AIを使います）'
 			],
-			trial: { length: 1, unit: 'month', period: '年額', periodEn: 'annual' },
-			restoreSteps: [
-				'「プロフィール」タブを開く',
-				'「プレミアムプランにアップグレード」を押す',
-				'「購入を復元」を押す'
-			],
+			restoreSteps: ['「設定」タブを開く', '「メモリープラス」の「詳しく見る」を押す', '「購入を復元」を押す'],
 			restoreStepsEn: [
-				'Open the 「プロフィール」 (Profile) tab',
-				'Tap 「プレミアムプランにアップグレード」 (Upgrade to Premium Plan)',
+				'Open the 「設定」 (Settings) tab',
+				'Tap 「詳しく見る」 (Learn more) on 「メモリープラス」 (Memory Plus)',
 				'Tap 「購入を復元」 (Restore purchases)'
+			],
+			notes: [
+				'無料のお試しはありません。購入を確定したときから代金がかかります',
+				'米国の価格は 年額 $39.99／月額 $3.99 です。ほかの国と地域の価格は App Store に表示されます'
 			]
 		},
 		en: {
 			name: 'Reading Memory',
 			privacy: {
 				dataItems: [
-					'An ID to identify your account (Sign in with Apple or Google)',
-					'The books you add, and your reading records',
-					'The notes you write about books, and your exchanges with AI',
+					'An ID to identify your account (Sign in with Apple or Google). Your email address is held by the sign-in service (Google Firebase Authentication) and is not stored with your reading records',
+					'The books you add, and your reading records (days you read, pages read, ratings, how a book made you feel, and reading cards)',
+					'The sticky notes, notebooks and notes you write about books (including words AI returned in earlier versions)',
+					'Photos of pages (only when you snap a page to read its text. They pass through the server while the text is read, and are not stored)',
 					'Nickname and profile photo',
-					'Reading goals, and records of reaching them',
-					'Records of actions in the app (used to improve the app)'
+					'Records of actions in the app (such as opening the app, searching for a book, or viewing the Memory Plus screen), with the app version and the language and region of your device'
 				],
 				thirdPartyServices: [
-					'Cloudflare (storage of books, records and notes, and measuring the steps up to a purchase. This measurement uses an ID for each device the app is installed on, and does not send your account ID)',
-					'Google (sign-in and usage analytics; storage of data for app versions 1.4.0 and earlier)',
-					'Apple (sign-in)',
-					'Google Gemini (conversations with AI about books, and summaries)',
-					'RevenueCat (subscription management)',
+					'Google Firebase Authentication (issuing the account ID and sign-in, including sign-in with Google)',
+					'Google Analytics for Firebase (analytics of how the app is used)',
+					'Google Cloud (storage of data for app versions 1.4.0 and earlier; deleted when you delete your account)',
+					'Apple (Sign in with Apple, and payment on the App Store)',
+					'Cloudflare (storage of books, records, notes and profile photos, and measuring the steps up to a purchase. This measurement uses an ID for each device the app is installed on, and does not send your account ID)',
+					'Anthropic (Claude. When you snap a page, our server sends the photo and the text your device read, to put the text back into whole sentences and to turn the lines you pick into key points)',
+					'Google Gemini (when you create a summary of a book, the notes you wrote about that book are sent)',
+					'RevenueCat (subscription management, and measuring whether the app was installed from Apple Search Ads)',
+					'Slack (notifications to the operator: the account ID and nickname when someone signs up)',
 					'Rakuten Books, Google Books, openBD and Open Library (when you search for a book, the title or ISBN is sent)'
+				],
+				sections: [
+					{
+						title: 'Who we are',
+						paragraphs: [
+							'Reading Memory is run by an individual developer based in Japan, who is the controller of your data under the EU General Data Protection Regulation (GDPR) and similar laws. Contact details are at the end of this page.'
+						]
+					},
+					{
+						title: 'Why we use your information, and our legal bases',
+						paragraphs: [
+							'We use the information only for the purposes below. We do not use it for advertising, we do not sell it, and we do not track you across other companies\' apps or websites. We do not hand over your notes or page photos for training AI. The text after each purpose is the GDPR legal basis for people in the EU, the UK and similar regions.'
+						],
+						items: [
+							'To provide the app (sign-in, storing and syncing your books, records and notes, reading pages, key points and summaries, and Memory Plus): performance of our contract with you (GDPR Article 6(1)(b))',
+							'To understand how the app is used and improve it, and to measure where installs and purchases come from: our legitimate interests (Article 6(1)(f)). We limit this to information that does not include your notes or the content of your books and has little impact on you'
+						]
+					},
+					{
+						title: 'Service providers and transfers outside the EU',
+						paragraphs: [
+							'We are based in Japan, and we use the companies listed under "Third-party services" above to store and process the information. Their servers are outside the EU, including in the United States and Japan.',
+							'The EU recognizes Japan as providing an adequate level of protection (an adequacy decision). Transfers to the United States and other countries are protected by the safeguards each provider offers, such as the EU Standard Contractual Clauses (SCCs) or the EU-U.S. Data Privacy Framework.'
+						]
+					},
+					{
+						title: 'How long we keep it',
+						items: [
+							'Your account and your books, reading records, sticky notes, notebooks, notes and profile photo: while you have an account. They are deleted when you delete your account',
+							'Photos of pages: not stored on our servers. They are sent to Anthropic while the text is read, and Anthropic handles them under its own rules',
+							'Action records: as long as needed to improve the app. They are linked to an ID for each device the app is installed on, not to your account ID',
+							'Purchase and analytics records held by RevenueCat, Apple and Google are kept under each company\'s own rules'
+						]
+					},
+					{
+						title: 'Deleting your account',
+						paragraphs: [
+							'You can delete your account at any time in the app under Settings → Delete Account (「設定」→「アカウントを削除」 in Japanese). This deletes your sign-in account; your books, reading records, sticky notes, notebooks, notes and profile photo on the server; and data from app versions 1.4.0 and earlier. It cannot be undone.',
+							'Deleting your account does not cancel Memory Plus, and Apple will keep billing you. Cancel it in the App Store first. Deleting the app alone does not delete your records on the server.'
+						]
+					},
+					{
+						title: 'Requesting access, deletion and more',
+						paragraphs: [
+							'You can ask us to give you access to, correct, or delete your information, to restrict or stop using it, or to give you a copy to take elsewhere. Email us at the address below. We will normally reply within one month. We may ask you a few questions to confirm that the account is yours.',
+							'If you live in the EU, the UK or a similar region, you can also complain to the data protection authority in your country.'
+						]
+					}
 				]
 			},
 			support: {
@@ -145,15 +248,15 @@ export const products: Product[] = [
 					{
 						question: 'How do I delete my account and data?',
 						answer:
-							'You can permanently delete your account and all of your data from "Delete Account" on the profile screen. This cannot be undone.'
+							'You can permanently delete your account and all of your data from "Delete Account" in the Settings tab. This cannot be undone.'
 					},
 					{
 						question: 'What is the difference between free and Memory Plus?',
 						answer:
-							'For free, you can add up to 10 books in total (books added by barcode count toward these 10). Notes, looking back on earlier notes (letters), My Library, "Read today" records, badges and basic statistics are also free. You can also try the AI listener once for free. With Memory Plus (¥6,000 per year / ¥600 per month), you can add unlimited books and use the AI listener (AI answers your notes with questions), AI summary, detailed statistics (genres, moods and a reading calendar) and Year in Books. The annual plan is free to try for the first month.'
+							'Adding books is free, with no limit on how many. Sticky notes, notebooks, reading text from pages, reading cards and stamps, the calendar and widgets are also free for good. With Memory Plus (¥6,000 per year / ¥600 per month in Japan; $39.99 / $3.99 in the US), you can turn the lines you pick from a page into key points, look up a word from your notebook across all your books, see your year in books and detailed statistics, and get summaries of your notes. There is no free trial.'
 					}
 				],
-				systemRequirements: 'iOS 17.0 or later'
+				systemRequirements: 'iOS 26.0 or later'
 			},
 			subscription: {
 				planName: 'Memory Plus',
@@ -162,21 +265,25 @@ export const products: Product[] = [
 					{ period: 'Monthly', price: '¥600' }
 				],
 				free: [
-					'Adding books (up to 10 books in total; books added by barcode count toward these 10)',
-					'Notes, and looking back on earlier notes (letters)',
-					'My Library, and "Read today" records',
-					'Try the AI listener once',
-					'Badges',
-					'Basic statistics'
+					'Adding books (no limit on how many; search by title or scan the barcode)',
+					'Sticky notes and notebooks; snapping a page to read its text and adding the lines you pick to your notebook',
+					'Reading cards and stamps, and the card box for each year',
+					'The calendar of days you read, your streak, basic statistics and badges',
+					'Looking back on notes you wrote earlier, and widgets',
+					'The index of words in your notebook (for other books, the number of books and the first line)'
 				],
 				paid: [
-					'Unlimited books',
-					'AI listener (AI answers your notes with questions; AI chat notes)',
-					'AI summary',
-					'Detailed statistics (genres, moods and a reading calendar)',
-					'Year in Books'
+					'Turn the lines you picked from a page into key points (uses AI)',
+					'Look up a word from your notebook across all your books (every line)',
+					'Your year in books (everything you read and wrote in a year, in one place)',
+					'Detailed statistics (books finished per month, genres, ratings, and how books made you feel)',
+					'Summaries of the notes you wrote (uses AI)'
 				],
-				restoreSteps: ['Open the "Profile" tab', 'Tap "Upgrade to Premium Plan"', 'Tap "Restore purchases"']
+				restoreSteps: ['Open the "Settings" tab', 'Tap "Learn more" on Memory Plus', 'Tap "Restore purchases"'],
+				notes: [
+					'There is no free trial. You are charged when you confirm the purchase',
+					'In the US, the price is $39.99 per year / $3.99 per month. Prices in other countries and regions are shown on the App Store'
+				]
 			}
 		}
 	},
