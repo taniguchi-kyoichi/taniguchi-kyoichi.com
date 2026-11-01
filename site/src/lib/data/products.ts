@@ -51,7 +51,6 @@ export const products: Product[] = [
 				'Anthropic（Claude。ページを撮ったときに、写真と端末が読み取った文字をサーバーから送り、本文を文の単位に組み直すことと、選んだ行を要点に整えることに使います）',
 				'Google Gemini（本の要約を作るときに、その本について書いたメモを送ります）',
 				'RevenueCat（サブスクリプションの管理、Appleの検索広告からアプリを入れたかどうかの計測）',
-				'Slack（運営者への通知。新しく登録したときのアカウントのIDとニックネーム）',
 				'楽天ブックス・Googleブックス・openBD・Open Library（本を探すときに、書名やISBNを送ります）'
 			],
 			analyticsUsed: true,
@@ -181,7 +180,6 @@ export const products: Product[] = [
 					'Anthropic (Claude. When you snap a page, our server sends the photo and the text your device read, to put the text back into whole sentences and to turn the lines you pick into key points)',
 					'Google Gemini (when you create a summary of a book, the notes you wrote about that book are sent)',
 					'RevenueCat (subscription management, and measuring whether the app was installed from Apple Search Ads)',
-					'Slack (notifications to the operator: the account ID and nickname when someone signs up)',
 					'Rakuten Books, Google Books, openBD and Open Library (when you search for a book, the title or ISBN is sent)'
 				],
 				sections: [
