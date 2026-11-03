@@ -314,13 +314,14 @@ export const products: Product[] = [
 			'Premium で Apple / Google とつないで、複数の端末で同期'
 		],
 		privacy: {
-			effectiveDate: '2026-10-29',
+			effectiveDate: '2026-11-03',
 			dataCollection: 'standard',
 			dataItems: [
 				'アカウントを識別するためのID（初めて開いたときに作られる匿名のID。AppleまたはGoogleとつないだときは、そのアカウントのID）',
 				'メールアドレス（AppleまたはGoogleとつないだときだけ。サインインのために使います）',
 				'登録した習慣・ごほうび・目標と、達成や交換の記録（バックアップと同期のため）',
 				'アプリ内の操作の記録（アプリを開いた・習慣を達成した・Premiumの画面を見た、など）と、アプリの版、端末の言語と地域。習慣やごほうびの名前、金額、入力した文は含みません',
+				'ヘルスケアとモーションの記録（歩数・ワークアウト・睡眠）は、許可したときだけ端末の中で読みます。読んだ値はサーバーに送らず、目標に届いた日の達成だけを記録します',
 				'購入の記録（無料体験の開始・購入・更新・解約・返金と、その金額と通貨。以前の「広告削除」を含みます）と、Appleの検索広告からアプリを入れたかどうか',
 				'通知のための端末の情報（プッシュ通知のトークン、時間帯、言語、アプリの版、通知を許可しているかどうか）'
 			],
@@ -328,7 +329,8 @@ export const products: Product[] = [
 				'Google Firebase Authentication（アカウントのIDの発行とサインイン。Googleでのサインインを含みます）',
 				'Apple（Appleでのサインイン、プッシュ通知の配信、App Storeでの支払い）',
 				'Cloudflare（記録のバックアップと同期、操作の記録・購入の記録・通知の端末の情報の保管、通知の送信）',
-				'RevenueCat（サブスクリプションの管理、Appleの検索広告からアプリを入れたかどうかの計測）'
+				'RevenueCat（サブスクリプションの管理、Appleの検索広告からアプリを入れたかどうかの計測）',
+				'Anthropic（Claude。習慣やごほうびを自分で書いたとき、書いた文と端末の言語・お金の単位をサーバーから送り、習慣やごほうびの形に直すことに使います。あなたのIDは送りません）'
 			],
 			analyticsUsed: true,
 			sections: [
@@ -351,7 +353,7 @@ export const products: Product[] = [
 				{
 					title: '預け先とEUの外への移転',
 					paragraphs: [
-						'私たちは日本にいて、情報の保管と処理を上の「第三者サービス」の各社（Google・Apple・Cloudflare・RevenueCat）に任せています。各社のサーバーは米国や日本など、EUの外にあります。',
+						'私たちは日本にいて、情報の保管と処理を上の「第三者サービス」の各社（Google・Apple・Cloudflare・RevenueCat・Anthropic）に任せています。各社のサーバーは米国や日本など、EUの外にあります。',
 						'日本はEUから十分な保護の水準があると認められています（十分性認定）。米国などへの移転は、各社が用意するEUの標準契約条項（SCC）や、EU・米国データプライバシーフレームワークなどの仕組みで保護されます。'
 					]
 				},
@@ -454,6 +456,7 @@ export const products: Product[] = [
 					'Email address (only when you connect Apple or Google; used for sign-in)',
 					'The habits, rewards and goals you add, and records of completions and exchanges (to back them up and sync them)',
 					'Records of actions in the app (such as opening the app, completing a habit, or viewing the Premium screen), with the app version and the language and region of your device. They do not contain the names of your habits or rewards, amounts, or text you type',
+					'Health and Motion data (steps, workouts and sleep) is read on your device only if you allow it. The values are not sent to our servers; we record only the completion on days you reach your goal',
 					'Purchase records (start of a free trial, purchases, renewals, cancellations and refunds, with the amount and currency; including the earlier "Remove Ads"), and whether the app was installed from Apple Search Ads',
 					'Device information for notifications (the push notification token, time zone, language, app version, and whether notifications are allowed)'
 				],
@@ -461,7 +464,8 @@ export const products: Product[] = [
 					'Google Firebase Authentication (issuing the account ID and sign-in, including sign-in with Google)',
 					'Apple (Sign in with Apple, delivery of push notifications, and payment on the App Store)',
 					'Cloudflare (backup and sync of records; storage of action records, purchase records and device information for notifications; sending notifications)',
-					'RevenueCat (subscription management, and measuring whether the app was installed from Apple Search Ads)'
+					'RevenueCat (subscription management, and measuring whether the app was installed from Apple Search Ads)',
+					'Anthropic (Claude. When you type a habit or reward yourself, our server sends the text you typed, with your device language and currency, to turn it into a habit or reward. Your ID is not sent)'
 				],
 				sections: [
 					{
@@ -483,7 +487,7 @@ export const products: Product[] = [
 					{
 						title: 'Service providers and transfers outside the EU',
 						paragraphs: [
-							'We are based in Japan, and we use the companies listed under "Third-party services" above (Google, Apple, Cloudflare and RevenueCat) to store and process the information. Their servers are outside the EU, including in the United States and Japan.',
+							'We are based in Japan, and we use the companies listed under "Third-party services" above (Google, Apple, Cloudflare, RevenueCat and Anthropic) to store and process the information. Their servers are outside the EU, including in the United States and Japan.',
 							'The EU recognizes Japan as providing an adequate level of protection (an adequacy decision). Transfers to the United States and other countries are protected by the safeguards each provider offers, such as the EU Standard Contractual Clauses (SCCs) or the EU-U.S. Data Privacy Framework.'
 						]
 					},
