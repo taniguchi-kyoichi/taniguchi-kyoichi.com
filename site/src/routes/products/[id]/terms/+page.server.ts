@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { products } from '$lib/data/products';
 import { error } from '@sveltejs/kit';
-import { DEFAULT_OG_IMAGE, DEFAULT_OG_IMAGE_SIZE, SITE_NAME, SITE_URL } from '$lib/seo';
+import { DEFAULT_OG_IMAGE, DEFAULT_OG_IMAGE_SIZE, SITE_URL } from '$lib/seo';
 import type { SEO } from '$lib/seo';
 import { legalAlternates, legalProduct } from '$lib/legal';
 
@@ -13,13 +13,13 @@ export const load: PageServerLoad = async ({ params }) => {
 	}
 
 	const seo: SEO = {
-		title: `利用規約 - ${product.name} | ${SITE_NAME}`,
+		title: `利用規約 - ${product.name}`,
 		description: `${product.name} の利用規約とサブスクリプションの条件`,
 		canonical: `${SITE_URL}/products/${product.id}/terms`,
 		alternates: legalAlternates(product, 'terms'),
 		ogType: 'website',
 		ogImage: DEFAULT_OG_IMAGE,
-		ogImageAlt: SITE_NAME,
+		ogImageAlt: product.name,
 		ogImageWidth: DEFAULT_OG_IMAGE_SIZE,
 		ogImageHeight: DEFAULT_OG_IMAGE_SIZE,
 		twitterCard: 'summary',

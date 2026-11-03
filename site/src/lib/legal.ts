@@ -68,7 +68,30 @@ export function trialAdjectiveEn(trial: SubscriptionTrial): string {
 	return `${trial.length}-${trial.unit}`;
 }
 
-/** 法務ページに渡す製品のデータ。製品の紹介に使う技術の一覧は、法務ページの元データにも載せない。 */
+/**
+ * 法務ページに渡す製品のデータ。ページが使う項目（名前・アイコン・プライバシー・サポート・課金）だけにする。
+ * 紹介文や技術の一覧は、画面に出さなくてもページのソースに載るので渡さない。
+ */
 export function legalProduct(product: Product): Product {
-	return { ...product, technologies: [] };
+	const { en } = product;
+	return {
+		id: product.id,
+		name: product.name,
+		description: '',
+		type: product.type,
+		status: product.status,
+		platforms: [],
+		links: {},
+		technologies: [],
+		thumbnail: product.thumbnail,
+		privacy: product.privacy,
+		support: product.support,
+		subscription: product.subscription,
+		en: en && ({ name: en.name, privacy: en.privacy, support: en.support, subscription: en.subscription } as Product['en'])
+	} as Product;
+}
+
+/** 法務ページの道か（/products/<id>/<page> と /en/products/<id>/<page>）。 */
+export function isLegalPath(pathname: string): boolean {
+	return /^(\/en)?\/products\/[^/]+\/(terms|privacy|support)\/?$/.test(pathname);
 }
