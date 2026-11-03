@@ -48,8 +48,7 @@ export const products: Product[] = [
 				'Google Cloud（1.4.0以前の版のアプリのデータの保管。アカウントを削除すると消します）',
 				'Apple（Appleでのサインイン、App Storeでの支払い）',
 				'Cloudflare（本・記録・メモ・プロフィール画像の保管、課金までの流れの計測。計測はアプリを入れた端末ごとのIDで行い、アカウントのIDは送りません）',
-				'Anthropic（Claude。ページを撮ったときに、写真と端末が読み取った文字をサーバーから送り、本文を文の単位に組み直すことと、選んだ行を要点に整えることに使います）',
-				'Google Gemini（本の要約を作るときに、その本について書いたメモを送ります）',
+				'Anthropic（Claude。ページを撮ったときに、写真と端末が読み取った文字をサーバーから送り、本文を文の単位に組み直すことと、選んだ行を要点に整えることに使います。本の要約を作るときは、その本について書いたメモを送ります）',
 				'RevenueCat（サブスクリプションの管理、Appleの検索広告からアプリを入れたかどうかの計測）',
 				'楽天ブックス・Googleブックス・openBD・Open Library（本を探すときに、書名やISBNを送ります）'
 			],
@@ -177,8 +176,7 @@ export const products: Product[] = [
 					'Google Cloud (storage of data for app versions 1.4.0 and earlier; deleted when you delete your account)',
 					'Apple (Sign in with Apple, and payment on the App Store)',
 					'Cloudflare (storage of books, records, notes and profile photos, and measuring the steps up to a purchase. This measurement uses an ID for each device the app is installed on, and does not send your account ID)',
-					'Anthropic (Claude. When you snap a page, our server sends the photo and the text your device read, to put the text back into whole sentences and to turn the lines you pick into key points)',
-					'Google Gemini (when you create a summary of a book, the notes you wrote about that book are sent)',
+					'Anthropic (Claude. When you snap a page, our server sends the photo and the text your device read, to put the text back into whole sentences and to turn the lines you pick into key points. When you create a summary of a book, the notes you wrote about that book are sent)',
 					'RevenueCat (subscription management, and measuring whether the app was installed from Apple Search Ads)',
 					'Rakuten Books, Google Books, openBD and Open Library (when you search for a book, the title or ISBN is sent)'
 				],
