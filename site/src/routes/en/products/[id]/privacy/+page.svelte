@@ -14,7 +14,7 @@
 	const name = data.en.name;
 	const privacy = product.privacy!;
 	const dataItems = data.en.privacy?.dataItems;
-	const thirdPartyServices = data.en.privacy?.thirdPartyServices;
+	const serviceProviders = data.en.privacy?.serviceProviders;
 	const sections = data.en.privacy?.sections ?? [];
 
 	const collectionSummary: Record<string, string> = {
@@ -64,16 +64,12 @@
 					{/if}
 				</section>
 
-				{#if thirdPartyServices && thirdPartyServices.length > 0}
+				{#if serviceProviders && serviceProviders.length > 0}
 					<section>
-						<h2 class={heading}>Third-party services</h2>
-						<p class="mb-3">The app uses the following third-party services:</p>
-						<ul class="list-inside list-disc space-y-1">
-							{#each thirdPartyServices as service}
-								<li>{service}</li>
-							{/each}
-						</ul>
-						<p class="mt-3">The privacy policy of each service provider applies to the use of these services.</p>
+						<h2 class={heading}>Service providers</h2>
+						{#each serviceProviders as paragraph}
+							<p class="mb-3 last:mb-0">{paragraph}</p>
+						{/each}
 					</section>
 				{/if}
 

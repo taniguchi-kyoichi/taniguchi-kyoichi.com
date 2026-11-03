@@ -67,3 +67,8 @@ export function trialSpanEn(trial: SubscriptionTrial): string {
 export function trialAdjectiveEn(trial: SubscriptionTrial): string {
 	return `${trial.length}-${trial.unit}`;
 }
+
+/** 法務ページに渡す製品のデータ。製品の紹介に使う技術の一覧は、法務ページの元データにも載せない。 */
+export function legalProduct(product: Product): Product {
+	return { ...product, technologies: [] };
+}

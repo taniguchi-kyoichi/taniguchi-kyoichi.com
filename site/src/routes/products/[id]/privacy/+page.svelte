@@ -80,19 +80,13 @@
 					{/if}
 				</section>
 
-				<!-- 第三者サービス -->
-				{#if privacy.thirdPartyServices && privacy.thirdPartyServices.length > 0}
+				<!-- 外部の事業者 -->
+				{#if privacy.serviceProviders && privacy.serviceProviders.length > 0}
 					<section>
-						<h2 class="mb-3 text-lg font-semibold text-gray-900 dark:text-white">第三者サービス</h2>
-						<p class="mb-3">本アプリは以下の第三者サービスを利用しています:</p>
-						<ul class="list-inside list-disc space-y-1">
-							{#each privacy.thirdPartyServices as service}
-								<li>{service}</li>
-							{/each}
-						</ul>
-						<p class="mt-3">
-							これらのサービスの利用にあたっては、各サービス提供者のプライバシーポリシーが適用されます。
-						</p>
+						<h2 class="mb-3 text-lg font-semibold text-gray-900 dark:text-white">外部の事業者</h2>
+						{#each privacy.serviceProviders as paragraph}
+							<p class="mb-3 last:mb-0">{paragraph}</p>
+						{/each}
 					</section>
 				{/if}
 

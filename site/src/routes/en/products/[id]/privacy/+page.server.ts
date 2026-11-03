@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { products } from '$lib/data/products';
 import { error } from '@sveltejs/kit';
-import { englishLegalSeo } from '$lib/legal';
+import { englishLegalSeo, legalProduct } from '$lib/legal';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const product = products.find((p) => p.id === params.id);
@@ -11,5 +11,5 @@ export const load: PageServerLoad = async ({ params }) => {
 		throw error(404, 'Not found');
 	}
 
-	return { product, en, seo: englishLegalSeo({ ...product, en }, 'privacy') };
+	return { product: legalProduct(product), en, seo: englishLegalSeo({ ...product, en }, 'privacy') };
 };
