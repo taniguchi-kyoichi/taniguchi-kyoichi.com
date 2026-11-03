@@ -3,7 +3,7 @@ import { products } from '$lib/data/products';
 import { error } from '@sveltejs/kit';
 import { DEFAULT_OG_IMAGE, DEFAULT_OG_IMAGE_SIZE, SITE_NAME, SITE_URL } from '$lib/seo';
 import type { SEO } from '$lib/seo';
-import { legalAlternates } from '$lib/legal';
+import { legalAlternates, legalProduct } from '$lib/legal';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const product = products.find((p) => p.id === params.id);
@@ -27,5 +27,5 @@ export const load: PageServerLoad = async ({ params }) => {
 		noindex: true
 	};
 
-	return { product, seo };
+	return { product: legalProduct(product), seo };
 };
