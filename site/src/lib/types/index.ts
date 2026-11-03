@@ -43,9 +43,10 @@ export interface PrivacyConfig {
   effectiveDate: string;
   dataCollection: "none" | "minimal" | "standard";
   dataItems?: string[];
-  thirdPartyServices?: string[];
+  /** 外部の事業者に何を任せているかを、機能で書いた短い段落。会社や技術の名前は書かない */
+  serviceProviders?: string[];
   analyticsUsed?: boolean;
-  /** 目的・法的根拠・移転・保存期間・削除と開示の求め方など、アプリごとに書く節。「第三者サービス」の後に順に出す */
+  /** 目的・法的根拠・移転・保存期間・削除と開示の求め方など、アプリごとに書く節。「外部の事業者」の後に順に出す */
   sections?: PrivacySection[];
   contactEmail: string;
 }
@@ -134,7 +135,7 @@ export interface Product {
 export interface ProductEnglish {
   /** App Store の英語の表示名 */
   name: string;
-  privacy?: Pick<PrivacyConfig, "dataItems" | "thirdPartyServices" | "sections">;
+  privacy?: Pick<PrivacyConfig, "dataItems" | "serviceProviders" | "sections">;
   support?: Pick<SupportConfig, "faq" | "systemRequirements">;
   subscription?: {
     planName: string;

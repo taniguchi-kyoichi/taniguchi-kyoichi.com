@@ -32,25 +32,19 @@ export const products: Product[] = [
 			'ダークモード対応'
 		],
 		privacy: {
-			effectiveDate: '2026-11-01',
+			effectiveDate: '2026-11-03',
 			dataCollection: 'standard',
 			dataItems: [
-				'アカウントを識別するためのID（AppleまたはGoogleでのサインイン）。メールアドレスはサインインの仕組み（Google Firebase Authentication）が持ち、読書の記録には保存しません',
+				'アカウントを識別するためのID（AppleまたはGoogleでのサインイン）。メールアドレスはサインインを任せている外部の事業者が持ち、読書の記録には保存しません',
 				'登録した本と、読書の記録（読んだ日、読んだページ、評価、読後の気持ち、読書カード）',
 				'本について書いた付箋・ノート・メモ（以前の版でAIが返した言葉も含みます）',
 				'ページの写真（ページを撮って文字を読み取るときだけ。読み取りのあいだサーバーを通り、保存しません）',
 				'ニックネームとプロフィール画像',
 				'アプリ内の操作の記録（アプリを開いた・本を探した・メモリープラスの画面を見た、など）と、アプリの版、端末の言語と地域'
 			],
-			thirdPartyServices: [
-				'Google Firebase Authentication（アカウントのIDの発行とサインイン。Googleでのサインインを含みます）',
-				'Google Analytics for Firebase（アプリの使われ方の分析）',
-				'Google Cloud（1.4.0以前の版のアプリのデータの保管。アカウントを削除すると消します）',
-				'Apple（Appleでのサインイン、App Storeでの支払い）',
-				'Cloudflare（本・記録・メモ・プロフィール画像の保管、課金までの流れの計測。計測はアプリを入れた端末ごとのIDで行い、アカウントのIDは送りません）',
-				'Anthropic（Claude。ページを撮ったときに、写真と端末が読み取った文字をサーバーから送り、本文を文の単位に組み直すことと、選んだ行を要点に整えることに使います。本の要約を作るときは、その本について書いたメモを送ります）',
-				'RevenueCat（サブスクリプションの管理、Appleの検索広告からアプリを入れたかどうかの計測）',
-				'楽天ブックス・Googleブックス・openBD・Open Library（本を探すときに、書名やISBNを送ります）'
+			serviceProviders: [
+				'サインイン・本と記録とメモとプロフィール画像の保管と同期・アプリの使われ方の分析・購入の管理・本を探すときの書名やISBNの照会・AIの機能を、外部の事業者に任せています。任せる情報は、その目的に要る分だけです。',
+				'AIの機能では、ページを撮ったときに写真と端末が読み取った文字を送り、本文を文の単位に組み直すことと、選んだ行を要点に整えることに使います。本の要約を作るときは、その本について書いたメモを送ります。'
 			],
 			analyticsUsed: true,
 			sections: [
@@ -73,24 +67,24 @@ export const products: Product[] = [
 				{
 					title: '預け先とEUの外への移転',
 					paragraphs: [
-						'私たちは日本にいて、情報の保管と処理を上の「第三者サービス」の各社に任せています。各社のサーバーは米国や日本など、EUの外にあります。',
-						'日本はEUから十分な保護の水準があると認められています（十分性認定）。米国などへの移転は、各社が用意するEUの標準契約条項（SCC）や、EU・米国データプライバシーフレームワークなどの仕組みで保護されます。'
+						'私たちは日本にいて、情報の保管と処理を外部の事業者に任せています。事業者のサーバーは米国や日本など、EUの外にあります。',
+						'日本はEUから十分な保護の水準があると認められています（十分性認定）。米国などへの移転は、各事業者が用意するEUの標準契約条項（SCC）や、EU・米国データプライバシーフレームワークなどの仕組みで保護されます。'
 					]
 				},
 				{
 					title: '保存する期間',
 					items: [
 						'アカウントと、本・読書の記録・付箋・ノート・メモ・プロフィール画像: アカウントがあるあいだ。アカウントを削除すると消します',
-						'ページの写真: 私たちのサーバーには保存しません。読み取りのあいだAnthropicに送り、Anthropicでは同社の決まりに従って扱われます',
+						'ページの写真: 私たちのサーバーには保存しません。読み取りのあいだ外部の事業者に送り、その事業者の決まりに従って扱われます',
 						'操作の記録: アプリの改善に要るあいだ。アカウントのIDではなく、アプリを入れた端末ごとのIDと結びついています',
-						'RevenueCat・Apple・Googleが持つ購入の記録と分析の記録は、各社の決まりに従って保管されます'
+						'外部の事業者が持つ購入の記録と分析の記録は、各事業者の決まりに従って保管されます'
 					]
 				},
 				{
 					title: 'アカウントの削除',
 					paragraphs: [
 						'アプリの「設定」→「アカウントを削除」で、いつでもアカウントを削除できます。サインインのアカウントと、サーバーにある本・読書の記録・付箋・ノート・メモ・プロフィール画像、1.4.0以前の版のデータが消えます。元に戻せません。',
-						'アカウントを削除してもメモリープラスは解約されず、Appleからの請求が続きます。先にApp Storeで解約してください。アプリを消すだけでは、サーバーの記録は消えません。'
+						'アカウントを削除してもメモリープラスは解約されず、App Storeでの請求が続きます。先にApp Storeで解約してください。アプリを消すだけでは、サーバーの記録は消えません。'
 					]
 				},
 				{
@@ -163,22 +157,16 @@ export const products: Product[] = [
 			name: 'Reading Memory',
 			privacy: {
 				dataItems: [
-					'An ID to identify your account (Sign in with Apple or Google). Your email address is held by the sign-in service (Google Firebase Authentication) and is not stored with your reading records',
+					'An ID to identify your account (Sign in with Apple or Google). Your email address is held by the service provider we use for sign-in and is not stored with your reading records',
 					'The books you add, and your reading records (days you read, pages read, ratings, how a book made you feel, and reading cards)',
 					'The sticky notes, notebooks and notes you write about books (including words AI returned in earlier versions)',
 					'Photos of pages (only when you snap a page to read its text. They pass through the server while the text is read, and are not stored)',
 					'Nickname and profile photo',
 					'Records of actions in the app (such as opening the app, searching for a book, or viewing the Memory Plus screen), with the app version and the language and region of your device'
 				],
-				thirdPartyServices: [
-					'Google Firebase Authentication (issuing the account ID and sign-in, including sign-in with Google)',
-					'Google Analytics for Firebase (analytics of how the app is used)',
-					'Google Cloud (storage of data for app versions 1.4.0 and earlier; deleted when you delete your account)',
-					'Apple (Sign in with Apple, and payment on the App Store)',
-					'Cloudflare (storage of books, records, notes and profile photos, and measuring the steps up to a purchase. This measurement uses an ID for each device the app is installed on, and does not send your account ID)',
-					'Anthropic (Claude. When you snap a page, our server sends the photo and the text your device read, to put the text back into whole sentences and to turn the lines you pick into key points. When you create a summary of a book, the notes you wrote about that book are sent)',
-					'RevenueCat (subscription management, and measuring whether the app was installed from Apple Search Ads)',
-					'Rakuten Books, Google Books, openBD and Open Library (when you search for a book, the title or ISBN is sent)'
+				serviceProviders: [
+					'We use outside service providers for sign-in, storing and syncing your books, records, notes and profile photo, analytics of how the app is used, managing purchases, looking up books by title or ISBN, and the AI features. We share only what each purpose needs.',
+					'For the AI features, when you snap a page, the photo and the text your device read are sent to put the text back into whole sentences and to turn the lines you pick into key points. When you create a summary of a book, the notes you wrote about that book are sent.'
 				],
 				sections: [
 					{
@@ -200,7 +188,7 @@ export const products: Product[] = [
 					{
 						title: 'Service providers and transfers outside the EU',
 						paragraphs: [
-							'We are based in Japan, and we use the companies listed under "Third-party services" above to store and process the information. Their servers are outside the EU, including in the United States and Japan.',
+							'We are based in Japan, and we use outside service providers to store and process the information. Their servers are outside the EU, including in the United States and Japan.',
 							'The EU recognizes Japan as providing an adequate level of protection (an adequacy decision). Transfers to the United States and other countries are protected by the safeguards each provider offers, such as the EU Standard Contractual Clauses (SCCs) or the EU-U.S. Data Privacy Framework.'
 						]
 					},
@@ -208,16 +196,16 @@ export const products: Product[] = [
 						title: 'How long we keep it',
 						items: [
 							'Your account and your books, reading records, sticky notes, notebooks, notes and profile photo: while you have an account. They are deleted when you delete your account',
-							'Photos of pages: not stored on our servers. They are sent to Anthropic while the text is read, and Anthropic handles them under its own rules',
+							'Photos of pages: not stored on our servers. They are sent to a service provider while the text is read, and that provider handles them under its own rules',
 							'Action records: as long as needed to improve the app. They are linked to an ID for each device the app is installed on, not to your account ID',
-							'Purchase and analytics records held by RevenueCat, Apple and Google are kept under each company\'s own rules'
+							'Purchase and analytics records held by our service providers are kept under each provider\'s own rules'
 						]
 					},
 					{
 						title: 'Deleting your account',
 						paragraphs: [
 							'You can delete your account at any time in the app under Settings → Delete Account (「設定」→「アカウントを削除」 in Japanese). This deletes your sign-in account; your books, reading records, sticky notes, notebooks, notes and profile photo on the server; and data from app versions 1.4.0 and earlier. It cannot be undone.',
-							'Deleting your account does not cancel Memory Plus, and Apple will keep billing you. Cancel it in the App Store first. Deleting the app alone does not delete your records on the server.'
+							'Deleting your account does not cancel Memory Plus, and you will keep being billed on the App Store. Cancel it in the App Store first. Deleting the app alone does not delete your records on the server.'
 						]
 					},
 					{
@@ -322,15 +310,12 @@ export const products: Product[] = [
 				'登録した習慣・ごほうび・目標と、達成や交換の記録（バックアップと同期のため）',
 				'アプリ内の操作の記録（アプリを開いた・習慣を達成した・Premiumの画面を見た、など）と、アプリの版、端末の言語と地域。習慣やごほうびの名前、金額、入力した文は含みません',
 				'ヘルスケアとモーションの記録（歩数・ワークアウト・睡眠）は、許可したときだけ端末の中で読みます。読んだ値はサーバーに送らず、目標に届いた日の達成だけを記録します',
-				'購入の記録（無料体験の開始・購入・更新・解約・返金と、その金額と通貨。以前の「広告削除」を含みます）と、Appleの検索広告からアプリを入れたかどうか',
+				'購入の記録（無料体験の開始・購入・更新・解約・返金と、その金額と通貨。以前の「広告削除」を含みます）と、広告からアプリを入れたかどうか',
 				'通知のための端末の情報（プッシュ通知のトークン、時間帯、言語、アプリの版、通知を許可しているかどうか）'
 			],
-			thirdPartyServices: [
-				'Google Firebase Authentication（アカウントのIDの発行とサインイン。Googleでのサインインを含みます）',
-				'Apple（Appleでのサインイン、プッシュ通知の配信、App Storeでの支払い）',
-				'Cloudflare（記録のバックアップと同期、操作の記録・購入の記録・通知の端末の情報の保管、通知の送信）',
-				'RevenueCat（サブスクリプションの管理、Appleの検索広告からアプリを入れたかどうかの計測）',
-				'Anthropic（Claude。習慣やごほうびを自分で書いたとき、書いた文と端末の言語・お金の単位をサーバーから送り、習慣やごほうびの形に直すことに使います。あなたのIDは送りません）'
+			serviceProviders: [
+				'サインイン・記録のバックアップと同期・操作と購入と通知の端末の記録の保管・通知の送信・購入の管理と広告からアプリを入れたかどうかの計測・書いた文の読み取りを、外部の事業者に任せています。任せる情報は、その目的に要る分だけです。',
+				'習慣やごほうびを自分で書いたときは、書いた文と端末の言語・お金の単位をAIで読み取り、習慣やごほうびの形に直します。あなたのIDは送りません。'
 			],
 			analyticsUsed: true,
 			sections: [
@@ -353,8 +338,8 @@ export const products: Product[] = [
 				{
 					title: '預け先とEUの外への移転',
 					paragraphs: [
-						'私たちは日本にいて、情報の保管と処理を上の「第三者サービス」の各社（Google・Apple・Cloudflare・RevenueCat・Anthropic）に任せています。各社のサーバーは米国や日本など、EUの外にあります。',
-						'日本はEUから十分な保護の水準があると認められています（十分性認定）。米国などへの移転は、各社が用意するEUの標準契約条項（SCC）や、EU・米国データプライバシーフレームワークなどの仕組みで保護されます。'
+						'私たちは日本にいて、情報の保管と処理を外部の事業者に任せています。事業者のサーバーは米国や日本など、EUの外にあります。',
+						'日本はEUから十分な保護の水準があると認められています（十分性認定）。米国などへの移転は、各事業者が用意するEUの標準契約条項（SCC）や、EU・米国データプライバシーフレームワークなどの仕組みで保護されます。'
 					]
 				},
 				{
@@ -362,8 +347,8 @@ export const products: Product[] = [
 					items: [
 						'アカウントと、習慣・ごほうび・目標・達成と交換の記録: アカウントがあるあいだ。アカウントを削除すると消します',
 						'操作の記録と購入の記録: アプリの改善と売上の把握に要るあいだ。アカウントを削除したあとは、あなたのIDを無作為なIDに置き換え、あなたと結びつかない形で残します',
-						'通知の端末の情報: サインアウトしたとき、アカウントを削除したとき、Appleがその端末にもう届かないと答えたときに消します',
-						'RevenueCatとAppleが持つ購入の記録は、各社の決まりに従って保管されます'
+						'通知の端末の情報: サインアウトしたとき、アカウントを削除したとき、通知の配信の仕組みがその端末にもう届かないと答えたときに消します',
+						'外部の事業者が持つ購入の記録は、各事業者の決まりに従って保管されます'
 					]
 				},
 				{
@@ -371,7 +356,7 @@ export const products: Product[] = [
 					paragraphs: [
 						'アプリの「設定」→「アカウントを削除」で、いつでもアカウントを削除できます。サインインのアカウントと、サーバーとこの端末にある習慣・ごほうび・目標・達成と交換の記録、通知の端末の情報が消えます。元に戻せません。',
 						'操作の記録と購入の記録は、あなたのIDを無作為なIDに置き換えて残します。これらに習慣やごほうびの名前、金額、入力した文は含まれません。',
-						'アカウントを削除してもPremiumは解約されず、Appleからの請求が続きます。先にApp Storeで解約してください。アプリを消すだけでは、サーバーの記録は消えません。'
+						'アカウントを削除してもPremiumは解約されず、App Storeでの請求が続きます。先にApp Storeで解約してください。アプリを消すだけでは、サーバーの記録は消えません。'
 					]
 				},
 				{
@@ -457,15 +442,12 @@ export const products: Product[] = [
 					'The habits, rewards and goals you add, and records of completions and exchanges (to back them up and sync them)',
 					'Records of actions in the app (such as opening the app, completing a habit, or viewing the Premium screen), with the app version and the language and region of your device. They do not contain the names of your habits or rewards, amounts, or text you type',
 					'Health and Motion data (steps, workouts and sleep) is read on your device only if you allow it. The values are not sent to our servers; we record only the completion on days you reach your goal',
-					'Purchase records (start of a free trial, purchases, renewals, cancellations and refunds, with the amount and currency; including the earlier "Remove Ads"), and whether the app was installed from Apple Search Ads',
+					'Purchase records (start of a free trial, purchases, renewals, cancellations and refunds, with the amount and currency; including the earlier "Remove Ads"), and whether the app was installed from an ad',
 					'Device information for notifications (the push notification token, time zone, language, app version, and whether notifications are allowed)'
 				],
-				thirdPartyServices: [
-					'Google Firebase Authentication (issuing the account ID and sign-in, including sign-in with Google)',
-					'Apple (Sign in with Apple, delivery of push notifications, and payment on the App Store)',
-					'Cloudflare (backup and sync of records; storage of action records, purchase records and device information for notifications; sending notifications)',
-					'RevenueCat (subscription management, and measuring whether the app was installed from Apple Search Ads)',
-					'Anthropic (Claude. When you type a habit or reward yourself, our server sends the text you typed, with your device language and currency, to turn it into a habit or reward. Your ID is not sent)'
+				serviceProviders: [
+					'We use outside service providers for sign-in, backup and sync of your records, storing action records, purchase records and device information for notifications, sending notifications, managing purchases and measuring whether the app was installed from an ad, and reading the text you write. We share only what each purpose needs.',
+					'When you type a habit or reward yourself, the text you typed, with your device language and currency, is read by AI to turn it into a habit or reward. Your ID is not sent.'
 				],
 				sections: [
 					{
@@ -487,7 +469,7 @@ export const products: Product[] = [
 					{
 						title: 'Service providers and transfers outside the EU',
 						paragraphs: [
-							'We are based in Japan, and we use the companies listed under "Third-party services" above (Google, Apple, Cloudflare, RevenueCat and Anthropic) to store and process the information. Their servers are outside the EU, including in the United States and Japan.',
+							'We are based in Japan, and we use outside service providers to store and process the information. Their servers are outside the EU, including in the United States and Japan.',
 							'The EU recognizes Japan as providing an adequate level of protection (an adequacy decision). Transfers to the United States and other countries are protected by the safeguards each provider offers, such as the EU Standard Contractual Clauses (SCCs) or the EU-U.S. Data Privacy Framework.'
 						]
 					},
@@ -496,8 +478,8 @@ export const products: Product[] = [
 						items: [
 							'Your account and your habits, rewards, goals, and completion and exchange records: while you have an account. They are deleted when you delete your account',
 							'Action records and purchase records: as long as needed to improve the app and understand revenue. After you delete your account, we replace your ID with a random ID and keep them in a form that is no longer linked to you',
-							'Device information for notifications: deleted when you sign out, when you delete your account, or when Apple reports that the device can no longer be reached',
-							'Purchase records held by RevenueCat and Apple are kept under each company\'s own rules'
+							'Device information for notifications: deleted when you sign out, when you delete your account, or when the notification delivery service reports that the device can no longer be reached',
+							'Purchase records held by our service providers are kept under each provider\'s own rules'
 						]
 					},
 					{
@@ -505,7 +487,7 @@ export const products: Product[] = [
 						paragraphs: [
 							'You can delete your account at any time in the app under Settings → Delete Account (「設定」→「アカウントを削除」 in Japanese). This deletes your sign-in account; your habits, rewards, goals, and completion and exchange records on the server and on this device; and the device information for notifications. It cannot be undone.',
 							'Action records and purchase records are kept with your ID replaced by a random ID. They do not contain the names of your habits or rewards, amounts, or text you type.',
-							'Deleting your account does not cancel Premium, and Apple will keep billing you. Cancel it in the App Store first. Deleting the app alone does not delete your records on the server.'
+							'Deleting your account does not cancel Premium, and you will keep being billed on the App Store. Cancel it in the App Store first. Deleting the app alone does not delete your records on the server.'
 						]
 					},
 					{
@@ -643,7 +625,7 @@ export const products: Product[] = [
 		privacy: {
 			// 本文を実態に合わせて書き直した日。**中身を直したらここも直す** ——
 			// 表示だけ古い日付が残ると、法務ページがそのページ自身の内容と食い違う。
-			effectiveDate: '2026-10-26',
+			effectiveDate: '2026-11-03',
 			dataCollection: 'minimal',
 			dataItems: [
 				'アカウントを識別するための ID（端末内で作られる匿名の ID、または Apple・Google のサインイン）',
@@ -657,12 +639,8 @@ export const products: Product[] = [
 				'その月に読み取ったレシートの枚数（無料の枚数を数えるため）',
 				'アプリ内の操作の記録（改善のために使います。広告には使いません）'
 			],
-			thirdPartyServices: [
-				'Google（サインイン、利用状況の分析、レシートと商品名の読み取り）',
-				'Yahoo! JAPAN（バーコードから商品名を調べるときに、バーコードの番号を送ります）',
-				'Apple（サインイン、通知の配信）',
-				'Cloudflare（データと写真の保管、世帯のあいだの同期）',
-				'RevenueCat（サブスクリプションの管理）'
+			serviceProviders: [
+				'サインイン・データと写真の保管と世帯のあいだの同期・利用状況の分析・通知の配信・購入の管理・レシートと商品名の読み取り・バーコードから商品名を調べること（バーコードの番号を送ります）を、外部の事業者に任せています。任せる情報は、その目的に要る分だけです。'
 			],
 			analyticsUsed: true,
 			contactEmail: 'info@taniguchi-kyoichi.com'
@@ -743,7 +721,7 @@ export const products: Product[] = [
 			'広告なし・再生時間の制限なし'
 		],
 		privacy: {
-			effectiveDate: '2026-10-26',
+			effectiveDate: '2026-11-03',
 			dataCollection: 'minimal',
 			dataItems: [
 				'匿名のインストール ID（初回の起動で端末が作るランダムな文字列。アカウントとは結び付けません）',
@@ -754,11 +732,8 @@ export const products: Product[] = [
 				'作ったBGM・お気に入り・集中の記録・外観の設定は端末の中だけに保存し、送りません',
 				'広告 ID（IDFA）は読みません。広告もトラッキングもありません'
 			],
-			thirdPartyServices: [
-				'Google Firebase Authentication（Apple または Google でサインインしたときだけ）',
-				'Apple（サインイン）',
-				'Cloudflare（音とカタログの配信、操作の記録の保管）',
-				'RevenueCat（サブスクリプションの管理）'
+			serviceProviders: [
+				'サインイン（Appleでサインイン・Googleでサインインしたときだけ）・音とカタログの配信・操作の記録の保管・購入の管理を、外部の事業者に任せています。任せる情報は、その目的に要る分だけです。'
 			],
 			analyticsUsed: true,
 			contactEmail: 'info@taniguchi-kyoichi.com'
