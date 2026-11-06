@@ -302,7 +302,7 @@ export const products: Product[] = [
 			'Premium で Apple / Google とつないで、複数の端末で同期'
 		],
 		privacy: {
-			effectiveDate: '2026-11-03',
+			effectiveDate: '2026-11-06',
 			dataCollection: 'standard',
 			dataItems: [
 				'アカウントを識別するためのID（初めて開いたときに作られる匿名のID。AppleまたはGoogleとつないだときは、そのアカウントのID）',
@@ -311,7 +311,11 @@ export const products: Product[] = [
 				'アプリ内の操作の記録（アプリを開いた・習慣を達成した・Premiumの画面を見た、など）と、アプリの版、端末の言語と地域。習慣やごほうびの名前、金額、入力した文は含みません',
 				'ヘルスケアとモーションの記録（歩数・ワークアウト・睡眠）は、許可したときだけ端末の中で読みます。読んだ値はサーバーに送らず、目標に届いた日の達成だけを記録します',
 				'購入の記録（無料体験の開始・購入・更新・解約・返金と、その金額と通貨。以前の「広告削除」を含みます）と、広告からアプリを入れたかどうか',
-				'通知のための端末の情報（プッシュ通知のトークン、時間帯、言語、アプリの版、通知を許可しているかどうか）'
+				'通知のための端末の情報（プッシュ通知のトークン、時間帯、言語、アプリの版、通知を許可しているかどうか）',
+				'ごほうびにつけた写真（つけたときだけ）',
+				'「ごほうびを頼む」を使ったときの呼び名、ごほうびの名前、目標の回数と進み、送った応援（約束の相手に見えます）',
+				'シェアのリンクにつける絵（自分でリンクを送るときだけ）',
+				'約束やシェアのリンクのページを開いた記録（Cookieの乱数を使います。IPアドレスと端末の情報は持ちません）'
 			],
 			serviceProviders: [
 				'サインイン・記録のバックアップと同期・操作と購入と通知の端末の記録の保管・通知の送信・購入の管理と広告からアプリを入れたかどうかの計測・書いた文の読み取りを、外部の事業者に任せています。任せる情報は、その目的に要る分だけです。',
@@ -348,6 +352,7 @@ export const products: Product[] = [
 						'アカウントと、習慣・ごほうび・目標・達成と交換の記録: アカウントがあるあいだ。アカウントを削除すると消します',
 						'操作の記録と購入の記録: アプリの改善と売上の把握に要るあいだ。アカウントを削除したあとは、あなたのIDを無作為なIDに置き換え、あなたと結びつかない形で残します',
 						'通知の端末の情報: サインアウトしたとき、アカウントを削除したとき、通知の配信の仕組みがその端末にもう届かないと答えたときに消します',
+						'約束とシェアのリンクの絵: 約束が終わってから、またはシェアしてから90日で消します。アカウントを削除したときも消します。相手がいる約束は終わった扱いになり、あなたの名前は相手から見えなくなります',
 						'外部の事業者が持つ購入の記録は、各事業者の決まりに従って保管されます'
 					]
 				},
@@ -443,7 +448,11 @@ export const products: Product[] = [
 					'Records of actions in the app (such as opening the app, completing a habit, or viewing the Premium screen), with the app version and the language and region of your device. They do not contain the names of your habits or rewards, amounts, or text you type',
 					'Health and Motion data (steps, workouts and sleep) is read on your device only if you allow it. The values are not sent to our servers; we record only the completion on days you reach your goal',
 					'Purchase records (start of a free trial, purchases, renewals, cancellations and refunds, with the amount and currency; including the earlier "Remove Ads"), and whether the app was installed from an ad',
-					'Device information for notifications (the push notification token, time zone, language, app version, and whether notifications are allowed)'
+					'Device information for notifications (the push notification token, time zone, language, app version, and whether notifications are allowed)',
+					'Photos you add to a reward (only when you add one)',
+					'When you use “Ask for a reward”: the name you go by, the reward name, the target and progress, and the cheers you send (the person you asked can see these)',
+					'The image attached to a share link (only when you send a link yourself)',
+					'Records of opening a pact or share link page (using a random value in a cookie; we do not keep your IP address or device information)'
 				],
 				serviceProviders: [
 					'We use outside service providers for sign-in, backup and sync of your records, storing action records, purchase records and device information for notifications, sending notifications, managing purchases and measuring whether the app was installed from an ad, and reading the text you write. We share only what each purpose needs.',
@@ -479,6 +488,7 @@ export const products: Product[] = [
 							'Your account and your habits, rewards, goals, and completion and exchange records: while you have an account. They are deleted when you delete your account',
 							'Action records and purchase records: as long as needed to improve the app and understand revenue. After you delete your account, we replace your ID with a random ID and keep them in a form that is no longer linked to you',
 							'Device information for notifications: deleted when you sign out, when you delete your account, or when the notification delivery service reports that the device can no longer be reached',
+							'Pacts and share link images: deleted 90 days after a pact ends or after you share. They are also deleted when you delete your account. A pact with another person is marked as ended, and your name is no longer shown to them',
 							'Purchase records held by our service providers are kept under each provider\'s own rules'
 						]
 					},
