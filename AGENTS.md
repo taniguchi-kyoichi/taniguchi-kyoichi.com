@@ -91,4 +91,4 @@ with-secrets --profile ai bun eval/run.ts --label <名前>          # judge の�
 with-secrets --profile ai bun eval/run.ts --target https://taniguchi-kyoichi.com --subset baseline --pace 11000 --label prod
 ```
 
-**決まった答えの層は 100%、judge は前回から下げない**を出す条件にする。モデルを変える案は同じ eval で比べてから（2026-11-08: Haiku 100%/97.8%・Sonnet 100%/95.1%・旧モデル 5.3%/38.6%）。
+**決まった答えの層は 100%、judge は前回から下げない**を出す条件にする。同じコードでも1回ごとに judge が数ポイント揺れる（2026-11-08 に同じコードで 94.5% と 98.9%）ので、**2回流して両方を見る**。モデルを変える案は同じ eval で比べてから（2026-11-08: Haiku 100%/97.8%（11-08 の日本語名の修正後 100%/97.3%・98.9%）・Sonnet 100%/95.1%・旧モデル 5.3%/38.6%）。
