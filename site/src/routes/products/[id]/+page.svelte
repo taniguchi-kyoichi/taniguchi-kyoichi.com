@@ -94,7 +94,7 @@
 							</span>
 						{/each}
 						{#if data.product.ageRating}
-							<span class="rounded bg-gray-200 px-1.5 py-0.5 text-xs font-medium dark:bg-gray-700">
+							<span class="rounded bg-gray-200 px-1.5 py-0.5 text-xs font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-100">
 								{data.product.ageRating}
 							</span>
 						{/if}

@@ -22,18 +22,6 @@
 			<p class="text-sm text-gray-600 sm:text-base dark:text-gray-400">
 				技術記事・ブログ
 			</p>
-
-			<!-- /rein はヘッダーのナビから意図的に外してあるので、ここが唯一の入口。
-			     被リンクが 1 本も無い間はインデックスされていなかった。 -->
-			<a
-				href="/rein"
-				class="mt-4 inline-flex items-center gap-1.5 rounded-full border border-gray-200 px-3.5 py-1.5 text-sm text-gray-600 transition-colors hover:border-gray-300 hover:text-gray-900 dark:border-gray-700 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-white"
-			>
-				Rein の記事
-				<svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-				</svg>
-			</a>
 		</div>
 
 		{#if data.articles.length > 0}

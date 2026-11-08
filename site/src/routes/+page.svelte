@@ -13,14 +13,12 @@
 
 	let { data } = $props();
 
-	// Rein は一時的に非表示（データ・ルート・記事取得は残す）。戻すときは true に。
-	const SHOW_REIN = false;
 
 	let askInput = $state('');
 
 	// Short, tidy chips. They stay light-weight, while the answers they trigger
 	// pull live content (latest articles/videos) — so "freshness" lives in the
-	// response, not in cramped chip text. Video vs Rein chip depends on real data.
+	// response, not in cramped chip text. The video chip depends on real data.
 	const askSuggestions = $derived.by(() => {
 		const chips: { label: string; q: string }[] = [
 			{ label: '📱 作ったアプリ', q: 'どんなアプリを作ってる？' },
@@ -460,51 +458,6 @@
 	</section>
 {/if}
 
-<!-- Rein Articles Section (一時的に非表示: SHOW_REIN) -->
-{#if SHOW_REIN && data.reinArticles && data.reinArticles.length > 0}
-	<section id="rein" class="bg-gray-50 py-12 md:py-20 dark:bg-gray-800/50">
-		<div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-			<div class="mb-6 flex items-center gap-3 sm:mb-8">
-				<img src="/rein-icon.webp" alt="Rein" width="320" height="320" loading="lazy" class="h-12 w-12 rounded-xl shadow-sm sm:h-14 sm:w-14" />
-				<div>
-					<h2 class="text-xl font-bold text-gray-900 sm:text-2xl dark:text-white">Rein</h2>
-					<p class="text-xs text-gray-600 sm:text-sm dark:text-gray-400">
-						意志じゃなくて、仕組み。認知科学で日常のつまずきを言語化するメディア
-					</p>
-				</div>
-			</div>
-
-			<div class="grid gap-4 sm:gap-6 md:grid-cols-2">
-				{#each data.reinArticles as article}
-					<ArticleCard {article} />
-				{/each}
-			</div>
-
-			<div class="mt-6 flex flex-wrap items-center justify-center gap-3 sm:mt-8">
-				<a
-					href="/rein"
-					class="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-amber-700 px-6 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-amber-800 dark:bg-amber-600 dark:hover:bg-amber-500"
-				>
-					Rein の記事をもっと見る
-					<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-					</svg>
-				</a>
-				<a
-					href="https://reinself.com"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-gray-300 bg-white px-6 py-2.5 text-sm font-medium text-gray-700 shadow-sm transition-all hover:border-amber-300 hover:bg-amber-50 hover:text-amber-800 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-amber-700 dark:hover:bg-gray-700 dark:hover:text-amber-300"
-				>
-					reinself.com を訪れる
-					<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-					</svg>
-				</a>
-			</div>
-		</div>
-	</section>
-{/if}
 
 <!-- Contact Section -->
 <section id="contact" class="bg-gray-50 py-12 md:py-20 dark:bg-gray-800/50">
@@ -529,7 +482,7 @@
 				{#if contact.email}
 					<a
 						href="mailto:{contact.email}"
-						class="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-primary-600 px-6 py-3 text-sm font-medium text-white shadow-sm transition-colors hover:bg-primary-700 sm:w-auto dark:bg-primary-500 dark:hover:bg-primary-600"
+						class="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-primary-700 px-6 py-3 text-sm font-medium text-white shadow-sm transition-colors hover:bg-primary-800 sm:w-auto dark:bg-primary-500 dark:hover:bg-primary-600"
 					>
 						<SocialIcon platform="email" class="h-5 w-5" />
 						メールで問い合わせる

@@ -187,7 +187,7 @@ export interface Contact {
   message?: string;
 }
 
-export type ArticleSource = "zenn" | "note" | "rein" | "other";
+export type ArticleSource = "zenn" | "note" | "other";
 
 export interface Article {
   title: string;
