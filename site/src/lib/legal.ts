@@ -82,7 +82,6 @@ export function legalProduct(product: Product): Product {
 		status: product.status,
 		platforms: [],
 		links: {},
-		technologies: [],
 		thumbnail: product.thumbnail,
 		privacy: product.privacy,
 		support: product.support,

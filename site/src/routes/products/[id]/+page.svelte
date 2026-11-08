@@ -161,7 +161,7 @@
 								rel="noopener noreferrer"
 								class="inline-flex items-center gap-2 rounded-xl border border-gray-300 bg-white px-6 py-3 text-base font-semibold text-gray-700 transition-all hover:bg-gray-50 hover:shadow-lg dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
 							>
-								Webで開く
+								公式サイト
 							</a>
 						{/if}
 						{#if data.product.links.github}
@@ -216,19 +216,6 @@
 			</section>
 		{/if}
 
-		<!-- Technologies Section -->
-		<section class="mb-10">
-			<h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">使用技術</h2>
-			<div class="flex flex-wrap gap-2">
-				{#each data.product.technologies as tech}
-					<span
-						class="rounded-lg bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm dark:bg-gray-800 dark:text-gray-300"
-					>
-						{tech}
-					</span>
-				{/each}
-			</div>
-		</section>
 
 		<!-- Information Section -->
 		<section>

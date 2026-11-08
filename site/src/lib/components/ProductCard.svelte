@@ -83,26 +83,6 @@
 		</div>
 	</div>
 
-	<!-- Technologies -->
-	<div class="border-t border-gray-100 px-4 py-3 sm:px-6 dark:border-gray-700">
-		<div class="flex flex-wrap gap-1.5">
-			{#each product.technologies.slice(0, 5) as tech}
-				<span
-					class="rounded-full bg-primary-50 px-2.5 py-0.5 text-xs font-medium text-primary-700 dark:bg-primary-900/30 dark:text-primary-400"
-				>
-					{tech}
-				</span>
-			{/each}
-			{#if product.technologies.length > 5}
-				<span
-					class="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-gray-500 dark:bg-gray-700 dark:text-gray-400"
-				>
-					+{product.technologies.length - 5}
-				</span>
-			{/if}
-		</div>
-	</div>
-
 	</a>
 
 	<!-- Store links: real links OUTSIDE the card anchor (valid, middle-clickable) -->
@@ -146,7 +126,7 @@
 						rel="noopener noreferrer"
 						class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-semibold text-gray-700 transition-all hover:bg-gray-50 hover:shadow-md dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
 					>
-						Webで開く
+						公式サイト
 					</a>
 				{/if}
 			</div>

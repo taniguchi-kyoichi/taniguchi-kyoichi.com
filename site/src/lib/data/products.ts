@@ -14,7 +14,6 @@ export const products: Product[] = [
 		links: {
 			appStore: 'https://apps.apple.com/jp/app/id6751159926'
 		},
-		technologies: ['Swift', 'SwiftUI'],
 		thumbnail: '/reading-memory-icon.webp',
 		ogImage: '/reading-memory-icon.jpg',
 		featured: true,
@@ -277,14 +276,14 @@ export const products: Product[] = [
 		description:
 			'毎日の習慣が、ごほうびを取りに行くゲームになる。達成するたびにほしいものが近づき、届いたら自分にごほうびを。広告のない習慣化アプリ。',
 		fullDescription:
-			'ごほうび習慣は、続けたい習慣に「ごほうび」をひもづけて、ゲームのように続けるためのアプリです。運動・勉強・早起きなど、続けたいことを決めて1回ぶんの値を決めると、達成するたびにほしいものが近づいていきます。\n\nごほうびに届いたら、がんばった自分にごほうびを。数字はアプリの中だけのもので、現金やポイントにはなりません。続けるほど増える継続ボーナス、時間で進めるタイマー、毎日のリマインダーで、気持ちが切れにくくなります。\n\n3.0 で SwiftUI で作り直し、広告をやめました。記録はこの端末に保存され、匿名のアカウントでバックアップされます。Premium で Apple または Google とつなぐと、複数の端末で同期でき、機種を変えても続きから使えます。',
+			'ごほうび習慣は、続けたい習慣に「ごほうび」をひもづけて、ゲームのように続けるためのアプリです。運動・勉強・早起きなど、続けたいことを決めて1回ぶんの値を決めると、達成するたびにほしいものが近づいていきます。\n\nごほうびに届いたら、がんばった自分にごほうびを。数字はアプリの中だけのもので、現金やポイントにはなりません。続けるほど増える継続ボーナス、時間で進めるタイマー、毎日のリマインダーで、気持ちが切れにくくなります。\n\n3.0 で作り直し、広告をやめました。記録はこの端末に保存され、匿名のアカウントでバックアップされます。Premium で Apple または Google とつなぐと、複数の端末で同期でき、機種を変えても続きから使えます。',
 		type: 'app',
 		status: 'production',
 		platforms: ['ios'],
 		links: {
-			appStore: 'https://apps.apple.com/jp/app/id1671700938'
+			appStore: 'https://apps.apple.com/jp/app/id1671700938',
+			web: 'https://gohobishukan.com'
 		},
-		technologies: ['Swift', 'SwiftUI', 'Cloudflare Workers', 'D1', 'Firebase'],
 		thumbnail: '/gohobi-shukan-icon.png',
 		ogImage: '/gohobi-shukan-icon.png',
 		featured: true,
@@ -583,7 +582,6 @@ export const products: Product[] = [
 		status: 'development',
 		platforms: ['ios'],
 		links: {},
-		technologies: ['Swift', 'SwiftUI', 'Foundation Models', 'Firebase'],
 		thumbnail: '/rein-icon.webp',
 		ogImage: '/rein-icon.png',
 		featured: true,
@@ -615,7 +613,8 @@ export const products: Product[] = [
 			appStore: 'https://apps.apple.com/jp/app/id6792582581',
 			web: 'https://stock-radar.taniguchi-kyoichi.com'
 		},
-		technologies: ['Swift', 'SwiftUI', 'Cloudflare Workers', 'D1', 'Firebase'],
+		// 掲載は3本（読書メモリー・ごほうび習慣・じぶんBGM）に絞った。規約・プライバシー・サポートのページは残す。
+		hidden: true,
 		thumbnail: '/stock-radar-icon.png',
 		ogImage: '/stock-radar-icon.jpg',
 		featured: true,
@@ -712,10 +711,11 @@ export const products: Product[] = [
 		fullDescription:
 			'じぶんBGMは、作業中も生活の中でも、音を止めずに流しておくためのアプリです。朝のカフェミュージックや夜のジャズバーなど、定番のBGMは押せばすぐに鳴ります。\n\n曲に雨や焚き火、波の音を重ねて音量を決めれば、自分のBGMとして保存できます。集中するときは長さを決めてタイマーを動かすと、音が鳴っている時間だけを数えます。\n\nロック画面とコントロールセンターから、アプリを開かずにいつものBGMを流せます。音はオフラインでも鳴り続けます。広告はなく、再生時間の制限もありません。',
 		type: 'app',
-		status: 'development',
+		status: 'production',
 		platforms: ['ios'],
-		links: {},
-		technologies: ['Swift', 'SwiftUI', 'AVAudioEngine', 'Cloudflare Workers', 'D1', 'R2', 'Firebase'],
+		links: {
+			appStore: 'https://apps.apple.com/jp/app/id6816582916'
+		},
 		thumbnail: '/jibun-bgm-icon.png',
 		ogImage: '/jibun-bgm-icon.jpg',
 		featured: true,
