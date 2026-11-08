@@ -3,14 +3,13 @@ import type { KVNamespace } from '@cloudflare/workers-types';
 /**
  * Lightweight abuse protection for the public /api/chat endpoint, backed by KV.
  *
- * Three counters guard against a bot draining the Workers AI quota (free) or
- * running up cost (paid):
+ * Three counters guard against a bot running up the Claude API bill:
  *   - per-IP / minute  → blocks rapid hammering
  *   - per-IP / day     → one visitor can't monopolize the global budget
  *   - global / day     → hard ceiling on total daily inference
  *
  * Counts are only incremented for ALLOWED requests, and KV errors fail OPEN
- * (availability over strict blocking — the 10k-neuron/day quota is the backstop).
+ * (availability over strict blocking — the spend limit on the API key is the backstop).
  * Counters are eventually consistent, so the caps are approximate by design.
  */
 

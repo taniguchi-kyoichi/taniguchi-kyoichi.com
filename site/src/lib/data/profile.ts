@@ -1,4 +1,4 @@
-import type { Profile, Contact } from '$lib/types';
+import type { About, Profile, Contact } from '$lib/types';
 
 export const profile: Profile = {
 	name: '谷口 恭一',
@@ -46,6 +46,23 @@ export const profile: Profile = {
 			label: 'LinkedIn'
 		}
 	]
+};
+
+/**
+ * AI に質問（/api/chat）で渡す本人の話。サイトの bio と違い、技術の名前は入れない
+ * （製品の作り方は出さない方針。tool が返さなければ AI も言わない）。
+ */
+export const about: About = {
+	bio: 'iOSエンジニア。自分で企画したiOSアプリを作って、App Storeで公開しています。アプリにAIを組み込むことも探っています。',
+	background: [
+		'iOSアプリを作るエンジニアです',
+		'公開しているアプリは、読書メモリー・ごほうび習慣・じぶんBGMの3つです',
+		'作ったものや学んだことを、Zenn と note の記事、YouTube の動画で発信しています',
+		'作る中で生まれたライブラリをオープンソースで公開しています',
+		'神奈川県横浜市に住んでいます'
+	],
+	interests: ['モバイルアプリへのAIの組み込み'],
+	work: 'お仕事のご依頼・ご相談はメール（info@taniguchi-kyoichi.com）で受け付けています。内容を書いて送ってください。'
 };
 
 export const contact: Contact = {

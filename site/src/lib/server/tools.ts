@@ -1,52 +1,78 @@
-import { jsonSchema, tool } from 'ai';
-import type { JSONSchema7 } from '@ai-sdk/provider';
+import { tool } from 'ai';
 import { z } from 'zod';
-import { profile, contact } from '$lib/data/profile';
+import { profile, about, contact } from '$lib/data/profile';
 import { products } from '$lib/data/products';
 import { ossProjects } from '$lib/data/oss';
-import { getWritings, getReinArticles, getVideos } from '$lib/server/external';
-
-/**
- * The AI SDK's zod converter stamps a `$schema` dialect key onto every tool's
- * parameters. Llama 4 Scout on Workers AI answers a question carrying that key
- * with an empty completion — no text, no tool call — so the visitor sees no
- * reply at all. Sending the same schema without the dialect key restores tool
- * routing, and zod still backs validation.
- */
-function toolInput<T>(schema: z.ZodType<T>) {
-	const { $schema, ...withoutDialect } = z.toJSONSchema(schema) as Record<string, unknown>;
-	void $schema;
-	return jsonSchema<T>(withoutDialect as JSONSchema7, {
-		validate: (value) => {
-			const parsed = schema.safeParse(value);
-			return parsed.success
-				? { success: true, value: parsed.data }
-				: { success: false, error: parsed.error };
-		}
-	});
-}
+import { getWritings, getVideos } from '$lib/server/external';
+import type { Product } from '$lib/types';
 
 /**
  * Tools the AI agent calls to answer questions about Kyoichi.
  *
- * Each returns typed, structured data; the client (`MessageParts.svelte`) maps
- * each `tool-<name>` part to a Svelte component, reusing the site's own cards.
- * Static tools read `$lib/data/*`; the `list*` content tools fetch live from
- * external services (Zenn/note/Rein RSS, YouTube API) via `$lib/server/external`.
- *
- * Tool descriptions are intentionally terse English for cheap, accurate routing.
- * Keep argument schemas small — every extra property lengthens the prompt, and
- * Llama 4 Scout drops to an empty completion as the tool block grows.
+ * Each returns only what its card and the answer need. What a tool does not
+ * return, the model cannot say — so the products' tech stack, privacy/terms
+ * text and hidden products are kept out here rather than forbidden in the prompt.
+ * The client (`MessageParts.svelte`) maps each `tool-<name>` part to a card.
  */
+
+const SITE = 'https://taniguchi-kyoichi.com';
+
+/** Where an answer should send a visitor: the official site if there is one, else the App Store. */
+function primaryLink(p: Product): { label: string; url: string } {
+	if (p.links.web) return { label: '公式サイト', url: p.links.web };
+	if (p.links.appStore) return { label: 'App Store', url: p.links.appStore };
+	return { label: '紹介ページ', url: `${SITE}/products/${p.id}` };
+}
+
+function summary(p: Product) {
+	return {
+		id: p.id,
+		name: p.name,
+		nameEn: p.en?.name,
+		description: p.description,
+		status: p.status,
+		thumbnail: p.thumbnail,
+		price: p.price,
+		rating: p.rating,
+		ratingCount: p.ratingCount,
+		link: primaryLink(p),
+		appStore: p.links.appStore,
+		page: `${SITE}/products/${p.id}`
+	};
+}
+export type ProductSummary = ReturnType<typeof summary>;
+
+function detail(p: Product) {
+	const s = p.subscription;
+	return {
+		...summary(p),
+		category: p.category,
+		features: p.features ?? [],
+		audience: p.audience,
+		why: p.why,
+		plan: s && {
+			name: s.planName,
+			prices: s.prices,
+			free: s.free,
+			paid: s.paid,
+			trial: s.trial && `${s.trial.period}に${s.trial.length}${s.trial.unit === 'day' ? '日' : 'か月'}の無料お試し`
+		}
+	};
+}
+
+const publicProducts = () => products.filter((p) => !p.hidden);
+
 export const tools = {
 	getProfile: tool({
-		description: "Kyoichi's profile: name, role, bio, location, socials. For 'who is he / about / background'.",
-		inputSchema: toolInput(z.object({})),
+		description: 'Who Kyoichi is: short bio, background, interests, location, social links.',
+		inputSchema: z.object({}),
 		execute: async () => ({
 			name: profile.name,
 			nameEn: profile.nameEn,
 			title: profile.title,
-			bio: profile.bio,
+			bio: about.bio,
+			background: about.background,
+			interests: about.interests,
 			avatar: profile.avatar,
 			location: profile.location,
 			socialLinks: profile.socialLinks
@@ -54,65 +80,66 @@ export const tools = {
 	}),
 
 	listProducts: tool({
-		description: "Kyoichi's products (iOS apps etc). For 'what apps / products'. Optional status filter.",
-		inputSchema: toolInput(
-			z.object({
-				status: z
-					.enum(['production', 'development', 'archived'])
-					.optional()
-					.describe('filter by status')
-			})
-		),
-		execute: async ({ status }) =>
-			products.filter((p) => !p.hidden && (!status || p.status === status))
+		description: 'His public apps, with a one-line description, status, price, rating and the link to send visitors to.',
+		inputSchema: z.object({}),
+		execute: async () => publicProducts().map(summary)
 	}),
 
 	getProductDetail: tool({
-		description: 'Full detail of one product by id (features, tech, rating, privacy). Call listProducts first for the id.',
-		inputSchema: toolInput(
-			z.object({
-				id: z.string().describe('product id from listProducts, e.g. reading-memory')
-			})
-		),
-		execute: async ({ id }) => products.find((p) => p.id === id) ?? null
+		description:
+			'One app in detail: features, who it is for (audience), why he built it (why), paid plan and prices, links. ids: reading-memory (読書メモリー), gohobi-shukan (ごほうび習慣 / Reward Habits), jibun-bgm (じぶんBGM).',
+		inputSchema: z.object({ id: z.string().describe('product id') }),
+		execute: async ({ id }) => {
+			const p = publicProducts().find((p) => p.id === id);
+			return p ? detail(p) : null;
+		}
 	}),
 
 	listOSS: tool({
-		description: "Kyoichi's open-source projects. For 'OSS / libraries / GitHub'.",
-		inputSchema: toolInput(z.object({})),
+		description: 'His open-source libraries and tools.',
+		inputSchema: z.object({}),
 		execute: async () =>
-			[...ossProjects].sort((a, b) => Number(b.featured ?? false) - Number(a.featured ?? false))
+			[...ossProjects]
+				.sort((a, b) => Number(b.featured ?? false) - Number(a.featured ?? false))
+				.map(({ id, name, description, category, language, repository }) => ({
+					id,
+					name,
+					description,
+					category,
+					language,
+					repository
+				}))
 	}),
 
 	getContact: tool({
-		description: "How to reach Kyoichi (email, socials). For 'contact / hire / get in touch'.",
-		inputSchema: toolInput(z.object({})),
+		description: 'How to contact him and how he takes work requests: email, social links.',
+		inputSchema: z.object({}),
 		execute: async () => ({
 			email: contact.email,
 			message: contact.message,
-			socialLinks: profile.socialLinks
+			work: about.work,
+			socialLinks: [...profile.socialLinks, ...(profile.secondaryLinks ?? [])]
 		})
 	}),
 
 	listWritings: tool({
-		description: "Kyoichi's latest tech blog posts from Zenn and note, live. For 'articles / blog / writing'. Optional source filter.",
-		inputSchema: toolInput(
-			z.object({
-				source: z.enum(['zenn', 'note', 'all']).optional().describe('which platform; default all')
-			})
-		),
-		execute: async ({ source }) => getWritings(source ?? 'all')
-	}),
-
-	listReinArticles: tool({
-		description: "Latest articles from Rein, Kyoichi's cognitive-science media, live. For 'Rein / media articles'.",
-		inputSchema: toolInput(z.object({})),
-		execute: async () => getReinArticles()
+		description: 'His latest blog posts on Zenn and note (live).',
+		inputSchema: z.object({
+			source: z.enum(['zenn', 'note', 'all']).optional().describe('default all')
+		}),
+		execute: async ({ source }) =>
+			(await getWritings(source ?? 'all')).map(({ title, url, publishedAt, source, thumbnail }) => ({
+				title,
+				url,
+				publishedAt,
+				source,
+				thumbnail
+			}))
 	}),
 
 	listVideos: tool({
-		description: "Kyoichi's latest YouTube videos, live. For 'videos / YouTube'.",
-		inputSchema: toolInput(z.object({})),
+		description: 'His latest YouTube videos (live).',
+		inputSchema: z.object({}),
 		execute: async () => getVideos()
 	})
 };

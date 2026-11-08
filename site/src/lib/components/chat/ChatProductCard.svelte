@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { Product } from '$lib/types';
+	import type { ProductSummary } from '$lib/server/tools';
 
 	interface Props {
-		product: Product;
+		product: ProductSummary;
 	}
 
 	let { product }: Props = $props();
@@ -19,9 +19,8 @@
 	};
 </script>
 
-<a
-	href="/products/{product.id}"
-	class="group flex gap-3 rounded-xl border border-gray-200 bg-white p-3 transition-colors hover:border-primary-300 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-primary-600"
+<div
+	class="flex gap-3 rounded-xl border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800"
 >
 	{#if product.thumbnail}
 		<img
@@ -47,13 +46,21 @@
 				{product.description}
 			</p>
 		{/if}
-		<span
-			class="mt-auto inline-flex items-center gap-0.5 pt-1.5 text-xs font-medium text-primary-600 dark:text-primary-400"
-		>
-			詳細
-			<svg class="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-			</svg>
-		</span>
+		<div class="mt-auto flex items-center gap-3 pt-1.5 text-xs font-medium">
+			<a
+				href={product.link.url}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="text-primary-600 hover:underline dark:text-primary-400"
+			>
+				{product.link.label}
+			</a>
+			<a
+				href="/products/{product.id}"
+				class="text-gray-500 hover:underline dark:text-gray-400"
+			>
+				詳細
+			</a>
+		</div>
 	</div>
-</a>
+</div>
