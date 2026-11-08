@@ -26,6 +26,8 @@ export const load: PageServerLoad = async ({ params }) => {
 	const socialImage = product.ogImage ?? product.thumbnail;
 	const ogImage = socialImage ? absoluteUrl(socialImage) : DEFAULT_OG_IMAGE;
 
+	const sameAs = [product.links.web, product.links.appStore].filter((u): u is string => !!u);
+
 	const seo: SEO = {
 		title: `${product.name} | ${SITE_NAME}`,
 		description: product.description,
@@ -36,6 +38,8 @@ export const load: PageServerLoad = async ({ params }) => {
 		ogImageWidth: socialImage ? undefined : DEFAULT_OG_IMAGE_SIZE,
 		ogImageHeight: socialImage ? undefined : DEFAULT_OG_IMAGE_SIZE,
 		twitterCard: 'summary',
+		// 一覧から外した製品は、法務ページのために URL だけ生かして検索には出さない
+		noindex: product.hidden === true,
 		jsonLd: [
 			{
 				'@context': 'https://schema.org',
@@ -58,6 +62,9 @@ export const load: PageServerLoad = async ({ params }) => {
 					: product.platforms.includes('macos')
 						? 'macOS'
 						: undefined,
+				// 公式サイトと App Store を同じアプリとして結ぶ
+				sameAs: sameAs.length > 0 ? sameAs : undefined,
+				downloadUrl: product.links.appStore,
 				offers: priceToOffer(product.price),
 				...(product.rating !== undefined
 					? {
