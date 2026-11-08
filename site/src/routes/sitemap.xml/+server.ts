@@ -16,7 +16,6 @@ function paths(): string[] {
 	return [
 		'',
 		'/writings',
-		'/rein',
 		'/oss',
 		...products.filter((p) => !p.hidden).map((p) => `/products/${p.id}`),
 		...ossProjects.map((p) => `/oss/${p.id}`)

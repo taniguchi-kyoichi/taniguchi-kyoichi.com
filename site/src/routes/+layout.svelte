@@ -50,7 +50,7 @@
 			name: profile.name,
 			jobTitle: profile.title,
 			url: SITE_URL,
-			sameAs: profile.socialLinks.map((l) => l.url)
+			sameAs: [...profile.socialLinks, ...(profile.secondaryLinks ?? [])].map((l) => l.url)
 		}
 	};
 
@@ -163,17 +163,6 @@
 							YouTube
 						</a>
 					</li>
-					<!-- Rein は一時的に非表示。戻すときは true に -->
-					{#if false}
-						<li>
-							<a
-								href="/rein"
-								class="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-							>
-								Rein
-							</a>
-						</li>
-					{/if}
 					<li>
 						<a
 							href="/#contact"

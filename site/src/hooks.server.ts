@@ -3,14 +3,15 @@ import type { Handle, RequestEvent } from '@sveltejs/kit';
 // Security headers on every server-rendered response (documents + /api).
 // `script-src 'unsafe-inline'` is kept because the theme bootstrap script and
 // JSON-LD blocks are inline; everything else is locked down (no external JS,
-// no framing, no plugins). The chat only connects same-origin (/api/chat).
+// no framing, no plugins). The chat only connects same-origin (/api/chat); the only
+// third party is Cloudflare Web Analytics, which the zone injects into every page.
 const CSP = [
 	"default-src 'self'",
-	"script-src 'self' 'unsafe-inline'",
+	"script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com",
 	"style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
 	"font-src 'self' https://fonts.gstatic.com",
 	"img-src 'self' https: data:",
-	"connect-src 'self'",
+	"connect-src 'self' https://cloudflareinsights.com",
 	"frame-ancestors 'none'",
 	"base-uri 'self'",
 	"object-src 'none'"
@@ -33,6 +34,12 @@ function canonicalRedirect(event: RequestEvent): string | null {
 	return `https://${CANONICAL_HOST}${event.url.pathname}${event.url.search}`;
 }
 
+/**
+ * 廃止して戻さないページ。404 でなく 410 を返すと、検索エンジンは早く索引から外す。
+ * Rein（アプリとメディア）は 2026-11-08 に廃止した。
+ */
+const GONE = /^\/(rein|products\/rein)(\/|\.md$|$)/;
+
 /** `<html lang>`。英語のページは /en/ の下にだけ置く（今は法務・サポートの面だけ）。 */
 function pageLanguage(pathname: string): 'ja' | 'en' {
 	return pathname === '/en' || pathname.startsWith('/en/') ? 'en' : 'ja';
@@ -42,6 +49,10 @@ export const handle: Handle = async ({ event, resolve }) => {
 	// 308（301 ではなく）にするのは、メソッドを保つため。/api/* が www に来ても壊れない。
 	const redirect = canonicalRedirect(event);
 	if (redirect) return new Response(null, { status: 308, headers: { location: redirect } });
+
+	if (GONE.test(event.url.pathname)) {
+		return new Response('Gone', { status: 410, headers: { 'content-type': 'text/plain; charset=utf-8' } });
+	}
 
 	const lang = pageLanguage(event.url.pathname);
 	const response = await resolve(event, {

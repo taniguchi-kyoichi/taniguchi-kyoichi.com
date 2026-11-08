@@ -286,7 +286,7 @@ export const products: Product[] = [
 			appStore: 'https://apps.apple.com/jp/app/id1671700938',
 			web: 'https://gohobishukan.com'
 		},
-		thumbnail: '/gohobi-shukan-icon.png',
+		thumbnail: '/gohobi-shukan-icon.webp',
 		ogImage: '/gohobi-shukan-icon.png',
 		featured: true,
 		rating: 4.7,
@@ -576,32 +576,6 @@ export const products: Product[] = [
 		}
 	},
 	{
-		id: 'rein',
-		name: 'Rein',
-		description:
-			'意志じゃなくて、仕組み。ダイエット・運動・コミュニケーション・スマホ習慣のつまずきを認知科学で見直し、自分との付き合い方を変えていく iOS アプリ。',
-		fullDescription:
-			'Rein は、頑張りや意志の力で自分を変えるのではなく、自分の状態を観察して、付き合い方を少しずつ変えていくためのアプリです。\n\n暴飲暴食、運動が続かない、人にうまく連絡できない、気づいたらスマホを開いている — そういう日常のつまずきを「直すべき欠陥」ではなく「自分を知るサイン」として扱います。失敗したときも、責めるのではなく、次の一歩を選び直すための手がかりに変えます。\n\n強制せず、押し付けず、卒業も自由。使わなくなったらそれでよく、また戻ってきてもいいアプリを目指しています。',
-		type: 'app',
-		status: 'development',
-		platforms: ['ios'],
-		links: {},
-		thumbnail: '/rein-icon.webp',
-		ogImage: '/rein-icon.png',
-		featured: true,
-		hidden: true,
-		price: '無料（プレミアム予定）',
-		category: 'ヘルスケア/フィットネス',
-		ageRating: '4+',
-		features: [
-			'ダイエット・運動・コミュニケーション・スマホ習慣の 4 つを 1 つのアプリで',
-			'衝動や停滞を「サイン」として記録し、自分を観察できる',
-			'失敗を責めずに、次の一歩を選び直すリフレクション',
-			'押し付けない、そっと差し出すデザイン',
-			'いつでも卒業できる、戻ってきてもいい設計'
-		]
-	},
-	{
 		id: 'stock-radar',
 		name: 'ストックレーダー',
 		description:
@@ -720,7 +694,7 @@ export const products: Product[] = [
 		links: {
 			appStore: 'https://apps.apple.com/jp/app/id6816582916'
 		},
-		thumbnail: '/jibun-bgm-icon.png',
+		thumbnail: '/jibun-bgm-icon.webp',
 		ogImage: '/jibun-bgm-icon.jpg',
 		featured: true,
 		price: '無料（プレミアムあり）',

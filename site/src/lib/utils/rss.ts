@@ -65,7 +65,6 @@ function stripHtml(html: string): string {
 function detectSource(url: string): ArticleSource {
 	if (url.includes('zenn.dev')) return 'zenn';
 	if (url.includes('note.com')) return 'note';
-	if (url.includes('reinself.com')) return 'rein';
 	return 'other';
 }
 

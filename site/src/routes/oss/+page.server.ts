@@ -6,7 +6,10 @@ import { resolveDoccUrls } from '$lib/server/docc';
 
 export const load: PageServerLoad = async ({ setHeaders }) => {
 	setHeaders({
-		'cache-control': 'public, max-age=3600, stale-while-revalidate=86400'
+		// HTML はエッジに置かない。adapter-cloudflare は public の応答を caches.default に入れ、
+		// それはデプロイでも消えない。置くと、消えた古い JS を指す HTML が最大1時間配られ、画面が動かなくなる
+		// （2026-11-08 に実測）。外部の RSS・YouTube は取得側（cachedFetch）でエッジに置いている。
+		'cache-control': 'no-cache'
 	});
 
 	const docc = await resolveDoccUrls(ossProjects);
