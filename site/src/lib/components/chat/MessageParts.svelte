@@ -91,8 +91,8 @@
 			<ToolSkeleton label="連絡先を読み込み中…" />
 		{/if}
 
-		<!-- listWritings / listReinArticles -> grid of ArticleCard -->
-	{:else if part.type === 'tool-listWritings' || part.type === 'tool-listReinArticles'}
+		<!-- listWritings -> grid of ArticleCard -->
+	{:else if part.type === 'tool-listWritings'}
 		{#if part.state === 'output-available'}
 			{#if part.output.length > 0}
 				<div class="carousel flex snap-x gap-3 overflow-x-auto pb-1">

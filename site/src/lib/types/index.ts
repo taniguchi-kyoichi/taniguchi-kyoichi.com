@@ -121,6 +121,10 @@ export interface Product {
   category?: string;
   ageRating?: string;
   features?: string[];
+  /** 誰のためのアプリか（1〜2文）。AI に質問の答えの材料として渡す */
+  audience?: string;
+  /** なぜ作ったか・何の悩みをなくすか（1〜2文）。AI に質問の答えの材料として渡す */
+  why?: string;
   privacy?: PrivacyConfig;
   support?: SupportConfig;
   subscription?: SubscriptionConfig;
@@ -165,6 +169,16 @@ export interface OSSProject {
   topics?: string[];
   homepage?: string;
   featured?: boolean;
+}
+
+/** AI に質問で渡す本人の話。技術の名前・勤め先・住所の詳細は入れない */
+export interface About {
+  /** 技術の名前を入れない短い紹介 */
+  bio: string;
+  background: string[];
+  interests: string[];
+  /** 仕事の相談をどう受けるか */
+  work: string;
 }
 
 export interface Contact {

@@ -1,7 +1,7 @@
 {
   // cloud-hub / site — SvelteKit(adapter-cloudflare) を Cloudflare Workers Static Assets で配信。
   // 旧 Pages(wrangler.toml) から移行。apex + www を custom domain で保持。
-  // ⚠️ AskAI(/ask + /api/chat) は Workers AI + KV に依存 → 下記 ai / kv_namespaces を必ず保持。
+  // ⚠️ AskAI(/ask + /api/chat) は Claude（secret ANTHROPIC_API_KEY）+ KV に依存 → 下記 kv_namespaces と secret を必ず保持。
   "name": "cloud-hub-site",
   // AI SDK on workerd が実 AsyncLocalStorage を使うため新しめの compat date（旧 Pages と同値）。
   "compatibility_date": "2025-04-01",
@@ -11,8 +11,6 @@
     "directory": ".svelte-kit/cloudflare",
     "binding": "ASSETS"
   },
-  // Workers AI — /ask エージェントの推論（無料枠・APIキー不要）。platform.env.AI で参照。
-  "ai": { "binding": "AI" },
   // /api/chat の濫用防止（per-IP レート制限 + 全体日次キャップ）。platform.env.CHAT_LIMITS。
   "kv_namespaces": [
     { "binding": "CHAT_LIMITS", "id": "e1a0f7df4862482fb2cd1e9c40c4e84b" }

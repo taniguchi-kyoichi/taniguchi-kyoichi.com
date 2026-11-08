@@ -2,7 +2,7 @@
 	import type { OSSProject } from '$lib/types';
 
 	interface Props {
-		project: OSSProject;
+		project: Pick<OSSProject, 'id' | 'name' | 'description' | 'language'>;
 	}
 
 	let { project }: Props = $props();

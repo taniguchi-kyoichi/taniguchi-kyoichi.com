@@ -11,8 +11,6 @@ declare global {
 		// interface PageState {}
 		interface Platform {
 			env?: {
-				/** Cloudflare Workers AI binding (configured in wrangler.toml). */
-				AI: import('@cloudflare/workers-types').Ai;
 				/** KV for /api/chat rate limiting + global daily cap. */
 				CHAT_LIMITS?: import('@cloudflare/workers-types').KVNamespace;
 			};
