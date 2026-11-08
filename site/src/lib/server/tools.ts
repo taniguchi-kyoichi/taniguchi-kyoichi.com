@@ -24,11 +24,14 @@ function primaryLink(p: Product): { label: string; url: string } {
 	return { label: '紹介ページ', url: `${SITE}/products/${p.id}` };
 }
 
-function summary(p: Product) {
+/** The language the reply is written in. Japanese replies get only the Japanese app name. */
+export type ReplyLanguage = 'Japanese' | 'English';
+
+function summary(p: Product, language: ReplyLanguage) {
 	return {
 		id: p.id,
 		name: p.name,
-		nameEn: p.en?.name,
+		...(language === 'English' && p.en?.name ? { nameEn: p.en.name } : {}),
 		description: p.description,
 		status: p.status,
 		thumbnail: p.thumbnail,
@@ -42,10 +45,10 @@ function summary(p: Product) {
 }
 export type ProductSummary = ReturnType<typeof summary>;
 
-function detail(p: Product) {
+function detail(p: Product, language: ReplyLanguage) {
 	const s = p.subscription;
 	return {
-		...summary(p),
+		...summary(p, language),
 		category: p.category,
 		features: p.features ?? [],
 		audience: p.audience,
@@ -62,7 +65,8 @@ function detail(p: Product) {
 
 const publicProducts = () => products.filter((p) => !p.hidden);
 
-export const tools = {
+export function toolsFor(language: ReplyLanguage) {
+	return {
 	getProfile: tool({
 		description: 'Who Kyoichi is: short bio, background, interests, location, social links.',
 		inputSchema: z.object({}),
@@ -82,7 +86,7 @@ export const tools = {
 	listProducts: tool({
 		description: 'His public apps, with a one-line description, status, price, rating and the link to send visitors to.',
 		inputSchema: z.object({}),
-		execute: async () => publicProducts().map(summary)
+		execute: async () => publicProducts().map((p) => summary(p, language))
 	}),
 
 	getProductDetail: tool({
@@ -91,7 +95,7 @@ export const tools = {
 		inputSchema: z.object({ id: z.string().describe('product id') }),
 		execute: async ({ id }) => {
 			const p = publicProducts().find((p) => p.id === id);
-			return p ? detail(p) : null;
+			return p ? detail(p, language) : null;
 		}
 	}),
 
@@ -142,4 +146,5 @@ export const tools = {
 		inputSchema: z.object({}),
 		execute: async () => getVideos()
 	})
-};
+	};
+}
