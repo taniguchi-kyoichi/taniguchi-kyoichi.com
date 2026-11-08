@@ -4,7 +4,7 @@ import type { ChatMessage } from '$lib/chat';
 // Cheap and reliable (no extra model call), and keeps the conversation flowing.
 const BY_TOOL: Record<string, string[]> = {
 	'tool-getProfile': ['どんなアプリを作ってる？', 'AIをどう開発に活かしてる？', '仕事の依頼はできる？'],
-	'tool-listProducts': ['一番こだわったアプリは？', 'なぜそれを作ったの？', 'どんな技術で作ってる？'],
+	'tool-listProducts': ['一番こだわったアプリは？', 'なぜそれを作ったの？', '誰のためのアプリ？'],
 	'tool-getProductDetail': ['なぜこのアプリを作ったの？', '開発で工夫した点は？', '他のアプリも見たい'],
 	'tool-listOSS': ['一番使われてるOSSは？', 'なぜOSSを公開してる？', 'どんなアプリを作ってる？'],
 	'tool-listWritings': ['最近の関心テーマは？', 'AIについてどう考えてる？', 'Reinって何？'],

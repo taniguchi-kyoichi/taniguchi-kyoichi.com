@@ -34,6 +34,7 @@ export type Platform =
 export interface ProductLinks {
   appStore?: string;
   googlePlay?: string;
+  /** 製品の公式サイト。一覧と詳細から「公式サイト」として送る */
   web?: string;
   github?: string;
   docs?: string;
@@ -102,7 +103,6 @@ export interface Product {
   status: ProductStatus;
   platforms: Platform[];
   links: ProductLinks;
-  technologies: string[];
   /** 画面表示用サムネイル。WebP で小さく配信する */
   thumbnail?: string;
   /** OG / SNS カード用画像。WebP 非対応のクライアント向けに raster(JPG/PNG) を指定する。未指定なら thumbnail にフォールバック */

@@ -51,9 +51,6 @@ export const GET: RequestHandler = ({ params, setHeaders }) => {
 			`- **Rating**: ${product.rating} / 5${product.ratingCount ? ` (${product.ratingCount}件)` : ''}`
 		);
 	}
-	if (product.technologies.length > 0) {
-		lines.push(`- **Technologies**: ${product.technologies.join(', ')}`);
-	}
 	lines.push(`- **Page**: ${SITE_URL}/products/${product.id}`);
 	lines.push('');
 
@@ -62,7 +59,7 @@ export const GET: RequestHandler = ({ params, setHeaders }) => {
 		lines.push('');
 		if (product.links.appStore) lines.push(`- App Store: ${product.links.appStore}`);
 		if (product.links.googlePlay) lines.push(`- Google Play: ${product.links.googlePlay}`);
-		if (product.links.web) lines.push(`- Web: ${product.links.web}`);
+		if (product.links.web) lines.push(`- Official site: ${product.links.web}`);
 		if (product.links.github) lines.push(`- GitHub: ${product.links.github}`);
 		lines.push('');
 	}
