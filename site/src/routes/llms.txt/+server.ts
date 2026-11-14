@@ -13,7 +13,7 @@ function body(): string {
 	const lines = [
 		`# ${profile.nameEn} - ${profile.title} Portfolio`,
 		'',
-		`> ${profile.name}（${profile.nameEn}）のポートフォリオ。個人で作って App Store で公開している iOS アプリ、OSS、記事を載せています。`,
+		`> ${profile.name}（${profile.nameEn}）のポートフォリオ。個人で作って App Store と Google Play で公開しているアプリ、OSS、記事を載せています。`,
 		'',
 		'## About',
 		`- Name: ${profile.name} (${profile.nameEn})`,
@@ -26,7 +26,8 @@ function body(): string {
 			`- **${p.name}**${p.en?.name ? ` (${p.en.name})` : ''}: ${p.description}`,
 			`  - ページ: ${SITE_URL}/products/${p.id}`,
 			...(p.links.web ? [`  - 公式サイト: ${p.links.web}`] : []),
-			...(p.links.appStore ? [`  - App Store: ${p.links.appStore}`] : [])
+			...(p.links.appStore ? [`  - App Store: ${p.links.appStore}`] : []),
+			...(p.links.googlePlay ? [`  - Google Play: ${p.links.googlePlay}`] : [])
 		]),
 		'',
 		'## Sections',

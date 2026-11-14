@@ -81,7 +81,8 @@ export function legalProduct(product: Product): Product {
 		type: product.type,
 		status: product.status,
 		platforms: [],
-		links: {},
+		// 復元・解約の手順をストアごとに出し分けるため、ストアの URL だけは渡す
+		links: { appStore: product.links.appStore, googlePlay: product.links.googlePlay },
 		thumbnail: product.thumbnail,
 		privacy: product.privacy,
 		support: product.support,

@@ -104,7 +104,7 @@
 				{/if}
 
 				{#if subscription}
-					<SubscriptionHelp {subscription} appName={name} lang="en" standalone />
+					<SubscriptionHelp {subscription} appName={name} lang="en" standalone googlePlay={!!product.links.googlePlay} />
 				{/if}
 
 				<section>

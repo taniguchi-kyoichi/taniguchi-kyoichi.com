@@ -40,6 +40,7 @@ function summary(p: Product, language: ReplyLanguage) {
 		ratingCount: p.ratingCount,
 		link: primaryLink(p),
 		appStore: p.links.appStore,
+		googlePlay: p.links.googlePlay,
 		page: `${SITE}/products/${p.id}`
 	};
 }

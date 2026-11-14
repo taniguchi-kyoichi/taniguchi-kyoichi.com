@@ -53,7 +53,7 @@ export const profile: Profile = {
  * （製品の作り方は出さない方針。tool が返さなければ AI も言わない）。
  */
 export const about: About = {
-	bio: 'iOSエンジニア。自分で企画したiOSアプリを作って、App Storeで公開しています。アプリにAIを組み込むことも探っています。',
+	bio: 'iOSエンジニア。自分で企画したアプリを作って、App StoreとGoogle Playで公開しています。アプリにAIを組み込むことも探っています。',
 	background: [
 		'iOSアプリを作るエンジニアです',
 		'公開しているアプリは、読書メモリー・ごほうび習慣・じぶんBGMの3つです',
