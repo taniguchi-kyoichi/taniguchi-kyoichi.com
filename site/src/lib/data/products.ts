@@ -413,7 +413,7 @@ export const products: Product[] = [
 				{
 					question: '機種変更してもデータを引き継げますか？',
 					answer:
-						'Premium で Apple または Google とつないでおくと引き継げます。新しい端末では、iPhoneは同じApple ID、Androidは同じGoogleアカウントで購入を復元してから、同じアカウントでつないでください。'
+						'Premium で Apple または Google とつないでおくと引き継げます。iPhoneとAndroidのあいだでも引き継げます。新しい端末では、設定から前と同じアカウントでサインインしてください（無料）。同じストアで買ったPremiumは、サインインすると自動で引き継がれます。'
 				},
 				{
 					question: '以前に「広告削除」を買いました',
@@ -551,7 +551,7 @@ export const products: Product[] = [
 					{
 						question: 'Can I keep my data when I change phones?',
 						answer:
-							'Yes, if you connect Apple or Google with Premium. On the new device, restore your purchase with the same Apple ID (iPhone) or Google account (Android), then connect the same account.'
+							'Yes, if you connect Apple or Google with Premium. This also works between iPhone and Android. On the new device, sign in with the same account in Settings (free). Premium bought in the same store is carried over automatically when you sign in.'
 					},
 					{
 						question: 'I bought "Remove Ads" before',
