@@ -72,7 +72,7 @@
 					type="submit"
 					class="ai-button absolute right-1.5 top-1/2 inline-flex -translate-y-1/2 items-center gap-1 rounded-full px-4 py-2.5 text-sm font-medium text-white"
 				>
-					<span class="ai-sparkle" aria-hidden="true">✦</span> 聞く
+					<span class="ai-sparkle" aria-hidden="true">✦</span> AIに聞く
 				</button>
 			</form>
 

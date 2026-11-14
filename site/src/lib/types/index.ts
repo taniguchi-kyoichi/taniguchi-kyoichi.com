@@ -137,6 +137,37 @@ export interface Product {
    * 日本語のページの訳で、意味を足し引きしない。無ければ英語のページは 404。
    */
   en?: ProductEnglish;
+  /** トップのカードと製品のページの見せ方。無い製品は飾りのない形で出す */
+  showcase?: ProductShowcase;
+}
+
+/**
+ * 製品の世界観。色はアプリの画面から取った物で、サイトのテーマ（明るい／暗い）に関係なく固定。
+ * 文は使う人の言葉で書き、技術の名前と作る側の経緯は入れない。
+ */
+export interface ProductShowcase {
+  /** 一言のキャッチ。カードの「目的の一言」も兼ねる */
+  catch: string;
+  /** 何のアプリかの説明1文 */
+  lead: string;
+  /** 使う場面を3つ */
+  scenes: { title: string; body: string }[];
+  /** 締めの一言（入手の直前） */
+  closing: string;
+  /** App Store の画面の写真（縦長・460×999）。alt は画面に何が映っているか */
+  screenshots: { src: string; alt: string }[];
+  theme: ProductTheme;
+}
+
+export interface ProductTheme {
+  /** 地 */
+  bg: string;
+  /** 文字 */
+  fg: string;
+  /** 差し色 */
+  accent: string;
+  /** 補助の文字 */
+  muted: string;
 }
 
 /** 日本語のデータ（privacy / support / subscription）のうち、文面の項目だけを英語にしたもの */

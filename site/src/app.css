@@ -321,3 +321,24 @@ html.debug::after {
 	background: oklch(55% 0.2 25);
 	pointer-events: none;
 }
+
+/* ── Page transitions (View Transitions) ─────────────────────────────────
+   トップのカードと製品のページの行き来だけで使う（+layout.svelte の onNavigate）。
+   ページ全体は短くクロスフェード、製品のアイコンだけがカードからページの上へ動く。 */
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation-duration: 260ms;
+	animation-timing-function: ease;
+}
+::view-transition-group(*) {
+	animation-duration: 380ms;
+	animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	::view-transition-group(*),
+	::view-transition-old(*),
+	::view-transition-new(*) {
+		animation: none !important;
+	}
+}

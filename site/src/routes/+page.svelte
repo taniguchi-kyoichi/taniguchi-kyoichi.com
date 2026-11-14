@@ -46,7 +46,7 @@
 		'どんなアプリを作ってる？',
 		'最近書いた記事は？',
 		'OSS活動について',
-		'iOSの強みは？',
+		'作ったアプリは？',
 		'連絡を取りたい'
 	];
 
@@ -104,11 +104,20 @@
 			cancelled = true;
 		};
 	});
+
+	// カードの製品名だけ、製品のページと同じ見出しの書体にする。使う文字だけを取り寄せるので小さい
+	const productNameFontUrl = `https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@700&display=swap&text=${encodeURIComponent(
+		[...new Set([...visibleProducts, ...buildingInPublic].map((p) => p.name).join(''))].join('')
+	)}`;
 </script>
+
+<svelte:head>
+	<link rel="stylesheet" href={productNameFontUrl} />
+</svelte:head>
 
 <!-- Hero Section -->
 <section class="relative overflow-hidden bg-white dark:bg-gray-900">
-	<div class="mx-auto max-w-4xl px-4 py-12 sm:px-6 md:py-20 lg:px-8">
+	<div class="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-12 md:py-20 lg:px-8">
 		<div class="hero-stagger flex flex-col items-center text-center">
 			{#if profile.avatar}
 				<img
@@ -117,7 +126,7 @@
 					width="460"
 					height="460"
 					fetchpriority="high"
-					class="mb-4 h-24 w-24 rounded-full object-cover shadow-lg ring-4 ring-white sm:mb-6 sm:h-28 sm:w-28 md:h-32 md:w-32 dark:ring-gray-800"
+					class="mb-3 h-20 w-20 rounded-full object-cover shadow-lg ring-4 ring-white sm:mb-6 sm:h-28 sm:w-28 md:h-32 md:w-32 dark:ring-gray-800"
 				/>
 			{:else}
 				<div
@@ -130,31 +139,32 @@
 			<h1 class="mb-2 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl dark:text-white">
 				{profile.name}
 			</h1>
-			<p class="mb-3 text-base text-primary-600 sm:mb-4 sm:text-lg dark:text-primary-400">
-				{profile.title}
+			<p
+				class="mb-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm sm:mb-4 sm:text-base"
+			>
+				<span class="text-primary-600 dark:text-primary-400">{profile.title}</span>
+				{#if profile.location}
+					<span class="flex items-center gap-1 text-gray-500 dark:text-gray-400">
+						<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+							/>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+							/>
+						</svg>
+						{profile.location}
+					</span>
+				{/if}
 			</p>
 
-			{#if profile.location}
-				<p class="mb-4 flex items-center gap-1.5 text-sm text-gray-500 sm:mb-6 dark:text-gray-400">
-					<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-						/>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-						/>
-					</svg>
-					{profile.location}
-				</p>
-			{/if}
-
-			<p class="mb-6 max-w-2xl text-sm text-gray-600 sm:mb-8 sm:text-base dark:text-gray-300">
+			<p class="mb-5 max-w-2xl text-sm text-gray-600 sm:mb-8 sm:text-base dark:text-gray-300">
 				{profile.bio}
 			</p>
 
@@ -209,7 +219,7 @@
 			{/if}
 
 			<!-- AI ask box: primary way to explore this site -->
-			<div class="mt-8 w-full max-w-xl sm:mt-10">
+			<div class="mt-6 w-full max-w-xl sm:mt-10">
 				<form onsubmit={askAI} class="ai-field relative">
 					<input
 						bind:value={askInput}
@@ -223,7 +233,7 @@
 						type="submit"
 						class="ai-button absolute right-1.5 top-1/2 inline-flex -translate-y-1/2 items-center gap-1 rounded-full px-4 py-2 text-sm font-medium text-white"
 					>
-						<span class="ai-sparkle" aria-hidden="true">✦</span> 聞く
+						<span class="ai-sparkle" aria-hidden="true">✦</span> AIに聞く
 					</button>
 				</form>
 				<div class="mt-3 flex flex-wrap justify-center gap-2">
@@ -285,18 +295,18 @@
 
 <!-- Products Section -->
 {#if visibleProducts.length > 0}
-	<section id="products" class="bg-gray-50 py-12 md:py-20 dark:bg-gray-800/50">
+	<section id="products" class="bg-gray-50 py-8 sm:py-12 md:py-20 dark:bg-gray-800/50">
 		<div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-			<h2 class="mb-2 text-center text-xl font-bold text-gray-900 sm:text-2xl dark:text-white">
+			<h2 class="mb-1 text-center text-xl font-bold text-gray-900 sm:mb-2 sm:text-2xl dark:text-white">
 				Products
 			</h2>
-			<p class="mb-8 text-center text-sm text-gray-600 sm:mb-12 sm:text-base dark:text-gray-400">
-				公開しているアプリケーション・サービス
+			<p class="mb-5 text-center text-sm text-gray-600 sm:mb-10 sm:text-base dark:text-gray-400">
+				公開しているアプリ
 			</p>
 
-			<div class="grid gap-4 sm:gap-6 md:grid-cols-2">
-				{#each visibleProducts as product}
-					<ProductCard {product} />
+			<div class="grid gap-3 sm:gap-4 lg:grid-cols-3">
+				{#each visibleProducts as product, i (product.id)}
+					<ProductCard {product} index={i} />
 				{/each}
 			</div>
 		</div>
@@ -315,8 +325,8 @@
 			</p>
 
 			<div class="grid gap-4 sm:gap-6 md:grid-cols-2">
-				{#each buildingInPublic as product}
-					<ProductCard {product} />
+				{#each buildingInPublic as product, i (product.id)}
+					<ProductCard {product} index={i} />
 				{/each}
 			</div>
 		</div>

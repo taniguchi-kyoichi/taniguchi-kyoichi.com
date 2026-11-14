@@ -1,139 +1,147 @@
+<script module lang="ts">
+	// 浮き上がりはサイトを開いた最初の1回だけ。製品のページから戻るたびに繰り返すと、
+	// アイコンが戻ってくる動き（View Transition）と重なってうるさくなる。
+	let introPlayed = false;
+</script>
+
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import type { Product } from '$lib/types';
+	import { devicesOf, purposeOf, themeStyle } from '$lib/productShowcase';
 
 	interface Props {
 		product: Product;
+		/** 並びの何番目か。浮き上がりの時間差に使う */
+		index?: number;
 	}
 
-	let { product }: Props = $props();
+	let { product, index = 0 }: Props = $props();
 
-	const statusLabel = {
-		production: '公開中',
-		development: '開発中',
-		archived: 'アーカイブ'
-	};
+	const intro = !introPlayed;
+	onMount(() => {
+		introPlayed = true;
+	});
 
-	const statusColor = {
-		production: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
-		development: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
-		archived: 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400'
-	};
-
-	const platformLabel: Record<string, string> = {
-		ios: 'iOS',
-		android: 'Android',
-		web: 'Web',
-		macos: 'macOS',
-		windows: 'Windows',
-		linux: 'Linux',
-		cli: 'CLI'
-	};
+	const devices = $derived(devicesOf(product));
 </script>
 
-<div
-	class="group relative flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all hover:border-primary-300 hover:shadow-lg sm:rounded-2xl dark:border-gray-700 dark:bg-gray-800 dark:hover:border-primary-600"
+<a
+	href="/products/{product.id}"
+	class="product-card group relative flex items-center gap-4 rounded-2xl p-4 sm:p-5 lg:flex-col lg:items-start lg:gap-3"
+	class:intro
+	style="{themeStyle(product)};--i:{index}"
+	aria-label="{product.name}（{purposeOf(product)}）{devices ? `・${devices}` : ''}"
 >
-	<a href="/products/{product.id}" class="flex flex-1 flex-col">
-	<!-- App Icon and Header -->
-	<div class="flex items-start gap-4 p-4 sm:p-6">
-		{#if product.thumbnail}
-			<img
-				src={product.thumbnail}
-				alt={product.name}
-				width="320"
-				height="320"
-				loading="lazy"
-				class="h-20 w-20 shrink-0 rounded-2xl shadow-md transition-transform group-hover:scale-105 sm:h-24 sm:w-24"
-			/>
-		{/if}
-		<div class="min-w-0 flex-1">
-			<div class="mb-1 flex items-center gap-2">
-				<h3 class="truncate text-lg font-bold text-gray-900 sm:text-xl dark:text-white">
-					{product.name}
-				</h3>
-				<span
-					class="shrink-0 rounded-full px-2 py-0.5 text-xs font-medium {statusColor[product.status]}"
-				>
-					{statusLabel[product.status]}
-				</span>
-			</div>
-			<div class="mb-2 flex flex-wrap items-center gap-2">
-				{#each product.platforms as platform}
-					<span class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-						{#if platform === 'ios'}
-							<svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
-								<path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-							</svg>
-						{:else if platform === 'android'}
-							<svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
-								<path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85a.637.637 0 0 0-.83.22l-1.88 3.24a11.463 11.463 0 0 0-8.94 0L5.65 5.67a.643.643 0 0 0-.87-.2c-.28.18-.37.54-.22.83L6.4 9.48A10.78 10.78 0 0 0 1 18h22a10.78 10.78 0 0 0-5.4-8.52M7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5m10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5"/>
-							</svg>
-						{/if}
-						{platformLabel[platform] ?? platform}
-					</span>
-				{/each}
-				{#if product.rating !== undefined}
-					<span class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-						<svg class="h-3.5 w-3.5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-							<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-						</svg>
-						{product.rating}
-					</span>
-				{/if}
-			</div>
-			<p class="line-clamp-2 text-sm text-gray-600 dark:text-gray-300">
-				{product.description}
-			</p>
-		</div>
-	</div>
-
-	</a>
-
-	<!-- Store links: real links OUTSIDE the card anchor (valid, middle-clickable) -->
-	{#if product.links.appStore || product.links.googlePlay || product.links.web}
-		<div class="border-t border-gray-100 p-4 sm:px-6 dark:border-gray-700">
-			<div class="flex flex-wrap gap-2">
-				{#if product.links.appStore}
-					<a
-						href={product.links.appStore}
-						target="_blank"
-						rel="noopener noreferrer"
-						class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-gray-900 px-4 py-3 text-sm font-semibold text-white transition-all hover:bg-gray-700 hover:shadow-md dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
-					>
-						<svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-							<path
-								d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"
-							/>
-						</svg>
-						App Storeで入手
-					</a>
-				{/if}
-				{#if product.links.googlePlay}
-					<a
-						href={product.links.googlePlay}
-						target="_blank"
-						rel="noopener noreferrer"
-						class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-gray-900 px-4 py-3 text-sm font-semibold text-white transition-all hover:bg-gray-700 hover:shadow-md dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
-					>
-						<svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-							<path
-								d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"
-							/>
-						</svg>
-						Google Playで入手
-					</a>
-				{/if}
-				{#if product.links.web}
-					<a
-						href={product.links.web}
-						target="_blank"
-						rel="noopener noreferrer"
-						class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-semibold text-gray-700 transition-all hover:bg-gray-50 hover:shadow-md dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
-					>
-						公式サイト
-					</a>
-				{/if}
-			</div>
-		</div>
+	{#if product.thumbnail}
+		<img
+			src={product.thumbnail}
+			alt=""
+			width="320"
+			height="320"
+			loading="lazy"
+			class="h-16 w-16 shrink-0 rounded-[22%] sm:h-[72px] sm:w-[72px]"
+			style="view-transition-name: product-icon-{product.id}"
+		/>
 	{/if}
-</div>
+	<div class="min-w-0 flex-1">
+		<h3 class="product-name text-lg font-bold leading-snug">{product.name}</h3>
+		<p class="product-purpose mt-0.5 text-sm leading-relaxed">{purposeOf(product)}</p>
+		{#if devices}
+			<p class="product-muted mt-1 text-xs">{devices}</p>
+		{/if}
+	</div>
+	<svg
+		class="product-chevron h-5 w-5 shrink-0 lg:absolute lg:right-5 lg:top-5"
+		viewBox="0 0 20 20"
+		fill="currentColor"
+		aria-hidden="true"
+	>
+		<path
+			fill-rule="evenodd"
+			d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+			clip-rule="evenodd"
+		/>
+	</svg>
+</a>
+
+<style>
+	.product-card {
+		background: var(--pw-bg);
+		color: var(--pw-fg);
+		box-shadow:
+			0 0 0 1px color-mix(in srgb, var(--pw-fg) 10%, transparent),
+			0 1px 2px rgb(0 0 0 / 0.06);
+		transition:
+			transform 200ms cubic-bezier(0.2, 0.7, 0.2, 1),
+			box-shadow 200ms ease;
+	}
+	/* 製品名は語の途中で折り返さない。*/
+	.product-name {
+		font-family: 'Zen Kaku Gothic New', var(--font-sans);
+		word-break: keep-all;
+		overflow-wrap: anywhere;
+	}
+	/* キャッチは読点のあとでだけ折り返す（「ごほう／び」のように語の途中で切らない） */
+	.product-purpose {
+		word-break: keep-all;
+		overflow-wrap: anywhere;
+	}
+	.product-muted {
+		color: var(--pw-muted);
+	}
+	.product-chevron {
+		color: var(--pw-accent);
+		transition: transform 200ms ease;
+	}
+	.product-card:focus-visible {
+		outline: 3px solid var(--color-primary-500);
+		outline-offset: 3px;
+	}
+
+	@media (hover: hover) {
+		.product-card:hover {
+			transform: translateY(-2px);
+			box-shadow:
+				0 0 0 1px color-mix(in srgb, var(--pw-fg) 14%, transparent),
+				0 10px 24px -8px rgb(0 0 0 / 0.25);
+		}
+		.product-card:hover .product-chevron {
+			transform: translateX(3px);
+		}
+	}
+	.product-card:active {
+		transform: scale(0.985);
+		transition-duration: 80ms;
+	}
+
+	/* 最初の1回だけ、上から順に少しずつ浮き上がる。終わったら普段の見た目に戻す（backwards）ので、ホバーの動きを邪魔しない */
+	.intro {
+		animation: card-rise 520ms cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+		animation-delay: calc(var(--i) * 70ms + 120ms);
+	}
+	@keyframes card-rise {
+		from {
+			opacity: 0;
+			transform: translateY(12px);
+		}
+		to {
+			opacity: 1;
+			transform: none;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.intro {
+			animation: none;
+		}
+		.product-card,
+		.product-chevron {
+			transition: none;
+		}
+		.product-card:hover,
+		.product-card:active,
+		.product-card:hover .product-chevron {
+			transform: none;
+		}
+	}
+</style>
