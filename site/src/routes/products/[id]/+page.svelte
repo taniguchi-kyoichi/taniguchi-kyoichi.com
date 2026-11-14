@@ -202,7 +202,8 @@
 	.price {
 		margin-top: 1rem;
 		font-size: 0.8125rem;
-		color: var(--pw-muted);
+		/* 濃い地の上で補助の色だと読みにくいと言われたので、本文の色を少し薄めて使う */
+		color: color-mix(in srgb, var(--pw-fg) 82%, transparent);
 	}
 
 	.shots-wrap {

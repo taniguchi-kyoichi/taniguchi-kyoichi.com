@@ -327,8 +327,8 @@ export const products: Product[] = [
 		},
 		thumbnail: '/gohobi-shukan-icon.webp',
 		showcase: {
-			catch: '続かなかったことが、ごほうびで続く',
-			lead: '習慣を達成するたびに、自分で決めたごほうびが近づいてくるアプリです。',
+			catch: '続かなかったことが、自分へのごほうびで続く',
+			lead: 'ケーキや旅行など、自分で決めたごほうびを目標に、習慣を続けるアプリです。',
 			scenes: [
 				{
 					title: '間食をがまんした日が、ケーキに近づく',
