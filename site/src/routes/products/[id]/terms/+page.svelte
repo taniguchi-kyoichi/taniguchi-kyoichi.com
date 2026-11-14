@@ -15,6 +15,8 @@
 	const contactEmail = product.support?.contactEmail ?? product.privacy?.contactEmail;
 
 	const EULA = 'https://www.apple.com/legal/internet-services/itunes/dev/stdeula/';
+	const PLAY_TERMS = 'https://play.google.com/about/play-terms/';
+	const googlePlay = !!product.links.googlePlay;
 	const heading = 'mb-3 text-lg font-semibold text-gray-900 dark:text-white';
 	const link = 'text-primary-600 hover:underline dark:text-primary-400';
 </script>
@@ -48,10 +50,21 @@
 			<div class="space-y-8 text-gray-700 leading-relaxed dark:text-gray-300">
 				<section>
 					<h2 class={heading}>使用許諾契約</h2>
-					<p>
-						{product.name} の使用許諾契約は、Apple 標準の使用許諾契約（EULA）です。
-						<a href={EULA} class={link}>Apple 標準の使用許諾契約を読む</a>
-					</p>
+					{#if googlePlay}
+						<p>
+							App Storeで入手した{product.name}の使用許諾契約は、Apple標準の使用許諾契約（EULA）です。
+							<a href={EULA} class={link}>Apple標準の使用許諾契約を読む</a>
+						</p>
+						<p class="mt-2">
+							Google Playで入手した{product.name}には、このページの条件と
+							<a href={PLAY_TERMS} class={link}>Google Playの利用規約</a>が当てはまります。
+						</p>
+					{:else}
+						<p>
+							{product.name} の使用許諾契約は、Apple 標準の使用許諾契約（EULA）です。
+							<a href={EULA} class={link}>Apple 標準の使用許諾契約を読む</a>
+						</p>
+					{/if}
 					<p class="mt-2">このページには、それに加えて有料プラン（{subscription.planName}）の条件を書いています。</p>
 				</section>
 
@@ -81,13 +94,20 @@
 						{/each}
 					</ul>
 					<ul class="mt-3 list-inside list-disc space-y-1">
-						<li>代金は購入を確定したときに Apple ID に請求されます</li>
-						<li>期間が終わる24時間前までに解約しないと、同じ期間・同じ価格で自動で更新されます</li>
-						<li>更新の代金は、期間が終わる前の24時間以内に請求されます</li>
-						<li>解約と管理は iPhone の「設定」→ 自分の名前 →「サブスクリプション」から行えます</li>
+						{#if googlePlay}
+							<li>代金は購入を確定したときに、App StoreではApple IDに、Google PlayではGoogleアカウントに登録したお支払い方法に請求されます</li>
+							<li>App Storeでは、期間が終わる24時間前までに解約しないと、同じ期間・同じ価格で自動で更新されます。更新の代金は、期間が終わる前の24時間以内に請求されます</li>
+							<li>Google Playでは、次の更新日より前に解約しないと、同じ期間・同じ価格で自動で更新されます</li>
+							<li>解約と管理は、iPhoneでは「設定」→自分の名前→「サブスクリプション」から、AndroidではGoogle Playアプリのプロフィールアイコン→「お支払いと定期購入」→「定期購入」から行えます</li>
+						{:else}
+							<li>代金は購入を確定したときに Apple ID に請求されます</li>
+							<li>期間が終わる24時間前までに解約しないと、同じ期間・同じ価格で自動で更新されます</li>
+							<li>更新の代金は、期間が終わる前の24時間以内に請求されます</li>
+							<li>解約と管理は iPhone の「設定」→ 自分の名前 →「サブスクリプション」から行えます</li>
+						{/if}
 						{#if subscription.trial}
 							<li>
-								{subscription.trial.period}は、はじめの{trialLengthJa(subscription.trial)}を無料で試せます。お試しの終わる24時間前までに解約しないと、そのまま有料の{subscription.trial.period}に切り替わり、代金が請求されます
+								{googlePlay ? 'App Storeの' : ''}{subscription.trial.period}は、はじめの{trialLengthJa(subscription.trial)}を無料で試せます。お試しの終わる24時間前までに解約しないと、そのまま有料の{subscription.trial.period}に切り替わり、代金が請求されます
 							</li>
 						{/if}
 					</ul>
@@ -100,7 +120,7 @@
 					{/if}
 				</section>
 
-				<SubscriptionHelp {subscription} appName={product.name} lang="ja" />
+				<SubscriptionHelp {subscription} appName={product.name} lang="ja" {googlePlay} />
 
 				{#if product.privacy}
 					<section>
@@ -119,20 +139,33 @@
 				<section lang="en" class="border-t border-gray-200 pt-8 dark:border-gray-700">
 					<h2 class={heading}>Terms of Use (English)</h2>
 					<p>
-						The license agreement for {product.name} is
-						<a href={EULA} class={link}>Apple's standard EULA</a>. Paid features are sold as
+						The license agreement for {product.name}{googlePlay ? ' from the App Store' : ''} is
+						<a href={EULA} class={link}>Apple's standard EULA</a>.
+						{#if googlePlay}
+							If you got {product.name} from Google Play, these terms and the
+							<a href={PLAY_TERMS} class={link}>Google Play Terms of Service</a> apply.
+						{/if}
+						Paid features are sold as
 						auto-renewable subscriptions ({subscription.prices.map((p) => p.price).join(' / ')} in Japan).
-						Payment is charged to your Apple ID at confirmation of purchase. The subscription renews
-						automatically unless cancelled at least 24 hours before the end of the current period; renewal is
-						charged within 24 hours before the period ends.
+						{#if googlePlay}
+							On the App Store, payment is charged to your Apple ID at confirmation of purchase, and the
+							subscription renews automatically unless cancelled at least 24 hours before the end of the current
+							period; renewal is charged within 24 hours before the period ends. On Google Play, payment is charged
+							to the payment method on your Google account, and the subscription renews automatically unless
+							cancelled before the next renewal date.
+						{:else}
+							Payment is charged to your Apple ID at confirmation of purchase. The subscription renews
+							automatically unless cancelled at least 24 hours before the end of the current period; renewal is
+							charged within 24 hours before the period ends.
+						{/if}
 						{#if subscription.trial}
-							The {subscription.trial.periodEn} plan starts with a {trialAdjectiveEn(subscription.trial)} free trial. Unless you
+							{googlePlay ? 'On the App Store, the' : 'The'} {subscription.trial.periodEn} plan starts with a {trialAdjectiveEn(subscription.trial)} free trial. Unless you
 							cancel at least 24 hours before the trial ends, it converts to the paid {subscription.trial.periodEn}
 							plan and you are charged.
 						{/if}
 					</p>
 					<div class="mt-4 space-y-4">
-						<SubscriptionHelp {subscription} appName={product.name} lang="en" />
+						<SubscriptionHelp {subscription} appName={product.name} lang="en" {googlePlay} />
 					</div>
 					{#if contactEmail}
 						<p class="mt-4">Contact: <a href="mailto:{contactEmail}" class={link}>{contactEmail}</a></p>

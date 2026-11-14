@@ -10,9 +10,10 @@ export const products: Product[] = [
 			'読書メモリーは、本を愛するすべての人のための読書管理アプリです。読みたい本・読書中の本・読み終えた本を、美しいビジュアル本棚で眺めるように管理できます。\n\n気になった一節や考えたことは、チャット形式の読書メモで気軽に残せます。一冊との対話の記録が積み重なっていくことで、本との関係が深まり、後から読み返したときに当時の自分の感覚も一緒に蘇ります。\n\nバーコードスキャンで蔵書登録は数秒。ジャンルやステータス、評価別の読書統計で、自分がどんな読書をしてきたかを振り返れます。読書好きの世界観を大切に、装飾より本そのものが映えるデザインを目指しました。',
 		type: 'app',
 		status: 'production',
-		platforms: ['ios'],
+		platforms: ['ios', 'android'],
 		links: {
-			appStore: 'https://apps.apple.com/jp/app/id6751159926'
+			appStore: 'https://apps.apple.com/jp/app/id6751159926',
+			googlePlay: 'https://play.google.com/store/apps/details?id=com.kyoichi.readingmemory'
 		},
 		thumbnail: '/reading-memory-icon.webp',
 		ogImage: '/reading-memory-icon.jpg',
@@ -33,15 +34,17 @@ export const products: Product[] = [
 		audience: '読んだことを残したい人。読んだ内容や感想を忘れてしまう人、本を買っては積んでしまう人、仕事や勉強で実用書を読む人に向けています。',
 		why: '「読んだのに内容を話せない」「読み返しても前に何を思ったか分からない」をなくすため。読んだ本の要点と感想を自分の言葉で残し、あとで見返せるようにしました。',
 		privacy: {
-			effectiveDate: '2026-11-03',
+			effectiveDate: '2026-11-14',
 			dataCollection: 'standard',
 			dataItems: [
 				'アカウントを識別するためのID（AppleまたはGoogleでのサインイン）。メールアドレスはサインインを任せている外部の事業者が持ち、読書の記録には保存しません',
 				'登録した本と、読書の記録（読んだ日、読んだページ、評価、読後の気持ち、読書カード）',
 				'本について書いた付箋・ノート・メモ（以前の版でAIが返した言葉も含みます）',
 				'ページの写真（ページを撮って文字を読み取るときだけ。読み取りのあいだサーバーを通り、保存しません）',
-				'ニックネームとプロフィール画像',
-				'アプリ内の操作の記録（アプリを開いた・本を探した・メモリープラスの画面を見た、など）と、アプリの版、端末の言語と地域'
+				'ニックネームとプロフィール画像（iPhoneの版だけ）',
+				'iPhoneの版では、アプリ内の操作の記録（アプリを開いた・本を探した・メモリープラスの画面を見た、など）と、アプリの版、端末の言語と地域',
+				'Androidの版では、端末の中で文字とバーコードを読む機能の動作の記録（性能の数値・エラーの種類・端末の機種とOS・インストールごとのID）。その機能を提供する外部の事業者に送ります。読み取った文字や写真は含みません',
+				'購入の記録（App StoreまたはGoogle Playでの購入・更新・解約）'
 			],
 			serviceProviders: [
 				'サインイン・本と記録とメモとプロフィール画像の保管と同期・アプリの使われ方の分析・購入の管理・本を探すときの書名やISBNの照会・AIの機能を、外部の事業者に任せています。任せる情報は、その目的に要る分だけです。',
@@ -85,7 +88,8 @@ export const products: Product[] = [
 					title: 'アカウントの削除',
 					paragraphs: [
 						'アプリの「設定」→「アカウントを削除」で、いつでもアカウントを削除できます。サインインのアカウントと、サーバーにある本・読書の記録・付箋・ノート・メモ・プロフィール画像、1.4.0以前の版のデータが消えます。元に戻せません。',
-						'アカウントを削除してもメモリープラスは解約されず、App Storeでの請求が続きます。先にApp Storeで解約してください。アプリを消すだけでは、サーバーの記録は消えません。'
+						'アカウントを削除してもメモリープラスは解約されず、App StoreまたはGoogle Playでの請求が続きます。先に、購入したストアで解約してください。アプリを消すだけでは、サーバーの記録は消えません。',
+						'アプリを消したあとでも、下のメールアドレスに削除を頼めます。手順は削除の案内のページ（https://reading-memory-api.taniguchi-kyoichi.com/delete-account）にもあります。'
 					]
 				},
 				{
@@ -120,7 +124,7 @@ export const products: Product[] = [
 						'本の登録は無料で、冊数の上限はありません。付箋・ノート・ページの文字の読み取り・読書カードとはんこ・カレンダー・ウィジェットも無料でずっと使えます。メモリープラス（年額¥6,000／月額¥600）では、撮ったページの選んだ行を要点に整えること、ノートの言葉をほかの本からも引く索引、1年のまとめ、詳しい統計、書いたメモの要約が使えます。無料のお試しはありません。'
 				}
 			],
-			systemRequirements: 'iOS 26.0以上'
+			systemRequirements: 'iOS 26.0以上、Android 8.0以上'
 		},
 		subscription: {
 			planName: 'メモリープラス',
@@ -143,15 +147,20 @@ export const products: Product[] = [
 				'詳しい統計（月ごとの読了数・ジャンル・評価・読後の気持ち）',
 				'書いたメモの要約（AIを使います）'
 			],
-			restoreSteps: ['「設定」タブを開く', '「メモリープラス」の「詳しく見る」を押す', '「購入を復元」を押す'],
+			restoreSteps: ['「設定」タブを開く', '「メモリープラス」の「詳しく見る」をタップする', '「購入を復元」をタップする'],
 			restoreStepsEn: [
 				'Open the 「設定」 (Settings) tab',
 				'Tap 「詳しく見る」 (Learn more) on 「メモリープラス」 (Memory Plus)',
 				'Tap 「購入を復元」 (Restore purchases)'
 			],
+			restoreStepsAndroid: ['「設定」を開く', '「メモリープラス」の欄の「購入を復元」をタップする'],
+			restoreStepsAndroidEn: [
+				'Open 「設定」 (Settings)',
+				'In the 「メモリープラス」 (Memory Plus) section, tap 「購入を復元」 (Restore purchases)'
+			],
 			notes: [
 				'無料のお試しはありません。購入を確定したときから代金がかかります',
-				'米国の価格は 年額 $39.99／月額 $3.99 です。ほかの国と地域の価格は App Store に表示されます'
+				'App Storeの米国の価格は 年額 $39.99／月額 $3.99 です。ほかの国と地域の価格は、App StoreとGoogle Playに表示されます'
 			]
 		},
 		en: {
@@ -162,8 +171,10 @@ export const products: Product[] = [
 					'The books you add, and your reading records (days you read, pages read, ratings, how a book made you feel, and reading cards)',
 					'The sticky notes, notebooks and notes you write about books (including words AI returned in earlier versions)',
 					'Photos of pages (only when you snap a page to read its text. They pass through the server while the text is read, and are not stored)',
-					'Nickname and profile photo',
-					'Records of actions in the app (such as opening the app, searching for a book, or viewing the Memory Plus screen), with the app version and the language and region of your device'
+					'Nickname and profile photo (iPhone version only)',
+					'In the iPhone version, records of actions in the app (such as opening the app, searching for a book, or viewing the Memory Plus screen), with the app version and the language and region of your device',
+					'In the Android version, records of how the on-device text and barcode reading works (performance numbers, error types, device model and OS, and an ID for each installation). They are sent to the service provider of that feature. They do not include the text read or the photos',
+					'Purchase records (purchases, renewals and cancellations on the App Store or Google Play)'
 				],
 				serviceProviders: [
 					'We use outside service providers for sign-in, storing and syncing your books, records, notes and profile photo, analytics of how the app is used, managing purchases, looking up books by title or ISBN, and the AI features. We share only what each purpose needs.',
@@ -206,7 +217,8 @@ export const products: Product[] = [
 						title: 'Deleting your account',
 						paragraphs: [
 							'You can delete your account at any time in the app under Settings → Delete Account (「設定」→「アカウントを削除」 in Japanese). This deletes your sign-in account; your books, reading records, sticky notes, notebooks, notes and profile photo on the server; and data from app versions 1.4.0 and earlier. It cannot be undone.',
-							'Deleting your account does not cancel Memory Plus, and you will keep being billed on the App Store. Cancel it in the App Store first. Deleting the app alone does not delete your records on the server.'
+							'Deleting your account does not cancel Memory Plus, and you will keep being billed on the App Store or Google Play. Cancel it first in the store you bought it from. Deleting the app alone does not delete your records on the server.',
+							'Even after you delete the app, you can ask us by email at the address below to delete your account. The steps are also on the account deletion page (https://reading-memory-api.taniguchi-kyoichi.com/en/delete-account).'
 						]
 					},
 					{
@@ -238,10 +250,10 @@ export const products: Product[] = [
 					{
 						question: 'What is the difference between free and Memory Plus?',
 						answer:
-							'Adding books is free, with no limit on how many. Sticky notes, notebooks, reading text from pages, reading cards and stamps, the calendar and widgets are also free for good. With Memory Plus (¥6,000 per year / ¥600 per month in Japan; $39.99 / $3.99 in the US), you can turn the lines you pick from a page into key points, look up a word from your notebook across all your books, see your year in books and detailed statistics, and get summaries of your notes. There is no free trial.'
+							'Adding books is free, with no limit on how many. Sticky notes, notebooks, reading text from pages, reading cards and stamps, the calendar and widgets are also free for good. With Memory Plus (¥6,000 per year / ¥600 per month in Japan; $39.99 / $3.99 on the US App Store), you can turn the lines you pick from a page into key points, look up a word from your notebook across all your books, see your year in books and detailed statistics, and get summaries of your notes. There is no free trial.'
 					}
 				],
-				systemRequirements: 'iOS 26.0 or later'
+				systemRequirements: 'iOS 26.0 or later, Android 8.0 or later'
 			},
 			subscription: {
 				planName: 'Memory Plus',
@@ -267,7 +279,7 @@ export const products: Product[] = [
 				restoreSteps: ['Open the "Settings" tab', 'Tap "Learn more" on Memory Plus', 'Tap "Restore purchases"'],
 				notes: [
 					'There is no free trial. You are charged when you confirm the purchase',
-					'In the US, the price is $39.99 per year / $3.99 per month. Prices in other countries and regions are shown on the App Store'
+					'On the US App Store, the price is $39.99 per year / $3.99 per month. Prices in other countries and regions are shown on the App Store and Google Play'
 				]
 			}
 		}
@@ -281,9 +293,10 @@ export const products: Product[] = [
 			'ごほうび習慣は、続けたい習慣に「ごほうび」をひもづけて、ゲームのように続けるためのアプリです。運動・勉強・早起きなど、続けたいことを決めて1回ぶんの値を決めると、達成するたびにほしいものが近づいていきます。\n\nごほうびに届いたら、がんばった自分にごほうびを。数字はアプリの中だけのもので、現金やポイントにはなりません。続けるほど増える継続ボーナス、時間で進めるタイマー、毎日のリマインダーで、気持ちが切れにくくなります。\n\n3.0 で作り直し、広告をやめました。記録はこの端末に保存され、匿名のアカウントでバックアップされます。Premium で Apple または Google とつなぐと、複数の端末で同期でき、機種を変えても続きから使えます。',
 		type: 'app',
 		status: 'production',
-		platforms: ['ios'],
+		platforms: ['ios', 'android'],
 		links: {
 			appStore: 'https://apps.apple.com/jp/app/id1671700938',
+			googlePlay: 'https://play.google.com/store/apps/details?id=com.kyoichi.gohobishukan',
 			web: 'https://gohobishukan.com'
 		},
 		thumbnail: '/gohobi-shukan-icon.webp',
@@ -305,24 +318,25 @@ export const products: Product[] = [
 		audience: 'ゲームのような手ごたえがあると続く大人（高校生〜30代）。勉強・運動・早起きを続けたいけれど、ただのチェックリストでは飽きてしまう人に向けています。',
 		why: 'ただのチェックリストでは習慣が続かないため。続けるための仕組みをそのまま遊びにして、「今日の1回で、ごほうびが確かに近づいた」という嬉しさで続けられるようにしました。',
 		privacy: {
-			effectiveDate: '2026-11-06',
+			effectiveDate: '2026-11-14',
 			dataCollection: 'standard',
 			dataItems: [
 				'アカウントを識別するためのID（初めて開いたときに作られる匿名のID。AppleまたはGoogleとつないだときは、そのアカウントのID）',
 				'メールアドレス（AppleまたはGoogleとつないだときだけ。サインインのために使います）',
 				'登録した習慣・ごほうび・目標と、達成や交換の記録（バックアップと同期のため）',
 				'アプリ内の操作の記録（アプリを開いた・習慣を達成した・Premiumの画面を見た、など）と、アプリの版、端末の言語と地域。習慣やごほうびの名前、金額、入力した文は含みません',
-				'ヘルスケアとモーションの記録（歩数・ワークアウト・睡眠）は、許可したときだけ端末の中で読みます。読んだ値はサーバーに送らず、目標に届いた日の達成だけを記録します',
-				'購入の記録（無料体験の開始・購入・更新・解約・返金と、その金額と通貨。以前の「広告削除」を含みます）と、広告からアプリを入れたかどうか',
-				'通知のための端末の情報（プッシュ通知のトークン、時間帯、言語、アプリの版、通知を許可しているかどうか）',
-				'ごほうびにつけた写真（つけたときだけ）',
-				'「ごほうびを頼む」を使ったときの呼び名、ごほうびの名前、目標の回数と進み、送った応援（約束の相手に見えます）',
-				'シェアのリンクにつける絵（自分でリンクを送るときだけ）',
+				'ヘルスケアとモーションの記録（歩数・ワークアウト・睡眠。iPhoneの版だけ）は、許可したときだけ端末の中で読みます。読んだ値はサーバーに送らず、目標に届いた日の達成だけを記録します',
+				'購入の記録（App StoreまたはGoogle Playでの無料体験の開始・購入・更新・解約・返金と、その金額と通貨。以前の「広告削除」を含みます）と、広告からアプリを入れたかどうか（iPhoneの版だけ）',
+				'通知のための端末の情報（プッシュ通知のトークン、時間帯、言語、アプリの版、通知を許可しているかどうか。iPhoneの版だけ。Androidの版のリマインダーは端末の中で鳴らし、通知のための情報をサーバーに送りません）',
+				'ごほうびにつけた写真（つけたときだけ。iPhoneの版だけ）',
+				'「ごほうびを頼む」を使ったときの呼び名、ごほうびの名前、目標の回数と進み、送った応援（約束の相手に見えます。iPhoneの版だけ）',
+				'シェアのリンクにつける絵（自分でリンクを送るときだけ。iPhoneの版だけ）',
 				'約束やシェアのリンクのページを開いた記録（Cookieの乱数を使います。IPアドレスと端末の情報は持ちません）'
 			],
 			serviceProviders: [
 				'サインイン・記録のバックアップと同期・操作と購入と通知の端末の記録の保管・通知の送信・購入の管理と広告からアプリを入れたかどうかの計測・書いた文の読み取りを、外部の事業者に任せています。任せる情報は、その目的に要る分だけです。',
-				'習慣やごほうびを自分で書いたときは、書いた文と端末の言語・お金の単位をAIで読み取り、習慣やごほうびの形に直します。あなたのIDは送りません。'
+				'iPhoneの版で習慣やごほうびを自分で書いたときは、書いた文と端末の言語・お金の単位をAIで読み取り、習慣やごほうびの形に直します。あなたのIDは送りません。',
+				'Androidの版で外部の事業者に任せるのは、サインイン・記録のバックアップと同期・操作と購入の記録の保管・購入の管理です。'
 			],
 			analyticsUsed: true,
 			sections: [
@@ -364,7 +378,8 @@ export const products: Product[] = [
 					paragraphs: [
 						'アプリの「設定」→「アカウントを削除」で、いつでもアカウントを削除できます。サインインのアカウントと、サーバーとこの端末にある習慣・ごほうび・目標・達成と交換の記録、通知の端末の情報が消えます。元に戻せません。',
 						'操作の記録と購入の記録は、あなたのIDを無作為なIDに置き換えて残します。これらに習慣やごほうびの名前、金額、入力した文は含まれません。',
-						'アカウントを削除してもPremiumは解約されず、App Storeでの請求が続きます。先にApp Storeで解約してください。アプリを消すだけでは、サーバーの記録は消えません。'
+						'アカウントを削除してもPremiumは解約されず、App StoreまたはGoogle Playでの請求が続きます。先に、購入したストアで解約してください。アプリを消すだけでは、サーバーの記録は消えません。',
+						'アプリを消したあとでも、下のメールアドレスに削除を頼めます。手順は削除の案内のページ（https://gohobishukan.com/delete-account）にもあります。'
 					]
 				},
 				{
@@ -398,7 +413,7 @@ export const products: Product[] = [
 				{
 					question: '機種変更してもデータを引き継げますか？',
 					answer:
-						'Premium で Apple または Google とつないでおくと引き継げます。新しい端末では、同じ Apple ID で購入を復元してから、同じアカウントでつないでください。'
+						'Premium で Apple または Google とつないでおくと引き継げます。新しい端末では、iPhoneは同じApple ID、Androidは同じGoogleアカウントで購入を復元してから、同じアカウントでつないでください。'
 				},
 				{
 					question: '以前に「広告削除」を買いました',
@@ -408,10 +423,10 @@ export const products: Product[] = [
 				{
 					question: 'リマインダーの通知が届きません',
 					answer:
-						'iOS の「設定」→「通知」→「ごほうび習慣」で通知が許可されているか確かめてください。習慣ごとの通知は、習慣の編集画面から曜日と時刻を決められます。'
+						'iPhoneは「設定」→「通知」→「ごほうび習慣」で、Androidは端末の「設定」→「アプリ」→「ごほうび習慣」→「通知」で、通知が許可されているか確かめてください。習慣ごとの通知は、習慣の編集画面から曜日と時刻を決められます。'
 				}
 			],
-			systemRequirements: 'iOS 17.0以上'
+			systemRequirements: 'iOS 17.0以上、Android 8.0以上'
 		},
 		subscription: {
 			planName: 'Premium',
@@ -434,11 +449,12 @@ export const products: Product[] = [
 				'機種を変えても続きから使える'
 			],
 			trial: { length: 7, unit: 'day', period: '年額', periodEn: 'annual' },
-			restoreSteps: ['「設定」を開く', '「購入を復元」を押す'],
+			restoreSteps: ['「設定」を開く', '「購入を復元」をタップする'],
 			restoreStepsEn: ['Open 「設定」 (Settings) in the app', 'Tap 「購入を復元」 (Restore purchases)'],
 			notes: [
 				'2026年10月26日までに使い始めた方は、追加の支払いなしで Premium を使えます',
-				'以前に買い切りの「広告削除」を買った方は、追加の支払いなしで Premium を使えます'
+				'以前に買い切りの「広告削除」を買った方は、追加の支払いなしで Premium を使えます',
+				'Androidの版には、タイマーとホーム画面のウィジェットはありません'
 			]
 		},
 		en: {
@@ -449,17 +465,18 @@ export const products: Product[] = [
 					'Email address (only when you connect Apple or Google; used for sign-in)',
 					'The habits, rewards and goals you add, and records of completions and exchanges (to back them up and sync them)',
 					'Records of actions in the app (such as opening the app, completing a habit, or viewing the Premium screen), with the app version and the language and region of your device. They do not contain the names of your habits or rewards, amounts, or text you type',
-					'Health and Motion data (steps, workouts and sleep) is read on your device only if you allow it. The values are not sent to our servers; we record only the completion on days you reach your goal',
-					'Purchase records (start of a free trial, purchases, renewals, cancellations and refunds, with the amount and currency; including the earlier "Remove Ads"), and whether the app was installed from an ad',
-					'Device information for notifications (the push notification token, time zone, language, app version, and whether notifications are allowed)',
-					'Photos you add to a reward (only when you add one)',
-					'When you use “Ask for a reward”: the name you go by, the reward name, the target and progress, and the cheers you send (the person you asked can see these)',
-					'The image attached to a share link (only when you send a link yourself)',
+					'Health and Motion data (steps, workouts and sleep; iPhone version only) is read on your device only if you allow it. The values are not sent to our servers; we record only the completion on days you reach your goal',
+					'Purchase records on the App Store or Google Play (start of a free trial, purchases, renewals, cancellations and refunds, with the amount and currency; including the earlier "Remove Ads"), and whether the app was installed from an ad (iPhone version only)',
+					'Device information for notifications (the push notification token, time zone, language, app version, and whether notifications are allowed; iPhone version only. In the Android version, reminders are scheduled on your device and no notification information is sent to our servers)',
+					'Photos you add to a reward (only when you add one; iPhone version only)',
+					'When you use “Ask for a reward”: the name you go by, the reward name, the target and progress, and the cheers you send (the person you asked can see these; iPhone version only)',
+					'The image attached to a share link (only when you send a link yourself; iPhone version only)',
 					'Records of opening a pact or share link page (using a random value in a cookie; we do not keep your IP address or device information)'
 				],
 				serviceProviders: [
 					'We use outside service providers for sign-in, backup and sync of your records, storing action records, purchase records and device information for notifications, sending notifications, managing purchases and measuring whether the app was installed from an ad, and reading the text you write. We share only what each purpose needs.',
-					'When you type a habit or reward yourself, the text you typed, with your device language and currency, is read by AI to turn it into a habit or reward. Your ID is not sent.'
+					'In the iPhone version, when you type a habit or reward yourself, the text you typed, with your device language and currency, is read by AI to turn it into a habit or reward. Your ID is not sent.',
+					'In the Android version, we use outside service providers only for sign-in, backup and sync of your records, storing action and purchase records, and managing purchases.'
 				],
 				sections: [
 					{
@@ -500,7 +517,8 @@ export const products: Product[] = [
 						paragraphs: [
 							'You can delete your account at any time in the app under Settings → Delete Account (「設定」→「アカウントを削除」 in Japanese). This deletes your sign-in account; your habits, rewards, goals, and completion and exchange records on the server and on this device; and the device information for notifications. It cannot be undone.',
 							'Action records and purchase records are kept with your ID replaced by a random ID. They do not contain the names of your habits or rewards, amounts, or text you type.',
-							'Deleting your account does not cancel Premium, and you will keep being billed on the App Store. Cancel it in the App Store first. Deleting the app alone does not delete your records on the server.'
+							'Deleting your account does not cancel Premium, and you will keep being billed on the App Store or Google Play. Cancel it first in the store you bought it from. Deleting the app alone does not delete your records on the server.',
+							'Even after you delete the app, you can ask us by email at the address below to delete your account. The steps are also on the account deletion page (https://gohobishukan.com/delete-account).'
 						]
 					},
 					{
@@ -532,7 +550,7 @@ export const products: Product[] = [
 					{
 						question: 'Can I keep my data when I change phones?',
 						answer:
-							'Yes, if you connect Apple or Google with Premium. On the new device, restore your purchase with the same Apple ID, then connect the same account.'
+							'Yes, if you connect Apple or Google with Premium. On the new device, restore your purchase with the same Apple ID (iPhone) or Google account (Android), then connect the same account.'
 					},
 					{
 						question: 'I bought "Remove Ads" before',
@@ -542,10 +560,10 @@ export const products: Product[] = [
 					{
 						question: 'Reminder notifications do not arrive',
 						answer:
-							'In iOS Settings → Notifications → Reward Habits, check that notifications are allowed. For each habit, you can set the days and time of its notification on the habit\'s edit screen.'
+							'On iPhone, check Settings → Notifications → Reward Habits. On Android, check the device Settings → Apps → Reward Habits → Notifications. Make sure notifications are allowed. For each habit, you can set the days and time of its notification on the habit\'s edit screen.'
 					}
 				],
-				systemRequirements: 'iOS 17.0 or later'
+				systemRequirements: 'iOS 17.0 or later, Android 8.0 or later'
 			},
 			subscription: {
 				planName: 'Premium',
@@ -570,7 +588,8 @@ export const products: Product[] = [
 				restoreSteps: ['Open "Settings"', 'Tap "Restore purchases"'],
 				notes: [
 					'If you started using the app on or before October 26, 2026, you can use Premium at no additional cost',
-					'If you bought the earlier one-time "Remove Ads" purchase, you can use Premium at no additional cost'
+					'If you bought the earlier one-time "Remove Ads" purchase, you can use Premium at no additional cost',
+					'The Android version does not have the timer or the Home Screen widget'
 				]
 			}
 		}
@@ -685,14 +704,15 @@ export const products: Product[] = [
 		id: 'jibun-bgm',
 		name: 'じぶんBGM',
 		description:
-			'作業中も、生活の中でも、BGMを流しっぱなしに。定番のBGMは押せばすぐ鳴り、曲と環境音を重ねて自分のBGMとして残せる iOS アプリ。',
+			'作業中も、生活の中でも、BGMを流しっぱなしに。定番のBGMはタップですぐ鳴り、曲と環境音を重ねて自分のBGMとして残せるアプリ。',
 		fullDescription:
-			'じぶんBGMは、作業中も生活の中でも、音を止めずに流しておくためのアプリです。朝のカフェミュージックや夜のジャズバーなど、定番のBGMは押せばすぐに鳴ります。\n\n曲に雨や焚き火、波の音を重ねて音量を決めれば、自分のBGMとして保存できます。集中するときは長さを決めてタイマーを動かすと、音が鳴っている時間だけを数えます。\n\nロック画面とコントロールセンターから、アプリを開かずにいつものBGMを流せます。音はオフラインでも鳴り続けます。広告はなく、再生時間の制限もありません。',
+			'じぶんBGMは、作業中も生活の中でも、音を止めずに流しておくためのアプリです。朝のカフェミュージックや夜のジャズバーなど、定番のBGMはタップするとすぐに鳴ります。\n\n曲に雨や焚き火、波の音を重ねて音量を決めれば、自分のBGMとして保存できます。集中するときは長さを決めてタイマーを動かすと、音が鳴っている時間だけを数えます。\n\nロック画面とコントロールセンター（Androidはクイック設定）から、アプリを開かずにいつものBGMを流せます。音はオフラインでも鳴り続けます。広告はなく、再生時間の制限もありません。',
 		type: 'app',
 		status: 'production',
-		platforms: ['ios'],
+		platforms: ['ios', 'android'],
 		links: {
-			appStore: 'https://apps.apple.com/jp/app/id6816582916'
+			appStore: 'https://apps.apple.com/jp/app/id6816582916',
+			googlePlay: 'https://play.google.com/store/apps/details?id=com.kyoichi.jibunbgm'
 		},
 		thumbnail: '/jibun-bgm-icon.webp',
 		ogImage: '/jibun-bgm-icon.jpg',
@@ -701,26 +721,27 @@ export const products: Product[] = [
 		category: 'ミュージック',
 		ageRating: '4+',
 		features: [
-			'定番のBGMは押せばすぐに鳴る',
+			'定番のBGMはタップするとすぐに鳴る',
 			'曲と環境音を重ねて、自分のBGMとして保存（プレミアム）',
 			'鳴っている時間だけを数える集中タイマー',
-			'ロック画面・コントロールセンター・ウィジェットから流せる',
+			'ロック画面・コントロールセンター（Androidはクイック設定）・ウィジェットから流せる',
 			'オフラインでも鳴り続ける',
 			'広告なし・再生時間の制限なし'
 		],
 		audience: '音を流しながら作業や勉強をする人。雨や焚き火の音を重ねたい人、YouTubeのカフェジャズなどで作業している人に向けています。',
 		why: 'YouTubeで毎回やっている「BGMを探して、音量を合わせて、広告で止まる」を省くため。曲に雨音や焚き火の音を自分の比率で重ねて保存し、押せばすぐ流れるようにしました。',
 		privacy: {
-			effectiveDate: '2026-11-03',
+			effectiveDate: '2026-11-14',
 			dataCollection: 'minimal',
 			dataItems: [
 				'匿名のインストール ID（初回の起動で端末が作るランダムな文字列。アカウントとは結び付けません）',
 				'アプリ内の操作の記録（例: 画面を開いた、BGMを流した。値は数の範囲や決まった語だけで、BGMの名前や入力した文字は送りません）',
-				'サインインしたときだけ: メールアドレスとユーザー ID（有料プランを別の端末に引き継ぐためだけに使います）',
+				'サインインしたときだけ: メールアドレス・名前・ユーザーID（有料プランを別の端末に引き継ぐためだけに使います。名前はサインインを任せている外部の事業者が持ち、アプリの画面に出すだけです）',
 				'有料プランの期限（サインインしているときはユーザー ID と一緒に）',
 				'音の配信のときに、接続元の IP アドレス（配信と不正利用の防止のため）',
 				'作ったBGM・お気に入り・集中の記録・外観の設定は端末の中だけに保存し、送りません',
-				'広告 ID（IDFA）は読みません。広告もトラッキングもありません'
+				'購入の記録（App StoreまたはGoogle Playでの購入・更新・解約）',
+				'広告ID（iPhoneのIDFA、Androidの広告ID）は読みません。広告もトラッキングもありません'
 			],
 			serviceProviders: [
 				'サインイン（Appleでサインイン・Googleでサインインしたときだけ）・音とカタログの配信・操作の記録の保管・購入の管理を、外部の事業者に任せています。任せる情報は、その目的に要る分だけです。'
@@ -734,7 +755,7 @@ export const products: Product[] = [
 				{
 					question: '無料でどこまで使えますか？',
 					answer:
-						'定番のBGMを流す・タイマー・ロック画面とコントロールセンターからの操作は無料です。曲と環境音を重ねて自分のBGMを保存すること、ウィジェットで流すBGMを選ぶことはプレミアム（年額¥6,000 / 月額¥1,200）です。'
+						'定番のBGMを流す・タイマー・ロック画面とコントロールセンター（Androidはクイック設定と通知）からの操作は無料です。曲と環境音を重ねて自分のBGMを保存すること、ウィジェットで流すBGMを選ぶことはプレミアム（年額¥6,000 / 月額¥1,200）です。'
 				},
 				{
 					question: 'インターネットにつながっていなくても鳴りますか？',
@@ -748,10 +769,10 @@ export const products: Product[] = [
 				{
 					question: 'アカウントを削除するには？',
 					answer:
-						'BGMの一覧の右上の人のアイコンから「アカウント」を開き、「アカウントを削除」を押してください。端末に保存したBGMは端末に残ります。'
+						'iPhoneでは、BGMの一覧の右上の人のアイコンから「アカウント」を開き、「アカウントを削除」をタップしてください。Androidでは、右上の人のアイコンから「設定」を開き、「サインイン」の欄の「アカウントを削除」をタップしてください。端末に保存したBGMは端末に残ります。アカウントを削除しても有料プランは解約されないので、先に、購入したストアで解約してください。手順は削除の案内のページ（https://jibun-bgm.taniguchi-kyoichi.com/delete-account）にもあります。'
 				}
 			],
-			systemRequirements: 'iOS 27.0以上'
+			systemRequirements: 'iOS 27.0以上、Android 8.0以上'
 		},
 		subscription: {
 			planName: 'プレミアム',
@@ -762,18 +783,28 @@ export const products: Product[] = [
 			free: [
 				'定番のBGMを流す',
 				'集中タイマー',
-				'ロック画面・コントロールセンターからの操作',
+				'ロック画面・コントロールセンター（Androidはクイック設定と通知）からの操作',
 				'広告なし・再生時間の制限なし'
 			],
 			paid: ['曲と環境音を重ねて、自分のBGMとして保存', 'ウィジェットで流すBGMを選ぶ'],
 			restoreSteps: [
 				'BGMの一覧の右上の人のアイコンから「アカウント」を開く',
-				'「プラン」の「有料にする」を押す',
-				'「購入を復元」を押す'
+				'「プラン」の「有料にする」をタップする',
+				'「購入を復元」をタップする'
 			],
 			restoreStepsEn: [
 				'On the BGM list, tap the person icon at the top right to open 「アカウント」 (Account)',
 				'Under 「プラン」 (Plan), tap 「有料にする」 (Upgrade)',
+				'Tap 「購入を復元」 (Restore purchases)'
+			],
+			restoreStepsAndroid: [
+				'BGMの一覧の右上の人のアイコンから「設定」を開く',
+				'「サブスクリプション」の「プレミアムにする」をタップする',
+				'「購入を復元」をタップする'
+			],
+			restoreStepsAndroidEn: [
+				'On the BGM list, tap the person icon at the top right to open 「設定」 (Settings)',
+				'Under 「サブスクリプション」 (Subscription), tap 「プレミアムにする」 (Go Premium)',
 				'Tap 「購入を復元」 (Restore purchases)'
 			]
 		}

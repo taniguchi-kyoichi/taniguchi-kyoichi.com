@@ -78,6 +78,10 @@ export interface SubscriptionConfig {
   restoreSteps: string[];
   /** 英語の手順。画面の言葉は日本語のまま「」で残す */
   restoreStepsEn: string[];
+  /** Android で画面の言葉や道筋が iPhone と違うときだけ書く、Android の復元の手順 */
+  restoreStepsAndroid?: string[];
+  /** restoreStepsAndroid の英語。画面の言葉は日本語のまま「」で残す */
+  restoreStepsAndroidEn?: string[];
   /** 補足（旧プランの扱いなど） */
   notes?: string[];
   /** 無料のお試し。例: 年額に 7 日間 / 年額に 1 か月 */

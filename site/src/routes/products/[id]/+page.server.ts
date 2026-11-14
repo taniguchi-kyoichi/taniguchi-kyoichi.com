@@ -26,7 +26,16 @@ export const load: PageServerLoad = async ({ params }) => {
 	const socialImage = product.ogImage ?? product.thumbnail;
 	const ogImage = socialImage ? absoluteUrl(socialImage) : DEFAULT_OG_IMAGE;
 
-	const sameAs = [product.links.web, product.links.appStore].filter((u): u is string => !!u);
+	const sameAs = [product.links.web, product.links.appStore, product.links.googlePlay].filter(
+		(u): u is string => !!u
+	);
+	const operatingSystem = [
+		product.platforms.includes('ios') ? 'iOS' : undefined,
+		product.platforms.includes('android') ? 'Android' : undefined,
+		product.platforms.includes('macos') ? 'macOS' : undefined
+	]
+		.filter((os): os is string => !!os)
+		.join(', ');
 
 	const seo: SEO = {
 		title: `${product.name} | ${SITE_NAME}`,
@@ -57,12 +66,8 @@ export const load: PageServerLoad = async ({ params }) => {
 				url: `${SITE_URL}/products/${product.id}`,
 				image: ogImage,
 				applicationCategory: product.category ?? 'MobileApplication',
-				operatingSystem: product.platforms.includes('ios')
-					? 'iOS'
-					: product.platforms.includes('macos')
-						? 'macOS'
-						: undefined,
-				// 公式サイトと App Store を同じアプリとして結ぶ
+				operatingSystem: operatingSystem || undefined,
+				// 公式サイトと App Store・Google Play を同じアプリとして結ぶ
 				sameAs: sameAs.length > 0 ? sameAs : undefined,
 				downloadUrl: product.links.appStore,
 				offers: priceToOffer(product.price),

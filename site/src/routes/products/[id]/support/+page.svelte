@@ -125,7 +125,7 @@
 				{/if}
 
 				{#if product.subscription}
-					<SubscriptionHelp subscription={product.subscription} appName={product.name} lang="ja" />
+					<SubscriptionHelp subscription={product.subscription} appName={product.name} lang="ja" googlePlay={!!product.links.googlePlay} />
 				{/if}
 
 				<!-- Contact -->
@@ -185,10 +185,10 @@
 						<a
 							href="mailto:{support.contactEmail}"
 							class="text-primary-600 hover:underline dark:text-primary-400">{support.contactEmail}</a
-						>. For a bug, please include your iPhone model, iOS version, and what happened.
+						>. For a bug, please include your device model{product.links.googlePlay ? ' (iPhone or Android)' : ''}, OS version, and what happened.
 					</p>
 					{#if product.subscription}
-						<SubscriptionHelp subscription={product.subscription} appName={product.name} lang="en" />
+						<SubscriptionHelp subscription={product.subscription} appName={product.name} lang="en" googlePlay={!!product.links.googlePlay} />
 					{/if}
 					<p>
 						{#if product.privacy}
