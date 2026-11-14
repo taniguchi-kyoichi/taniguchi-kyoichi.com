@@ -3,8 +3,10 @@ import type { About, Profile, Contact } from '$lib/types';
 export const profile: Profile = {
 	name: '谷口 恭一',
 	nameEn: 'Kyoichi Taniguchi',
-	title: 'iOS Engineer',
-	bio: 'iOSエンジニア。Swift & SwiftUI を使ったネイティブiOSアプリ開発に情熱を注いでいます。モバイルアプリケーションへのAI統合技術も探求中。',
+	// 技術の名前は入れない（トップの紹介・ページの題・AI に質問のカードに出る）
+	title: 'アプリ開発者',
+	// ストアの名前の途中で折り返さないよう、名前の中の空白はノーブレークスペース
+	bio: '自分で企画したアプリを作って、App\u00a0StoreとGoogle\u00a0Playで公開しています。',
 	avatar: '/profile.webp',
 	location: '神奈川県横浜市',
 	socialLinks: [

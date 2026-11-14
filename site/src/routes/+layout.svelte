@@ -10,6 +10,7 @@
 	import { openPalette } from '$lib/stores/commandPalette.svelte';
 	import { isDebug } from '$lib/debug';
 	import { onMount } from 'svelte';
+	import { onNavigate } from '$app/navigation';
 
 	interface Props {
 		children: import('svelte').Snippet;
@@ -23,6 +24,23 @@
 	// dev-only: `?debug` freezes animations and shows a DEBUG badge for layout work
 	onMount(() => {
 		if (isDebug()) document.documentElement.classList.add('debug');
+	});
+
+	// トップのカードと製品のページの行き来だけ、ページをまたいでつなぐ（View Transitions）。
+	// アイコンはカードからページの上へ動き、製品の色はふわっと切り替わる。
+	// 動きを減らす設定の人と、対応していないブラウザでは何もしない（普段の遷移のまま）。
+	onNavigate((navigation) => {
+		if (!document.startViewTransition) return;
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		const isProductPage = (id: string | null | undefined) => id === '/products/[id]';
+		if (!isProductPage(navigation.from?.route.id) && !isProductPage(navigation.to?.route.id)) return;
+
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			});
+		});
 	});
 
 	// Fallback so error pages (which may not provide `seo`) don't crash <svelte:head>.

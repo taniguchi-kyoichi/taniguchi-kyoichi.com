@@ -16,6 +16,32 @@ export const products: Product[] = [
 			googlePlay: 'https://play.google.com/store/apps/details?id=com.kyoichi.readingmemory'
 		},
 		thumbnail: '/reading-memory-icon.webp',
+		showcase: {
+			catch: '読書が、毎日の習慣になる',
+			lead: '読んだ本と書いた言葉を、1冊ずつ本棚に並べていく読書記録のアプリです。',
+			scenes: [
+				{
+					title: '寝る前の10分が、読書の時間になる',
+					body: '決めた時間にそっと知らせが届きます。読んだ日には印が付き、続いた日が目に見えて増えていきます。'
+				},
+				{
+					title: '前に読んだ本の言葉を、また思い出せる',
+					body: '心に残った一文を書いておくと、あとで見返せます。読み終えた本が、ちゃんと自分の中に残ります。'
+				},
+				{
+					title: '積んだままの本が、本棚で待っている',
+					body: '読みたい本も読み終えた本も同じ本棚に。次に読む1冊がすぐに決まります。'
+				}
+			],
+			closing: '今夜の1冊から、はじめてみませんか。',
+			screenshots: [
+				{ src: '/products/reading-memory/1.webp', alt: '読書が、毎日の習慣に。読んだ日に印が並んだカレンダーの絵' },
+				{ src: '/products/reading-memory/2.webp', alt: '読むほど、続けたくなる。読んだ日数と連続日数、月のカレンダーの画面' },
+				{ src: '/products/reading-memory/3.webp', alt: '前に読んだ本を、もう忘れない。読んでいる本と、前に書いたメモが出る本棚の画面' },
+				{ src: '/products/reading-memory/4.webp', alt: '積読が、なくなっていく。読み終えた本とこれから読む本が並ぶ本棚の画面' }
+			],
+			theme: { bg: '#f5ede1', fg: '#3a2a22', accent: '#a6452f', muted: '#7a6658' }
+		},
 		ogImage: '/reading-memory-icon.jpg',
 		featured: true,
 		rating: 5.0,
@@ -300,6 +326,32 @@ export const products: Product[] = [
 			web: 'https://gohobishukan.com'
 		},
 		thumbnail: '/gohobi-shukan-icon.webp',
+		showcase: {
+			catch: '続かなかったことが、ごほうびで続く',
+			lead: '習慣を達成するたびに、自分で決めたごほうびが近づいてくるアプリです。',
+			scenes: [
+				{
+					title: '間食をがまんした日が、ケーキに近づく',
+					body: '手に入れたいごほうびを自分で決めます。今日の分を達成すると、ごほうびまでの残りが減っていきます。'
+				},
+				{
+					title: 'がんばった分が、目に見えて進む',
+					body: '続いた日と、ごほうびまでの進み具合がひと目で分かります。意志の力だけに頼らず、ゲームのように続けられます。'
+				},
+				{
+					title: '届いたら、がんばった自分にごほうび',
+					body: 'ごほうびに届いたら交換します。次のごほうびを決めて、また明日から。'
+				}
+			],
+			closing: '続けたいことを、1つ決めてみませんか。',
+			screenshots: [
+				{ src: '/products/gohobi-shukan/1.webp', alt: '続かなかったことが、ごほうびで続く。間食をがまんしたらケーキ、早起きしたらカフェなど、習慣とごほうびの組み合わせの絵' },
+				{ src: '/products/gohobi-shukan/2.webp', alt: '続けた分だけ、ほしいものが近づく。ごほうびまで習慣をあと2回と出るホームの画面' },
+				{ src: '/products/gohobi-shukan/3.webp', alt: 'タップして、今日もクリア。ごほうびに届いて交換できるようになった画面' },
+				{ src: '/products/gohobi-shukan/4.webp', alt: '届いたら、自分にごほうび。長押しでごほうびを開く画面' }
+			],
+			theme: { bg: '#1f4a3b', fg: '#fdf6e6', accent: '#f2c13d', muted: '#cfe0d6' }
+		},
 		ogImage: '/gohobi-shukan-icon.png',
 		featured: true,
 		rating: 4.7,
@@ -718,6 +770,32 @@ export const products: Product[] = [
 			googlePlay: 'https://play.google.com/store/apps/details?id=com.kyoichi.jibunbgm'
 		},
 		thumbnail: '/jibun-bgm-icon.webp',
+		showcase: {
+			catch: 'いつもの机が、朝のカフェになる',
+			lead: 'ジャズやピアノに雨音やカフェのざわめきを重ねて、作業のあいだ流しておけるアプリです。',
+			scenes: [
+				{
+					title: '好きな音を選ぶと、すぐに鳴りはじめる',
+					body: '曲はジャズ・ピアノ・ボサノバ。環境音は雨・波・焚き火・カフェ。好きな物を重ねて、自分だけのBGMに。'
+				},
+				{
+					title: '流したまま、作業に戻れる',
+					body: '画面を消しても鳴り続けます。区切りの時間を決めておけば、集中と休けいの切り替えも任せられます。'
+				},
+				{
+					title: 'その日の気分で、場所を変える',
+					body: '雨の夜の窓辺、朝のカフェ、波の音の部屋。気分に合わせて、机の上の景色が変わります。'
+				}
+			],
+			closing: '今日の作業に、音を1つ足してみませんか。',
+			screenshots: [
+				{ src: '/products/jibun-bgm/1.webp', alt: '好きな音を重ねて、自分の作業用BGMに。曲と雨や時計の音の音量を合わせる画面' },
+				{ src: '/products/jibun-bgm/2.webp', alt: 'いつもの机が、雨の窓辺になる。雨の窓を背に再生しているロック画面' },
+				{ src: '/products/jibun-bgm/3.webp', alt: 'その日の気分で、選んで流すだけ。雨の夜の窓辺や夕暮れの海辺など、場面ごとのBGMが並ぶ画面' },
+				{ src: '/products/jibun-bgm/4.webp', alt: '答えるだけで、あなたのBGMができる。質問に答えてできたBGMの画面' }
+			],
+			theme: { bg: '#17150f', fg: '#f3ece0', accent: '#e7b46a', muted: '#b9ad9b' }
+		},
 		ogImage: '/jibun-bgm-icon.jpg',
 		featured: true,
 		price: '無料（プレミアムあり）',

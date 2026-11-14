@@ -4,6 +4,9 @@ import { error } from '@sveltejs/kit';
 import { profile } from '$lib/data/profile';
 import { absoluteUrl, DEFAULT_OG_IMAGE, DEFAULT_OG_IMAGE_SIZE, SITE_NAME, SITE_URL } from '$lib/seo';
 import type { SEO } from '$lib/seo';
+import type { Product } from '$lib/types';
+import { appStoreIdOf, priceLineOf } from '$lib/productShowcase';
+import { legalPath } from '$lib/legal';
 
 // schema.org Offer.price must be numeric. Free → '0'; non-numeric (e.g.
 // '無料（プレミアム予定）') → '0'; otherwise extract digits, else omit offers.
@@ -86,5 +89,35 @@ export const load: PageServerLoad = async ({ params }) => {
 		]
 	};
 
-	return { product, seo };
+	return {
+		product: pageProduct(product),
+		priceLine: priceLineOf(product),
+		appStoreId: appStoreIdOf(product),
+		legalLinks: legalLinksOf(product),
+		seo
+	};
 };
+
+/**
+ * ページが使う項目だけを渡す。渡したデータは画面に出さなくてもページのソースに載るので、
+ * 規約の文面や機能の一覧（作り方の名前が混ざりうる）は入れない。
+ */
+function pageProduct(product: Product) {
+	const { id, name, description, platforms, links, thumbnail, showcase } = product;
+	return { id, name, description, platforms, links, thumbnail, showcase };
+}
+
+/**
+ * ページの一番下の規約類の1行。ルートが 404 になる物は出さない（各 +page.server.ts の条件と同じ）。
+ * App Store の審査に登録している URL なので、ここから辿れることが大事。
+ */
+function legalLinksOf(product: Product): { label: string; href: string; lang?: string }[] {
+	const links: { label: string; href: string; lang?: string }[] = [];
+	if (product.support) links.push({ label: 'サポート', href: legalPath(product.id, 'support', 'ja') });
+	if (product.privacy) links.push({ label: 'プライバシーポリシー', href: legalPath(product.id, 'privacy', 'ja') });
+	if (product.subscription) links.push({ label: '利用規約', href: legalPath(product.id, 'terms', 'ja') });
+	if (product.en && product.support && product.en.support) {
+		links.push({ label: 'English', href: legalPath(product.id, 'support', 'en'), lang: 'en' });
+	}
+	return links;
+}
