@@ -40,6 +40,17 @@ function canonicalRedirect(event: RequestEvent): string | null {
  */
 const GONE = /^\/(rein|products\/rein)(\/|\.md$|$)/;
 
+/**
+ * ごほうび習慣の法務・サポートの面は gohobishukan.com に移した（2026-11-14）。3.2.3 までのアプリとストアの掲載が
+ * この URL を持っているので、ずっと 301 で新しい面へ送る。/en/ は英語の面へ。
+ */
+const GOHOBI_LEGAL = /^(\/en)?\/products\/gohobi-shukan\/(terms|privacy|support)\/?$/;
+
+function gohobiLegalRedirect(pathname: string): string | null {
+	const m = GOHOBI_LEGAL.exec(pathname);
+	return m ? `https://gohobishukan.com${m[1] ?? ''}/${m[2]}/` : null;
+}
+
 /** `<html lang>`。英語のページは /en/ の下にだけ置く（今は法務・サポートの面だけ）。 */
 function pageLanguage(pathname: string): 'ja' | 'en' {
 	return pathname === '/en' || pathname.startsWith('/en/') ? 'en' : 'ja';
@@ -49,6 +60,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 	// 308（301 ではなく）にするのは、メソッドを保つため。/api/* が www に来ても壊れない。
 	const redirect = canonicalRedirect(event);
 	if (redirect) return new Response(null, { status: 308, headers: { location: redirect } });
+
+	const moved = gohobiLegalRedirect(event.url.pathname);
+	if (moved) return new Response(null, { status: 301, headers: { location: moved } });
 
 	if (GONE.test(event.url.pathname)) {
 		return new Response('Gone', { status: 410, headers: { 'content-type': 'text/plain; charset=utf-8' } });
