@@ -448,10 +448,11 @@ export const products: Product[] = [
 				'Apple または Google とつないで、複数の端末で同期',
 				'機種を変えても続きから使える'
 			],
-			trial: { length: 7, unit: 'day', period: '年額', periodEn: 'annual' },
 			restoreSteps: ['「設定」を開く', '「購入を復元」をタップする'],
 			restoreStepsEn: ['Open 「設定」 (Settings) in the app', 'Tap 「購入を復元」 (Restore purchases)'],
 			notes: [
+				'無料のお試しはありません。購入を確定したときから代金がかかります',
+				'3.2.0より前の版のアプリでApp Storeの年額を買うときだけ、はじめの7日間を無料で試せます。お試しの終わる24時間前までに解約しないと、そのまま有料の年額に切り替わり、代金が請求されます',
 				'2026年10月26日までに使い始めた方は、追加の支払いなしで Premium を使えます',
 				'以前に買い切りの「広告削除」を買った方は、追加の支払いなしで Premium を使えます',
 				'Androidの版には、タイマーとホーム画面のウィジェットはありません'
@@ -587,6 +588,8 @@ export const products: Product[] = [
 				],
 				restoreSteps: ['Open "Settings"', 'Tap "Restore purchases"'],
 				notes: [
+					'There is no free trial. You are charged when you confirm the purchase',
+					'Only when you buy the annual plan on the App Store from an app version earlier than 3.2.0, you can try it free for the first 7 days. Unless you cancel at least 24 hours before the trial ends, it switches to the paid annual plan and you are charged',
 					'If you started using the app on or before October 26, 2026, you can use Premium at no additional cost',
 					'If you bought the earlier one-time "Remove Ads" purchase, you can use Premium at no additional cost',
 					'The Android version does not have the timer or the Home Screen widget'
