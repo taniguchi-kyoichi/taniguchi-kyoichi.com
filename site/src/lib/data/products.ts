@@ -832,22 +832,40 @@ export const products: Product[] = [
 		audience: '音を流しながら作業や勉強をする人。雨や焚き火の音を重ねたい人、YouTubeのカフェジャズなどで作業している人に向けています。',
 		why: 'YouTubeで毎回やっている「BGMを探して、音量を合わせて、広告で止まる」を省くため。曲に雨音や焚き火の音を自分の比率で重ねて保存し、押せばすぐ流れるようにしました。',
 		privacy: {
-			effectiveDate: '2026-11-14',
-			dataCollection: 'minimal',
+			effectiveDate: '2026-11-22',
+			dataCollection: 'standard',
 			dataItems: [
-				'匿名のインストール ID（初回の起動で端末が作るランダムな文字列。アカウントとは結び付けません）',
-				'アプリ内の操作の記録（例: 画面を開いた、BGMを流した。値は数の範囲や決まった語だけで、BGMの名前や入力した文字は送りません）',
-				'サインインしたときだけ: メールアドレス・名前・ユーザーID（有料プランを別の端末に引き継ぐためだけに使います。名前はサインインを任せている外部の事業者が持ち、アプリの画面に出すだけです）',
+				'匿名のインストール ID（初回の起動で端末が作るランダムな文字列。サインインしたときは、ユーザーIDと結び付けます）',
+				'アプリ内の操作の記録（例: 画面を開いた、BGMを流した。値は数の範囲や決まった語だけで、BGMの名前や入力した文字は送りません）。iPhoneとAndroidの両方の版で送ります',
+				'サインインしたときだけ: メールアドレス・名前・ユーザーID（有料プランを別の端末に引き継ぐためと、操作の記録・問い合わせ・アンケートの答えをその人の物として結び付けるために使います。名前はサインインを任せている外部の事業者が持ち、アプリの画面に出すだけです）',
 				'有料プランの期限（サインインしているときはユーザー ID と一緒に）',
 				'音の配信のときに、接続元の IP アドレス（配信と不正利用の防止のため）',
+				'アプリの中の問い合わせ（「ヘルプと問い合わせ」）に書いた文と添えた画像、問い合わせに自動で添える情報（アプリの版・端末の機種とOS・プレミアムか・開いていた画面・直近の操作・アプリの中で出したお知らせ）。iPhoneの版だけです',
+				'問い合わせの返事を知らせる通知のための、端末の通知のトークン（iPhoneの版だけ）',
+				'どこからアプリを入れたか（入れたあと最初にアプリを開いたURL、Appleの検索広告から入れたときの広告のトークン、Androidの版ではGoogle PlayのInstall Referrer）',
+				'アンケートの答え（選んだ答えと、書いた人だけ書いた文）。答えるかどうかは任意です',
 				'作ったBGM・お気に入り・集中の記録・外観の設定は端末の中だけに保存し、送りません',
 				'購入の記録（App StoreまたはGoogle Playでの購入・更新・解約）',
 				'広告ID（iPhoneのIDFA、Androidの広告ID）は読みません。広告もトラッキングもありません'
 			],
 			serviceProviders: [
-				'サインイン（Appleでサインイン・Googleでサインインしたときだけ）・音とカタログの配信・操作の記録の保管・購入の管理を、外部の事業者に任せています。任せる情報は、その目的に要る分だけです。'
+				'サインイン（Appleでサインイン・Googleでサインインしたときだけ）・音とカタログの配信・操作の記録の保管・購入の管理を、外部の事業者に任せています。任せる情報は、その目的に要る分だけです。',
+				'操作の記録・問い合わせ・アンケートの答え・どこからアプリを入れたか・有料プランの状態は、私たちがCloudflareの上で動かしている仕組み（appgrowstack・api.appgrowstack.com）に送ります。インストールごとのIDと結び付け、サインインしていればユーザーIDとも結び付けます。',
+				'問い合わせの返事の下書きを作ることと、アンケートに書いた文を話題に分けることに、AI（AnthropicのClaude）を使います。そのために、問い合わせの文と添えた画像・添えた情報、アンケートの文を、Anthropic（米国）に送ります。返事は、運営者が下書きを読んでから送ります。問い合わせとアンケートの文を、AIの学習のために渡すことはしません。'
 			],
 			analyticsUsed: true,
+			sections: [
+				{
+					title: '保存する期間',
+					items: [
+						'サインインの記録と有料プランの期限: アカウントがあるあいだ。アカウントを削除すると消します',
+						'私たちのアプリのサーバーにある操作の記録: アプリの改善に要るあいだ。インストールごとのIDとだけ結び付いていて、アカウントを削除しても消えません',
+						'appgrowstackに送った操作の記録: 90日で消します',
+						'問い合わせと返事・添えた画像・アンケートの答え・どこからアプリを入れたか・通知のトークン: アカウントを削除するまで。アカウントを削除すると消します。サインインしていない方は、下のメールアドレスに頼めば消します。通知のトークンは、通知が届かなくなったときにも消します',
+						'外部の事業者が持つ購入の記録、AIに送った文と画像は、各事業者の決まりに従って保管されます'
+					]
+				}
+			],
 			contactEmail: 'info@taniguchi-kyoichi.com'
 		},
 		support: {
@@ -908,6 +926,86 @@ export const products: Product[] = [
 				'Under 「サブスクリプション」 (Subscription), tap 「プレミアムにする」 (Go Premium)',
 				'Tap 「購入を復元」 (Restore purchases)'
 			]
+		},
+		en: {
+			name: 'Jibun BGM',
+			privacy: {
+				dataItems: [
+					'An anonymous installation ID (a random string your device makes the first time you open the app. When you sign in, it is linked to your user ID)',
+					'Records of actions in the app (for example, opening a screen or playing a BGM. Values are only number ranges or fixed words; BGM names and anything you type are not sent). Both the iPhone and Android versions send them',
+					'Only when you sign in: your email address, name and user ID (used to carry your paid plan over to another device, and to link action records, questions and survey answers to you. Your name is held by the service provider we use for sign-in and is only shown in the app)',
+					'The expiry date of your paid plan (with your user ID when you are signed in)',
+					'Your IP address when sounds are delivered (for delivery and to prevent abuse)',
+					'What you write in the in-app contact form (「ヘルプと問い合わせ」, Help & Contact) and any images you attach, plus information added to it automatically (the app version, device model and OS, whether you have Premium, the screen you were on, your recent actions, and in-app messages we showed you). iPhone version only',
+					'Your device\'s notification token, to let you know when we reply to your question (iPhone version only)',
+					'Where you installed the app from (the URL that first opened the app after you installed it, the ad token when you installed from an Apple Search Ads ad, and in the Android version, the Google Play Install Referrer)',
+					'Your survey answers (the choices you pick, and text only if you write some). Answering is optional',
+					'The BGMs you make, your favorites, your focus records and appearance settings are stored only on your device and are not sent',
+					'Purchase records (purchases, renewals and cancellations on the App Store or Google Play)',
+					'We do not read the advertising ID (IDFA on iPhone, the advertising ID on Android). There are no ads and no tracking'
+				],
+				serviceProviders: [
+					'We use outside service providers for sign-in (only when you use Sign in with Apple or Sign in with Google), delivering sounds and the catalog, storing action records, and managing purchases. We share only what each purpose needs.',
+					'Action records, questions you send us, survey answers, where you installed the app from, and the status of your paid plan are sent to a system we run on Cloudflare (appgrowstack, api.appgrowstack.com). They are linked to an ID for each installation, and also to your user ID if you are signed in.',
+					'We use AI (Claude by Anthropic) to draft replies to your questions and to sort the text you write in surveys into topics. For this, the text of your question with its attached images and information, and the text of your survey answers, are sent to Anthropic in the United States. A person running the app reads each draft before a reply is sent. We do not hand over your questions or survey text for training AI.'
+				],
+				sections: [
+					{
+						title: 'How long we keep it',
+						items: [
+							'Sign-in records and the expiry date of your paid plan: while you have an account. They are deleted when you delete your account',
+							'Action records on the app\'s own server: as long as needed to improve the app. They are linked only to an ID for each installation, and are not deleted when you delete your account',
+							'Action records sent to appgrowstack: deleted after 90 days',
+							'Questions and replies, attached images, survey answers, where you installed the app from, and notification tokens: until you delete your account. They are deleted when you delete your account. If you have not signed in, email us at the address below and we will delete them. A notification token is also deleted when notifications can no longer reach the device',
+							'Purchase records held by our service providers, and text and images sent to AI, are kept under each provider\'s own rules'
+						]
+					}
+				]
+			},
+			support: {
+				faq: [
+					{
+						question: 'How much can I use for free?',
+						answer:
+							'Playing the standard BGMs, the timer, and controls from the Lock Screen and Control Center (on Android, Quick Settings and the notification) are free. Saving your own BGM by layering music and ambient sounds, and choosing which BGM a widget plays, need Premium (¥6,000 per year / ¥1,200 per month in Japan).'
+					},
+					{
+						question: 'Does it play without an internet connection?',
+						answer: 'Sounds that have been loaded once keep playing offline.'
+					},
+					{
+						question: 'Do I need to sign in?',
+						answer:
+							'No. You can use every feature without signing in. You only need to sign in to carry your paid plan over to another device.'
+					},
+					{
+						question: 'How do I delete my account?',
+						answer:
+							'On iPhone, tap the person icon at the top right of the BGM list, open 「アカウント」 (Account), and tap 「アカウントを削除」 (Delete account). On Android, tap the person icon at the top right, open 「設定」 (Settings), and tap 「アカウントを削除」 (Delete account) in the 「サインイン」 (Sign in) section. The BGMs saved on your device stay on your device. Deleting your account does not cancel your paid plan, so cancel it first in the store you bought it from. The steps are also on the account deletion page (https://jibun-bgm.taniguchi-kyoichi.com/delete-account).'
+					}
+				],
+				systemRequirements: 'iOS 27.0 or later, Android 8.0 or later'
+			},
+			subscription: {
+				planName: 'Premium',
+				prices: [
+					{ period: 'Yearly', price: '¥6,000' },
+					{ period: 'Monthly', price: '¥1,200' }
+				],
+				free: [
+					'Playing the standard BGMs',
+					'The focus timer',
+					'Controls from the Lock Screen and Control Center (on Android, Quick Settings and the notification)',
+					'No ads and no limit on playing time'
+				],
+				paid: ['Saving your own BGM by layering music and ambient sounds', 'Choosing which BGM a widget plays'],
+				restoreSteps: [
+					'On the BGM list, tap the person icon at the top right to open 「アカウント」 (Account)',
+					'Under 「プラン」 (Plan), tap 「有料にする」 (Upgrade)',
+					'Tap 「購入を復元」 (Restore purchases)'
+				],
+				notes: ['Prices in countries and regions other than Japan are shown on the App Store and Google Play']
+			}
 		}
 	}
 ];
