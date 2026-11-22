@@ -60,7 +60,7 @@ export const products: Product[] = [
 		audience: '読んだことを残したい人。読んだ内容や感想を忘れてしまう人、本を買っては積んでしまう人、仕事や勉強で実用書を読む人に向けています。',
 		why: '「読んだのに内容を話せない」「読み返しても前に何を思ったか分からない」をなくすため。読んだ本の要点と感想を自分の言葉で残し、あとで見返せるようにしました。',
 		privacy: {
-			effectiveDate: '2026-11-14',
+			effectiveDate: '2026-11-22',
 			dataCollection: 'standard',
 			dataItems: [
 				'アカウントを識別するためのID（AppleまたはGoogleでのサインイン）。メールアドレスはサインインを任せている外部の事業者が持ち、読書の記録には保存しません',
@@ -68,13 +68,20 @@ export const products: Product[] = [
 				'本について書いた付箋・ノート・メモ（以前の版でAIが返した言葉も含みます）',
 				'ページの写真（ページを撮って文字を読み取るときだけ。読み取りのあいだサーバーを通り、保存しません）',
 				'ニックネームとプロフィール画像（iPhoneの版だけ）',
-				'iPhoneの版では、アプリ内の操作の記録（アプリを開いた・本を探した・メモリープラスの画面を見た、など）と、アプリの版、端末の言語と地域',
+				'アプリ内の操作の記録（アプリを開いた・本を探した・メモリープラスの画面を見た、など）と、アプリの版、端末の言語と地域。iPhoneとAndroidの両方の版で送ります',
+				'行動の記録（開いた画面の名前・タップした所・前の画面に戻った・アプリが止まった・アプリの終わり方）。iPhoneとAndroidの両方の版で送ります。メモの本文・入力した文字・画面の画像は送りません',
+				'アプリの中の問い合わせ（「ヘルプと問い合わせ」）に書いた文と添えた画像、問い合わせに自動で添える情報（アプリの版・端末の機種とOS・メモリープラスか・開いていた画面・直近の操作・アプリの中で出したお知らせ）。iPhoneの版だけです。Androidの版の問い合わせはメールで受け、アプリの版・端末の機種とOS・直近の操作などをメールの本文に入れます',
+				'問い合わせの返事を知らせる通知のための、端末の通知のトークン（iPhoneの版だけ）',
+				'どこからアプリを入れたか（入れたあと最初にアプリを開いたURL、Appleの検索広告から入れたときの広告のトークン、Androidの版ではGoogle PlayのInstall Referrer）。広告ID（iPhoneのIDFA、Androidの広告ID）は読みません',
+				'アンケートの答え（選んだ答えと、書いた人だけ書いた文）。答えるかどうかは任意です',
 				'Androidの版では、端末の中で文字とバーコードを読む機能の動作の記録（性能の数値・エラーの種類・端末の機種とOS・インストールごとのID）。その機能を提供する外部の事業者に送ります。読み取った文字や写真は含みません',
 				'購入の記録（App StoreまたはGoogle Playでの購入・更新・解約）'
 			],
 			serviceProviders: [
 				'サインイン・本と記録とメモとプロフィール画像の保管と同期・アプリの使われ方の分析・購入の管理・本を探すときの書名やISBNの照会・AIの機能を、外部の事業者に任せています。任せる情報は、その目的に要る分だけです。',
-				'AIの機能では、ページを撮ったときに写真と端末が読み取った文字を送り、本文を文の単位に組み直すことと、選んだ行を要点に整えることに使います。本の要約を作るときは、その本について書いたメモを送ります。'
+				'AIの機能では、ページを撮ったときに写真と端末が読み取った文字を送り、本文を文の単位に組み直すことと、選んだ行を要点に整えることに使います。本の要約を作るときは、その本について書いたメモを送ります。',
+				'操作の記録・行動の記録・問い合わせ・アンケートの答え・どこからアプリを入れたか・購入の状態は、私たちがCloudflareの上で動かしている仕組み（appgrowstack・api.appgrowstack.com）に送ります。インストールごとのIDと結びつけ、サインインしていればアカウントのIDとも結びつけます。',
+				'問い合わせの返事の下書きを作ることと、アンケートに書いた文を話題に分けることに、AI（AnthropicのClaude）を使います。そのために、問い合わせの文と添えた画像・添えた情報、アンケートの文を送ります。返事は、運営者が下書きを読んでから送ります。'
 			],
 			analyticsUsed: true,
 			sections: [
@@ -87,18 +94,19 @@ export const products: Product[] = [
 				{
 					title: '使う目的と法的根拠',
 					paragraphs: [
-						'集めた情報は次の目的にだけ使います。広告には使いません。情報を売ることも、ほかの会社のアプリやWebサイトをまたいで追跡することもしません。書いたメモやページの写真をAIの学習のために渡すこともしません。目的ごとに「:」の後ろに書いたのが、EU・英国などにお住まいの方についてのGDPRの法的根拠です。'
+						'集めた情報は次の目的にだけ使います。広告には使いません。情報を売ることも、ほかの会社のアプリやWebサイトをまたいで追跡することもしません。書いたメモ・ページの写真・問い合わせとアンケートの文を、AIの学習のために渡すこともしません。目的ごとに「:」の後ろに書いたのが、EU・英国などにお住まいの方についてのGDPRの法的根拠です。'
 					],
 					items: [
-						'アプリを提供するため（サインイン、本と記録とメモの保管と同期、ページの読み取り、要点と要約、メモリープラス）: 利用者との契約の履行（GDPR第6条1項(b)）',
-						'アプリの使われ方を知って改善するため、どこからアプリを入れて購入に至ったかを測るため: 私たちの正当な利益（同項(f)）。書いたメモや本の中身を含まない、利用者への影響が小さい情報に絞っています'
+						'アプリを提供するため（サインイン、本と記録とメモの保管と同期、ページの読み取り、要点と要約、メモリープラス、問い合わせへの返事とその通知）: 利用者との契約の履行（GDPR第6条1項(b)）',
+						'アプリの使われ方を知って改善するため（操作の記録・行動の記録・アンケートの答え）、どこからアプリを入れて購入に至ったかを測るため: 私たちの正当な利益（同項(f)）。書いたメモや本の中身を含まない、利用者への影響が小さい情報に絞っています'
 					]
 				},
 				{
 					title: '預け先とEUの外への移転',
 					paragraphs: [
 						'私たちは日本にいて、情報の保管と処理を外部の事業者に任せています。事業者のサーバーは米国や日本など、EUの外にあります。',
-						'日本はEUから十分な保護の水準があると認められています（十分性認定）。米国などへの移転は、各事業者が用意するEUの標準契約条項（SCC）や、EU・米国データプライバシーフレームワークなどの仕組みで保護されます。'
+						'日本はEUから十分な保護の水準があると認められています（十分性認定）。米国などへの移転は、各事業者が用意するEUの標準契約条項（SCC）や、EU・米国データプライバシーフレームワークなどの仕組みで保護されます。',
+						'appgrowstackに送る情報は、Cloudflareのサーバーに置きます。AIに送る問い合わせとアンケートの文・画像は、Anthropic（米国）のサーバーで処理します。'
 					]
 				},
 				{
@@ -106,14 +114,16 @@ export const products: Product[] = [
 					items: [
 						'アカウントと、本・読書の記録・付箋・ノート・メモ・プロフィール画像: アカウントがあるあいだ。アカウントを削除すると消します',
 						'ページの写真: 私たちのサーバーには保存しません。読み取りのあいだ外部の事業者に送り、その事業者の決まりに従って扱われます',
-						'操作の記録: アプリの改善に要るあいだ。アカウントのIDではなく、アプリを入れた端末ごとのIDと結びついています',
-						'外部の事業者が持つ購入の記録と分析の記録は、各事業者の決まりに従って保管されます'
+						'私たちのアプリのサーバーにある操作の記録: アプリの改善に要るあいだ。アカウントのIDではなく、アプリを入れた端末ごとのIDと結びついています',
+						'appgrowstackに送った操作の記録と行動の記録: 90日で消します。問い合わせに添えた行動の記録は、問い合わせが済んでから90日で消します',
+						'問い合わせと返事・添えた画像・アンケートの答え・どこからアプリを入れたか・通知のトークン: アカウントを削除するまで。アカウントを削除すると消します。通知のトークンは、通知が届かなくなったときにも消します',
+						'外部の事業者が持つ購入の記録と分析の記録、AIに送った文と画像は、各事業者の決まりに従って保管されます'
 					]
 				},
 				{
 					title: 'アカウントの削除',
 					paragraphs: [
-						'アプリの「設定」→「アカウントを削除」で、いつでもアカウントを削除できます。サインインのアカウントと、サーバーにある本・読書の記録・付箋・ノート・メモ・プロフィール画像、1.4.0以前の版のデータが消えます。元に戻せません。',
+						'アプリの「設定」→「アカウントを削除」で、いつでもアカウントを削除できます。サインインのアカウントと、サーバーにある本・読書の記録・付箋・ノート・メモ・プロフィール画像、1.4.0以前の版のデータが消えます。appgrowstackにある操作の記録・行動の記録・問い合わせ・アンケートの答え・どこからアプリを入れたか・通知のトークンも消えます。元に戻せません。',
 						'アカウントを削除してもメモリープラスは解約されず、App StoreまたはGoogle Playでの請求が続きます。先に、購入したストアで解約してください。アプリを消すだけでは、サーバーの記録は消えません。',
 						'アプリを消したあとでも、下のメールアドレスに削除を頼めます。手順は削除の案内のページ（https://reading-memory-api.taniguchi-kyoichi.com/delete-account）にもあります。'
 					]
@@ -198,13 +208,20 @@ export const products: Product[] = [
 					'The sticky notes, notebooks and notes you write about books (including words AI returned in earlier versions)',
 					'Photos of pages (only when you snap a page to read its text. They pass through the server while the text is read, and are not stored)',
 					'Nickname and profile photo (iPhone version only)',
-					'In the iPhone version, records of actions in the app (such as opening the app, searching for a book, or viewing the Memory Plus screen), with the app version and the language and region of your device',
+					'Records of actions in the app (such as opening the app, searching for a book, or viewing the Memory Plus screen), with the app version and the language and region of your device. Both the iPhone and Android versions send them',
+					'Records of how you move through the app (the names of screens you open, where you tap, going back to the previous screen, the app freezing, and how the app was closed). Both the iPhone and Android versions send them. They do not include the text of your notes, anything you type, or images of the screen',
+					'What you write in the in-app contact form (「ヘルプと問い合わせ」, Help & Contact) and any images you attach, plus information added to it automatically (the app version, device model and OS, whether you have Memory Plus, the screen you were on, your recent actions, and in-app messages we showed you). iPhone version only. In the Android version, we receive questions by email, and the app version, device model and OS, your recent actions and similar details are put in the email',
+					'Your device\'s notification token, to let you know when we reply to your question (iPhone version only)',
+					'Where you installed the app from (the URL that first opened the app after you installed it, the ad token when you installed from an Apple Search Ads ad, and in the Android version, the Google Play Install Referrer). We do not read the advertising ID (IDFA on iPhone, the advertising ID on Android)',
+					'Your survey answers (the choices you pick, and text only if you write some). Answering is optional',
 					'In the Android version, records of how the on-device text and barcode reading works (performance numbers, error types, device model and OS, and an ID for each installation). They are sent to the service provider of that feature. They do not include the text read or the photos',
 					'Purchase records (purchases, renewals and cancellations on the App Store or Google Play)'
 				],
 				serviceProviders: [
 					'We use outside service providers for sign-in, storing and syncing your books, records, notes and profile photo, analytics of how the app is used, managing purchases, looking up books by title or ISBN, and the AI features. We share only what each purpose needs.',
-					'For the AI features, when you snap a page, the photo and the text your device read are sent to put the text back into whole sentences and to turn the lines you pick into key points. When you create a summary of a book, the notes you wrote about that book are sent.'
+					'For the AI features, when you snap a page, the photo and the text your device read are sent to put the text back into whole sentences and to turn the lines you pick into key points. When you create a summary of a book, the notes you wrote about that book are sent.',
+					'Action records, records of how you move through the app, questions you send us, survey answers, where you installed the app from, and your purchase status are sent to a system we run on Cloudflare (appgrowstack, api.appgrowstack.com). They are linked to an ID for each installation, and also to your account ID if you are signed in.',
+					'We use AI (Claude by Anthropic) to draft replies to your questions and to sort the text you write in surveys into topics. For this, the text of your question with its attached images and information, and the text of your survey answers, are sent. A person running the app reads each draft before a reply is sent.'
 				],
 				sections: [
 					{
@@ -216,18 +233,19 @@ export const products: Product[] = [
 					{
 						title: 'Why we use your information, and our legal bases',
 						paragraphs: [
-							'We use the information only for the purposes below. We do not use it for advertising, we do not sell it, and we do not track you across other companies\' apps or websites. We do not hand over your notes or page photos for training AI. The text after each purpose is the GDPR legal basis for people in the EU, the UK and similar regions.'
+							'We use the information only for the purposes below. We do not use it for advertising, we do not sell it, and we do not track you across other companies\' apps or websites. We do not hand over your notes, page photos, questions or survey text for training AI. The text after each purpose is the GDPR legal basis for people in the EU, the UK and similar regions.'
 						],
 						items: [
-							'To provide the app (sign-in, storing and syncing your books, records and notes, reading pages, key points and summaries, and Memory Plus): performance of our contract with you (GDPR Article 6(1)(b))',
-							'To understand how the app is used and improve it, and to measure where installs and purchases come from: our legitimate interests (Article 6(1)(f)). We limit this to information that does not include your notes or the content of your books and has little impact on you'
+							'To provide the app (sign-in, storing and syncing your books, records and notes, reading pages, key points and summaries, Memory Plus, and replying to your questions and notifying you of replies): performance of our contract with you (GDPR Article 6(1)(b))',
+							'To understand how the app is used and improve it (action records, records of how you move through the app, and survey answers), and to measure where installs and purchases come from: our legitimate interests (Article 6(1)(f)). We limit this to information that does not include your notes or the content of your books and has little impact on you'
 						]
 					},
 					{
 						title: 'Service providers and transfers outside the EU',
 						paragraphs: [
 							'We are based in Japan, and we use outside service providers to store and process the information. Their servers are outside the EU, including in the United States and Japan.',
-							'The EU recognizes Japan as providing an adequate level of protection (an adequacy decision). Transfers to the United States and other countries are protected by the safeguards each provider offers, such as the EU Standard Contractual Clauses (SCCs) or the EU-U.S. Data Privacy Framework.'
+							'The EU recognizes Japan as providing an adequate level of protection (an adequacy decision). Transfers to the United States and other countries are protected by the safeguards each provider offers, such as the EU Standard Contractual Clauses (SCCs) or the EU-U.S. Data Privacy Framework.',
+							'Information sent to appgrowstack is stored on Cloudflare\'s servers. Question and survey text and images sent to AI are processed on Anthropic\'s servers in the United States.'
 						]
 					},
 					{
@@ -235,14 +253,16 @@ export const products: Product[] = [
 						items: [
 							'Your account and your books, reading records, sticky notes, notebooks, notes and profile photo: while you have an account. They are deleted when you delete your account',
 							'Photos of pages: not stored on our servers. They are sent to a service provider while the text is read, and that provider handles them under its own rules',
-							'Action records: as long as needed to improve the app. They are linked to an ID for each device the app is installed on, not to your account ID',
-							'Purchase and analytics records held by our service providers are kept under each provider\'s own rules'
+							'Action records on the app\'s own server: as long as needed to improve the app. They are linked to an ID for each device the app is installed on, not to your account ID',
+							'Action records and records of how you move through the app sent to appgrowstack: deleted after 90 days. Records attached to a question are deleted 90 days after the question is closed',
+							'Questions and replies, attached images, survey answers, where you installed the app from, and notification tokens: until you delete your account. They are deleted when you delete your account. A notification token is also deleted when notifications can no longer reach the device',
+							'Purchase and analytics records held by our service providers, and text and images sent to AI, are kept under each provider\'s own rules'
 						]
 					},
 					{
 						title: 'Deleting your account',
 						paragraphs: [
-							'You can delete your account at any time in the app under Settings → Delete Account (「設定」→「アカウントを削除」 in Japanese). This deletes your sign-in account; your books, reading records, sticky notes, notebooks, notes and profile photo on the server; and data from app versions 1.4.0 and earlier. It cannot be undone.',
+							'You can delete your account at any time in the app under Settings → Delete Account (「設定」→「アカウントを削除」 in Japanese). This deletes your sign-in account; your books, reading records, sticky notes, notebooks, notes and profile photo on the server; and data from app versions 1.4.0 and earlier. It also deletes the action records, records of how you move through the app, questions, survey answers, install source and notification tokens held in appgrowstack. It cannot be undone.',
 							'Deleting your account does not cancel Memory Plus, and you will keep being billed on the App Store or Google Play. Cancel it first in the store you bought it from. Deleting the app alone does not delete your records on the server.',
 							'Even after you delete the app, you can ask us by email at the address below to delete your account. The steps are also on the account deletion page (https://reading-memory-api.taniguchi-kyoichi.com/en/delete-account).'
 						]
@@ -812,22 +832,40 @@ export const products: Product[] = [
 		audience: '音を流しながら作業や勉強をする人。雨や焚き火の音を重ねたい人、YouTubeのカフェジャズなどで作業している人に向けています。',
 		why: 'YouTubeで毎回やっている「BGMを探して、音量を合わせて、広告で止まる」を省くため。曲に雨音や焚き火の音を自分の比率で重ねて保存し、押せばすぐ流れるようにしました。',
 		privacy: {
-			effectiveDate: '2026-11-14',
-			dataCollection: 'minimal',
+			effectiveDate: '2026-11-22',
+			dataCollection: 'standard',
 			dataItems: [
-				'匿名のインストール ID（初回の起動で端末が作るランダムな文字列。アカウントとは結び付けません）',
-				'アプリ内の操作の記録（例: 画面を開いた、BGMを流した。値は数の範囲や決まった語だけで、BGMの名前や入力した文字は送りません）',
-				'サインインしたときだけ: メールアドレス・名前・ユーザーID（有料プランを別の端末に引き継ぐためだけに使います。名前はサインインを任せている外部の事業者が持ち、アプリの画面に出すだけです）',
+				'匿名のインストール ID（初回の起動で端末が作るランダムな文字列。サインインしたときは、ユーザーIDと結び付けます）',
+				'アプリ内の操作の記録（例: 画面を開いた、BGMを流した。値は数の範囲や決まった語だけで、BGMの名前や入力した文字は送りません）。iPhoneとAndroidの両方の版で送ります',
+				'サインインしたときだけ: メールアドレス・名前・ユーザーID（有料プランを別の端末に引き継ぐためと、操作の記録・問い合わせ・アンケートの答えをその人の物として結び付けるために使います。名前はサインインを任せている外部の事業者が持ち、アプリの画面に出すだけです）',
 				'有料プランの期限（サインインしているときはユーザー ID と一緒に）',
 				'音の配信のときに、接続元の IP アドレス（配信と不正利用の防止のため）',
+				'アプリの中の問い合わせ（「ヘルプと問い合わせ」）に書いた文と添えた画像、問い合わせに自動で添える情報（アプリの版・端末の機種とOS・プレミアムか・開いていた画面・直近の操作・アプリの中で出したお知らせ）。iPhoneの版だけです',
+				'問い合わせの返事を知らせる通知のための、端末の通知のトークン（iPhoneの版だけ）',
+				'どこからアプリを入れたか（入れたあと最初にアプリを開いたURL、Appleの検索広告から入れたときの広告のトークン、Androidの版ではGoogle PlayのInstall Referrer）',
+				'アンケートの答え（選んだ答えと、書いた人だけ書いた文）。答えるかどうかは任意です',
 				'作ったBGM・お気に入り・集中の記録・外観の設定は端末の中だけに保存し、送りません',
 				'購入の記録（App StoreまたはGoogle Playでの購入・更新・解約）',
 				'広告ID（iPhoneのIDFA、Androidの広告ID）は読みません。広告もトラッキングもありません'
 			],
 			serviceProviders: [
-				'サインイン（Appleでサインイン・Googleでサインインしたときだけ）・音とカタログの配信・操作の記録の保管・購入の管理を、外部の事業者に任せています。任せる情報は、その目的に要る分だけです。'
+				'サインイン（Appleでサインイン・Googleでサインインしたときだけ）・音とカタログの配信・操作の記録の保管・購入の管理を、外部の事業者に任せています。任せる情報は、その目的に要る分だけです。',
+				'操作の記録・問い合わせ・アンケートの答え・どこからアプリを入れたか・有料プランの状態は、私たちがCloudflareの上で動かしている仕組み（appgrowstack・api.appgrowstack.com）に送ります。インストールごとのIDと結び付け、サインインしていればユーザーIDとも結び付けます。',
+				'問い合わせの返事の下書きを作ることと、アンケートに書いた文を話題に分けることに、AI（AnthropicのClaude）を使います。そのために、問い合わせの文と添えた画像・添えた情報、アンケートの文を、Anthropic（米国）に送ります。返事は、運営者が下書きを読んでから送ります。問い合わせとアンケートの文を、AIの学習のために渡すことはしません。'
 			],
 			analyticsUsed: true,
+			sections: [
+				{
+					title: '保存する期間',
+					items: [
+						'サインインの記録と有料プランの期限: アカウントがあるあいだ。アカウントを削除すると消します',
+						'私たちのアプリのサーバーにある操作の記録: アプリの改善に要るあいだ。インストールごとのIDとだけ結び付いていて、アカウントを削除しても消えません',
+						'appgrowstackに送った操作の記録: 90日で消します',
+						'問い合わせと返事・添えた画像・アンケートの答え・どこからアプリを入れたか・通知のトークン: アカウントを削除するまで。アカウントを削除すると消します。サインインしていない方は、下のメールアドレスに頼めば消します。通知のトークンは、通知が届かなくなったときにも消します',
+						'外部の事業者が持つ購入の記録、AIに送った文と画像は、各事業者の決まりに従って保管されます'
+					]
+				}
+			],
 			contactEmail: 'info@taniguchi-kyoichi.com'
 		},
 		support: {
@@ -888,6 +926,86 @@ export const products: Product[] = [
 				'Under 「サブスクリプション」 (Subscription), tap 「プレミアムにする」 (Go Premium)',
 				'Tap 「購入を復元」 (Restore purchases)'
 			]
+		},
+		en: {
+			name: 'Jibun BGM',
+			privacy: {
+				dataItems: [
+					'An anonymous installation ID (a random string your device makes the first time you open the app. When you sign in, it is linked to your user ID)',
+					'Records of actions in the app (for example, opening a screen or playing a BGM. Values are only number ranges or fixed words; BGM names and anything you type are not sent). Both the iPhone and Android versions send them',
+					'Only when you sign in: your email address, name and user ID (used to carry your paid plan over to another device, and to link action records, questions and survey answers to you. Your name is held by the service provider we use for sign-in and is only shown in the app)',
+					'The expiry date of your paid plan (with your user ID when you are signed in)',
+					'Your IP address when sounds are delivered (for delivery and to prevent abuse)',
+					'What you write in the in-app contact form (「ヘルプと問い合わせ」, Help & Contact) and any images you attach, plus information added to it automatically (the app version, device model and OS, whether you have Premium, the screen you were on, your recent actions, and in-app messages we showed you). iPhone version only',
+					'Your device\'s notification token, to let you know when we reply to your question (iPhone version only)',
+					'Where you installed the app from (the URL that first opened the app after you installed it, the ad token when you installed from an Apple Search Ads ad, and in the Android version, the Google Play Install Referrer)',
+					'Your survey answers (the choices you pick, and text only if you write some). Answering is optional',
+					'The BGMs you make, your favorites, your focus records and appearance settings are stored only on your device and are not sent',
+					'Purchase records (purchases, renewals and cancellations on the App Store or Google Play)',
+					'We do not read the advertising ID (IDFA on iPhone, the advertising ID on Android). There are no ads and no tracking'
+				],
+				serviceProviders: [
+					'We use outside service providers for sign-in (only when you use Sign in with Apple or Sign in with Google), delivering sounds and the catalog, storing action records, and managing purchases. We share only what each purpose needs.',
+					'Action records, questions you send us, survey answers, where you installed the app from, and the status of your paid plan are sent to a system we run on Cloudflare (appgrowstack, api.appgrowstack.com). They are linked to an ID for each installation, and also to your user ID if you are signed in.',
+					'We use AI (Claude by Anthropic) to draft replies to your questions and to sort the text you write in surveys into topics. For this, the text of your question with its attached images and information, and the text of your survey answers, are sent to Anthropic in the United States. A person running the app reads each draft before a reply is sent. We do not hand over your questions or survey text for training AI.'
+				],
+				sections: [
+					{
+						title: 'How long we keep it',
+						items: [
+							'Sign-in records and the expiry date of your paid plan: while you have an account. They are deleted when you delete your account',
+							'Action records on the app\'s own server: as long as needed to improve the app. They are linked only to an ID for each installation, and are not deleted when you delete your account',
+							'Action records sent to appgrowstack: deleted after 90 days',
+							'Questions and replies, attached images, survey answers, where you installed the app from, and notification tokens: until you delete your account. They are deleted when you delete your account. If you have not signed in, email us at the address below and we will delete them. A notification token is also deleted when notifications can no longer reach the device',
+							'Purchase records held by our service providers, and text and images sent to AI, are kept under each provider\'s own rules'
+						]
+					}
+				]
+			},
+			support: {
+				faq: [
+					{
+						question: 'How much can I use for free?',
+						answer:
+							'Playing the standard BGMs, the timer, and controls from the Lock Screen and Control Center (on Android, Quick Settings and the notification) are free. Saving your own BGM by layering music and ambient sounds, and choosing which BGM a widget plays, need Premium (¥6,000 per year / ¥1,200 per month in Japan).'
+					},
+					{
+						question: 'Does it play without an internet connection?',
+						answer: 'Sounds that have been loaded once keep playing offline.'
+					},
+					{
+						question: 'Do I need to sign in?',
+						answer:
+							'No. You can use every feature without signing in. You only need to sign in to carry your paid plan over to another device.'
+					},
+					{
+						question: 'How do I delete my account?',
+						answer:
+							'On iPhone, tap the person icon at the top right of the BGM list, open 「アカウント」 (Account), and tap 「アカウントを削除」 (Delete account). On Android, tap the person icon at the top right, open 「設定」 (Settings), and tap 「アカウントを削除」 (Delete account) in the 「サインイン」 (Sign in) section. The BGMs saved on your device stay on your device. Deleting your account does not cancel your paid plan, so cancel it first in the store you bought it from. The steps are also on the account deletion page (https://jibun-bgm.taniguchi-kyoichi.com/delete-account).'
+					}
+				],
+				systemRequirements: 'iOS 27.0 or later, Android 8.0 or later'
+			},
+			subscription: {
+				planName: 'Premium',
+				prices: [
+					{ period: 'Yearly', price: '¥6,000' },
+					{ period: 'Monthly', price: '¥1,200' }
+				],
+				free: [
+					'Playing the standard BGMs',
+					'The focus timer',
+					'Controls from the Lock Screen and Control Center (on Android, Quick Settings and the notification)',
+					'No ads and no limit on playing time'
+				],
+				paid: ['Saving your own BGM by layering music and ambient sounds', 'Choosing which BGM a widget plays'],
+				restoreSteps: [
+					'On the BGM list, tap the person icon at the top right to open 「アカウント」 (Account)',
+					'Under 「プラン」 (Plan), tap 「有料にする」 (Upgrade)',
+					'Tap 「購入を復元」 (Restore purchases)'
+				],
+				notes: ['Prices in countries and regions other than Japan are shown on the App Store and Google Play']
+			}
 		}
 	}
 ];
