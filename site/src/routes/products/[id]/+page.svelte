@@ -115,13 +115,13 @@
 			</p>
 		{/if}
 
-		<!-- 規約類はページの一番下に細い1行で -->
+		<!-- 規約類はページの一番下に細い1行で。面はこのアプリの外（別の Worker）なので、ルーターを通さず読み込み直す -->
 		{#if data.legalLinks.length}
 			<nav class="legal" aria-label="サポートと規約">
 				<ul>
 					{#each data.legalLinks as link}
 						<li>
-							<a href={link.href} lang={link.lang} hreflang={link.lang}>{link.label}</a>
+							<a href={link.href} lang={link.lang} hreflang={link.lang} data-sveltekit-reload>{link.label}</a>
 						</li>
 					{/each}
 				</ul>

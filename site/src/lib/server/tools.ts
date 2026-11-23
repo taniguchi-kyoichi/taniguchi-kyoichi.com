@@ -31,7 +31,7 @@ function summary(p: Product, language: ReplyLanguage) {
 	return {
 		id: p.id,
 		name: p.name,
-		...(language === 'English' && p.en?.name ? { nameEn: p.en.name } : {}),
+		...(language === 'English' && p.nameEn ? { nameEn: p.nameEn } : {}),
 		description: p.description,
 		status: p.status,
 		thumbnail: p.thumbnail,

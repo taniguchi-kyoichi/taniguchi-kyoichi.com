@@ -23,7 +23,7 @@ function body(): string {
 		'',
 		'## Apps',
 		...listed.flatMap((p) => [
-			`- **${p.name}**${p.en?.name ? ` (${p.en.name})` : ''}: ${p.description}`,
+			`- **${p.name}**${p.nameEn ? ` (${p.nameEn})` : ''}: ${p.description}`,
 			`  - ページ: ${SITE_URL}/products/${p.id}`,
 			...(p.links.web ? [`  - 公式サイト: ${p.links.web}`] : []),
 			...(p.links.appStore ? [`  - App Store: ${p.links.appStore}`] : []),

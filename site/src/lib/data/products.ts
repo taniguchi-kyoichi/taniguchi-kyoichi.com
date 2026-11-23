@@ -59,109 +59,7 @@ export const products: Product[] = [
 		],
 		audience: '読んだことを残したい人。読んだ内容や感想を忘れてしまう人、本を買っては積んでしまう人、仕事や勉強で実用書を読む人に向けています。',
 		why: '「読んだのに内容を話せない」「読み返しても前に何を思ったか分からない」をなくすため。読んだ本の要点と感想を自分の言葉で残し、あとで見返せるようにしました。',
-		privacy: {
-			effectiveDate: '2026-11-22',
-			dataCollection: 'standard',
-			dataItems: [
-				'アカウントを識別するためのID（AppleまたはGoogleでのサインイン）。メールアドレスはサインインを任せている外部の事業者が持ち、読書の記録には保存しません',
-				'登録した本と、読書の記録（読んだ日、読んだページ、評価、読後の気持ち、読書カード）',
-				'本について書いた付箋・ノート・メモ（以前の版でAIが返した言葉も含みます）',
-				'ページの写真（ページを撮って文字を読み取るときだけ。読み取りのあいだサーバーを通り、保存しません）',
-				'ニックネームとプロフィール画像（iPhoneの版だけ）',
-				'アプリ内の操作の記録（アプリを開いた・本を探した・メモリープラスの画面を見た、など）と、アプリの版、端末の言語と地域。iPhoneとAndroidの両方の版で送ります',
-				'行動の記録（開いた画面の名前・タップした所・前の画面に戻った・アプリが止まった・アプリの終わり方）。iPhoneとAndroidの両方の版で送ります。メモの本文・入力した文字・画面の画像は送りません',
-				'アプリの中の問い合わせ（「ヘルプと問い合わせ」）に書いた文と添えた画像、問い合わせに自動で添える情報（アプリの版・端末の機種とOS・メモリープラスか・開いていた画面・直近の操作・アプリの中で出したお知らせ）。iPhoneの版だけです。Androidの版の問い合わせはメールで受け、アプリの版・端末の機種とOS・直近の操作などをメールの本文に入れます',
-				'問い合わせの返事を知らせる通知のための、端末の通知のトークン（iPhoneの版だけ）',
-				'どこからアプリを入れたか（入れたあと最初にアプリを開いたURL、Appleの検索広告から入れたときの広告のトークン、Androidの版ではGoogle PlayのInstall Referrer）。広告ID（iPhoneのIDFA、Androidの広告ID）は読みません',
-				'アンケートの答え（選んだ答えと、書いた人だけ書いた文）。答えるかどうかは任意です',
-				'Androidの版では、端末の中で文字とバーコードを読む機能の動作の記録（性能の数値・エラーの種類・端末の機種とOS・インストールごとのID）。その機能を提供する外部の事業者に送ります。読み取った文字や写真は含みません',
-				'購入の記録（App StoreまたはGoogle Playでの購入・更新・解約）'
-			],
-			serviceProviders: [
-				'サインイン・本と記録とメモとプロフィール画像の保管と同期・アプリの使われ方の分析・購入の管理・本を探すときの書名やISBNの照会・AIの機能を、外部の事業者に任せています。任せる情報は、その目的に要る分だけです。',
-				'AIの機能では、ページを撮ったときに写真と端末が読み取った文字を送り、本文を文の単位に組み直すことと、選んだ行を要点に整えることに使います。本の要約を作るときは、その本について書いたメモを送ります。',
-				'操作の記録・行動の記録・問い合わせ・アンケートの答え・どこからアプリを入れたか・購入の状態は、私たちがCloudflareの上で動かしている仕組み（appgrowstack・api.appgrowstack.com）に送ります。インストールごとのIDと結びつけ、サインインしていればアカウントのIDとも結びつけます。',
-				'問い合わせの返事の下書きを作ることと、アンケートに書いた文を話題に分けることに、AI（AnthropicのClaude）を使います。そのために、問い合わせの文と添えた画像・添えた情報、アンケートの文を送ります。返事は、運営者が下書きを読んでから送ります。'
-			],
-			analyticsUsed: true,
-			sections: [
-				{
-					title: '運営者',
-					paragraphs: [
-						'読書メモリーは、日本に住む個人開発者が運営しています。EU一般データ保護規則（GDPR）などでいう、データの管理者にあたります。連絡先はこのページの最後にあります。'
-					]
-				},
-				{
-					title: '使う目的と法的根拠',
-					paragraphs: [
-						'集めた情報は次の目的にだけ使います。広告には使いません。情報を売ることも、ほかの会社のアプリやWebサイトをまたいで追跡することもしません。書いたメモ・ページの写真・問い合わせとアンケートの文を、AIの学習のために渡すこともしません。目的ごとに「:」の後ろに書いたのが、EU・英国などにお住まいの方についてのGDPRの法的根拠です。'
-					],
-					items: [
-						'アプリを提供するため（サインイン、本と記録とメモの保管と同期、ページの読み取り、要点と要約、メモリープラス、問い合わせへの返事とその通知）: 利用者との契約の履行（GDPR第6条1項(b)）',
-						'アプリの使われ方を知って改善するため（操作の記録・行動の記録・アンケートの答え）、どこからアプリを入れて購入に至ったかを測るため: 私たちの正当な利益（同項(f)）。書いたメモや本の中身を含まない、利用者への影響が小さい情報に絞っています'
-					]
-				},
-				{
-					title: '預け先とEUの外への移転',
-					paragraphs: [
-						'私たちは日本にいて、情報の保管と処理を外部の事業者に任せています。事業者のサーバーは米国や日本など、EUの外にあります。',
-						'日本はEUから十分な保護の水準があると認められています（十分性認定）。米国などへの移転は、各事業者が用意するEUの標準契約条項（SCC）や、EU・米国データプライバシーフレームワークなどの仕組みで保護されます。',
-						'appgrowstackに送る情報は、Cloudflareのサーバーに置きます。AIに送る問い合わせとアンケートの文・画像は、Anthropic（米国）のサーバーで処理します。'
-					]
-				},
-				{
-					title: '保存する期間',
-					items: [
-						'アカウントと、本・読書の記録・付箋・ノート・メモ・プロフィール画像: アカウントがあるあいだ。アカウントを削除すると消します',
-						'ページの写真: 私たちのサーバーには保存しません。読み取りのあいだ外部の事業者に送り、その事業者の決まりに従って扱われます',
-						'私たちのアプリのサーバーにある操作の記録: アプリの改善に要るあいだ。アカウントのIDではなく、アプリを入れた端末ごとのIDと結びついています',
-						'appgrowstackに送った操作の記録と行動の記録: 90日で消します。問い合わせに添えた行動の記録は、問い合わせが済んでから90日で消します',
-						'問い合わせと返事・添えた画像・アンケートの答え・どこからアプリを入れたか・通知のトークン: アカウントを削除するまで。アカウントを削除すると消します。通知のトークンは、通知が届かなくなったときにも消します',
-						'外部の事業者が持つ購入の記録と分析の記録、AIに送った文と画像は、各事業者の決まりに従って保管されます'
-					]
-				},
-				{
-					title: 'アカウントの削除',
-					paragraphs: [
-						'アプリの「設定」→「アカウントを削除」で、いつでもアカウントを削除できます。サインインのアカウントと、サーバーにある本・読書の記録・付箋・ノート・メモ・プロフィール画像、1.4.0以前の版のデータが消えます。appgrowstackにある操作の記録・行動の記録・問い合わせ・アンケートの答え・どこからアプリを入れたか・通知のトークンも消えます。元に戻せません。',
-						'アカウントを削除してもメモリープラスは解約されず、App StoreまたはGoogle Playでの請求が続きます。先に、購入したストアで解約してください。アプリを消すだけでは、サーバーの記録は消えません。',
-						'アプリを消したあとでも、下のメールアドレスに削除を頼めます。手順は削除の案内のページ（https://reading-memory-api.taniguchi-kyoichi.com/delete-account）にもあります。'
-					]
-				},
-				{
-					title: '開示・削除などの求め方',
-					paragraphs: [
-						'自分の情報の開示・訂正・削除・利用の制限・利用への異議・データの持ち出しを求めることができます。下のメールアドレスにご連絡ください。原則として1か月以内にお答えします。本人の確認のため、いくつかお尋ねすることがあります。',
-						'EU・英国などにお住まいの方は、お住まいの国のデータ保護の監督機関に苦情を申し立てることもできます。'
-					]
-				}
-			],
-			contactEmail: 'info@taniguchi-kyoichi.com'
-		},
-		support: {
-			contactEmail: 'info@taniguchi-kyoichi.com',
-			faq: [
-				{
-					question: 'データはどこに保存されますか？',
-					answer:
-						'読書記録やメモはサーバーに保存され、お使いの端末のあいだで同期されます。サインインすれば、どの端末からでも同じ記録に戻れます。'
-				},
-				{
-					question: 'インターネット接続は必要ですか？',
-					answer: 'はい、ログインやデータの同期にインターネット接続が必要です。オフライン時もキャッシュされたデータの閲覧は可能ですが、新規登録や編集にはオンライン環境が必要です。'
-				},
-				{
-					question: 'アカウントやデータを削除するには？',
-					answer: '「設定」タブの「アカウントを削除」からアカウントと全データを完全に削除できます。この操作は取り消せません。'
-				},
-				{
-					question: '無料とメモリープラスの違いは？',
-					answer:
-						'本の登録は無料で、冊数の上限はありません。付箋・ノート・ページの文字の読み取り・読書カードとはんこ・カレンダー・ウィジェットも無料でずっと使えます。メモリープラス（年額¥6,000／月額¥600）では、撮ったページの選んだ行を要点に整えること、ノートの言葉をほかの本からも引く索引、1年のまとめ、詳しい統計、書いたメモの要約が使えます。無料のお試しはありません。'
-				}
-			],
-			systemRequirements: 'iOS 26.0以上、Android 8.0以上'
-		},
+		systemRequirements: 'iOS 26.0以上、Android 8.0以上',
 		subscription: {
 			planName: 'メモリープラス',
 			prices: [
@@ -182,153 +80,15 @@ export const products: Product[] = [
 				'1年のまとめ（その年に読んだ本と書いたことをまとめて見返す）',
 				'詳しい統計（月ごとの読了数・ジャンル・評価・読後の気持ち）',
 				'書いたメモの要約（AIを使います）'
-			],
-			restoreSteps: ['「設定」タブを開く', '「メモリープラス」の「詳しく見る」をタップする', '「購入を復元」をタップする'],
-			restoreStepsEn: [
-				'Open the 「設定」 (Settings) tab',
-				'Tap 「詳しく見る」 (Learn more) on 「メモリープラス」 (Memory Plus)',
-				'Tap 「購入を復元」 (Restore purchases)'
-			],
-			restoreStepsAndroid: ['「設定」を開く', '「メモリープラス」の欄の「購入を復元」をタップする'],
-			restoreStepsAndroidEn: [
-				'Open 「設定」 (Settings)',
-				'In the 「メモリープラス」 (Memory Plus) section, tap 「購入を復元」 (Restore purchases)'
-			],
-			notes: [
-				'無料のお試しはありません。購入を確定したときから代金がかかります',
-				'App Storeの米国の価格は 年額 $39.99／月額 $3.99 です。ほかの国と地域の価格は、App StoreとGoogle Playに表示されます'
 			]
 		},
-		en: {
-			name: 'Reading Memory',
-			privacy: {
-				dataItems: [
-					'An ID to identify your account (Sign in with Apple or Google). Your email address is held by the service provider we use for sign-in and is not stored with your reading records',
-					'The books you add, and your reading records (days you read, pages read, ratings, how a book made you feel, and reading cards)',
-					'The sticky notes, notebooks and notes you write about books (including words AI returned in earlier versions)',
-					'Photos of pages (only when you snap a page to read its text. They pass through the server while the text is read, and are not stored)',
-					'Nickname and profile photo (iPhone version only)',
-					'Records of actions in the app (such as opening the app, searching for a book, or viewing the Memory Plus screen), with the app version and the language and region of your device. Both the iPhone and Android versions send them',
-					'Records of how you move through the app (the names of screens you open, where you tap, going back to the previous screen, the app freezing, and how the app was closed). Both the iPhone and Android versions send them. They do not include the text of your notes, anything you type, or images of the screen',
-					'What you write in the in-app contact form (「ヘルプと問い合わせ」, Help & Contact) and any images you attach, plus information added to it automatically (the app version, device model and OS, whether you have Memory Plus, the screen you were on, your recent actions, and in-app messages we showed you). iPhone version only. In the Android version, we receive questions by email, and the app version, device model and OS, your recent actions and similar details are put in the email',
-					'Your device\'s notification token, to let you know when we reply to your question (iPhone version only)',
-					'Where you installed the app from (the URL that first opened the app after you installed it, the ad token when you installed from an Apple Search Ads ad, and in the Android version, the Google Play Install Referrer). We do not read the advertising ID (IDFA on iPhone, the advertising ID on Android)',
-					'Your survey answers (the choices you pick, and text only if you write some). Answering is optional',
-					'In the Android version, records of how the on-device text and barcode reading works (performance numbers, error types, device model and OS, and an ID for each installation). They are sent to the service provider of that feature. They do not include the text read or the photos',
-					'Purchase records (purchases, renewals and cancellations on the App Store or Google Play)'
-				],
-				serviceProviders: [
-					'We use outside service providers for sign-in, storing and syncing your books, records, notes and profile photo, analytics of how the app is used, managing purchases, looking up books by title or ISBN, and the AI features. We share only what each purpose needs.',
-					'For the AI features, when you snap a page, the photo and the text your device read are sent to put the text back into whole sentences and to turn the lines you pick into key points. When you create a summary of a book, the notes you wrote about that book are sent.',
-					'Action records, records of how you move through the app, questions you send us, survey answers, where you installed the app from, and your purchase status are sent to a system we run on Cloudflare (appgrowstack, api.appgrowstack.com). They are linked to an ID for each installation, and also to your account ID if you are signed in.',
-					'We use AI (Claude by Anthropic) to draft replies to your questions and to sort the text you write in surveys into topics. For this, the text of your question with its attached images and information, and the text of your survey answers, are sent. A person running the app reads each draft before a reply is sent.'
-				],
-				sections: [
-					{
-						title: 'Who we are',
-						paragraphs: [
-							'Reading Memory is run by an individual developer based in Japan, who is the controller of your data under the EU General Data Protection Regulation (GDPR) and similar laws. Contact details are at the end of this page.'
-						]
-					},
-					{
-						title: 'Why we use your information, and our legal bases',
-						paragraphs: [
-							'We use the information only for the purposes below. We do not use it for advertising, we do not sell it, and we do not track you across other companies\' apps or websites. We do not hand over your notes, page photos, questions or survey text for training AI. The text after each purpose is the GDPR legal basis for people in the EU, the UK and similar regions.'
-						],
-						items: [
-							'To provide the app (sign-in, storing and syncing your books, records and notes, reading pages, key points and summaries, Memory Plus, and replying to your questions and notifying you of replies): performance of our contract with you (GDPR Article 6(1)(b))',
-							'To understand how the app is used and improve it (action records, records of how you move through the app, and survey answers), and to measure where installs and purchases come from: our legitimate interests (Article 6(1)(f)). We limit this to information that does not include your notes or the content of your books and has little impact on you'
-						]
-					},
-					{
-						title: 'Service providers and transfers outside the EU',
-						paragraphs: [
-							'We are based in Japan, and we use outside service providers to store and process the information. Their servers are outside the EU, including in the United States and Japan.',
-							'The EU recognizes Japan as providing an adequate level of protection (an adequacy decision). Transfers to the United States and other countries are protected by the safeguards each provider offers, such as the EU Standard Contractual Clauses (SCCs) or the EU-U.S. Data Privacy Framework.',
-							'Information sent to appgrowstack is stored on Cloudflare\'s servers. Question and survey text and images sent to AI are processed on Anthropic\'s servers in the United States.'
-						]
-					},
-					{
-						title: 'How long we keep it',
-						items: [
-							'Your account and your books, reading records, sticky notes, notebooks, notes and profile photo: while you have an account. They are deleted when you delete your account',
-							'Photos of pages: not stored on our servers. They are sent to a service provider while the text is read, and that provider handles them under its own rules',
-							'Action records on the app\'s own server: as long as needed to improve the app. They are linked to an ID for each device the app is installed on, not to your account ID',
-							'Action records and records of how you move through the app sent to appgrowstack: deleted after 90 days. Records attached to a question are deleted 90 days after the question is closed',
-							'Questions and replies, attached images, survey answers, where you installed the app from, and notification tokens: until you delete your account. They are deleted when you delete your account. A notification token is also deleted when notifications can no longer reach the device',
-							'Purchase and analytics records held by our service providers, and text and images sent to AI, are kept under each provider\'s own rules'
-						]
-					},
-					{
-						title: 'Deleting your account',
-						paragraphs: [
-							'You can delete your account at any time in the app under Settings → Delete Account (「設定」→「アカウントを削除」 in Japanese). This deletes your sign-in account; your books, reading records, sticky notes, notebooks, notes and profile photo on the server; and data from app versions 1.4.0 and earlier. It also deletes the action records, records of how you move through the app, questions, survey answers, install source and notification tokens held in appgrowstack. It cannot be undone.',
-							'Deleting your account does not cancel Memory Plus, and you will keep being billed on the App Store or Google Play. Cancel it first in the store you bought it from. Deleting the app alone does not delete your records on the server.',
-							'Even after you delete the app, you can ask us by email at the address below to delete your account. The steps are also on the account deletion page (https://reading-memory-api.taniguchi-kyoichi.com/en/delete-account).'
-						]
-					},
-					{
-						title: 'Requesting access, deletion and more',
-						paragraphs: [
-							'You can ask us to give you access to, correct, or delete your information, to restrict or stop using it, or to give you a copy to take elsewhere. Email us at the address below. We will normally reply within one month. We may ask you a few questions to confirm that the account is yours.',
-							'If you live in the EU, the UK or a similar region, you can also complain to the data protection authority in your country.'
-						]
-					}
-				]
-			},
-			support: {
-				faq: [
-					{
-						question: 'Where is my data stored?',
-						answer:
-							'Your reading records and notes are stored on the server and synced between your devices. When you sign in, you can get back to the same records from any device.'
-					},
-					{
-						question: 'Do I need an internet connection?',
-						answer:
-							'Yes, you need an internet connection to sign in and to sync your data. While offline you can still view cached data, but adding or editing requires an online connection.'
-					},
-					{
-						question: 'How do I delete my account and data?',
-						answer:
-							'You can permanently delete your account and all of your data from "Delete Account" in the Settings tab. This cannot be undone.'
-					},
-					{
-						question: 'What is the difference between free and Memory Plus?',
-						answer:
-							'Adding books is free, with no limit on how many. Sticky notes, notebooks, reading text from pages, reading cards and stamps, the calendar and widgets are also free for good. With Memory Plus (¥6,000 per year / ¥600 per month in Japan; $39.99 / $3.99 on the US App Store), you can turn the lines you pick from a page into key points, look up a word from your notebook across all your books, see your year in books and detailed statistics, and get summaries of your notes. There is no free trial.'
-					}
-				],
-				systemRequirements: 'iOS 26.0 or later, Android 8.0 or later'
-			},
-			subscription: {
-				planName: 'Memory Plus',
-				prices: [
-					{ period: 'Yearly', price: '¥6,000' },
-					{ period: 'Monthly', price: '¥600' }
-				],
-				free: [
-					'Adding books (no limit on how many; search by title or scan the barcode)',
-					'Sticky notes and notebooks; snapping a page to read its text and adding the lines you pick to your notebook',
-					'Reading cards and stamps, and the card box for each year',
-					'The calendar of days you read, your streak, basic statistics and badges',
-					'Looking back on notes you wrote earlier, and widgets',
-					'The index of words in your notebook (for other books, the number of books and the first line)'
-				],
-				paid: [
-					'Turn the lines you picked from a page into key points (uses AI)',
-					'Look up a word from your notebook across all your books (every line)',
-					'Your year in books (everything you read and wrote in a year, in one place)',
-					'Detailed statistics (books finished per month, genres, ratings, and how books made you feel)',
-					'Summaries of the notes you wrote (uses AI)'
-				],
-				restoreSteps: ['Open the "Settings" tab', 'Tap "Learn more" on Memory Plus', 'Tap "Restore purchases"'],
-				notes: [
-					'There is no free trial. You are charged when you confirm the purchase',
-					'On the US App Store, the price is $39.99 per year / $3.99 per month. Prices in other countries and regions are shown on the App Store and Google Play'
-				]
-			}
-		}
+		legal: {
+			support: 'https://taniguchi-kyoichi.com/products/reading-memory/support',
+			privacy: 'https://taniguchi-kyoichi.com/products/reading-memory/privacy',
+			terms: 'https://taniguchi-kyoichi.com/products/reading-memory/terms',
+			supportEn: 'https://taniguchi-kyoichi.com/en/products/reading-memory/support'
+		},
+		nameEn: 'Reading Memory'
 	},
 	{
 		id: 'gohobi-shukan',
@@ -389,117 +149,7 @@ export const products: Product[] = [
 		],
 		audience: 'ゲームのような手ごたえがあると続く大人（高校生〜30代）。勉強・運動・早起きを続けたいけれど、ただのチェックリストでは飽きてしまう人に向けています。',
 		why: 'ただのチェックリストでは習慣が続かないため。続けるための仕組みをそのまま遊びにして、「今日の1回で、ごほうびが確かに近づいた」という嬉しさで続けられるようにしました。',
-		privacy: {
-			effectiveDate: '2026-11-14',
-			dataCollection: 'standard',
-			dataItems: [
-				'アカウントを識別するためのID（初めて開いたときに作られる匿名のID。AppleまたはGoogleとつないだときは、そのアカウントのID）',
-				'メールアドレス（AppleまたはGoogleとつないだときだけ。サインインのために使います）',
-				'登録した習慣・ごほうび・目標と、達成や交換の記録（バックアップと同期のため）',
-				'アプリ内の操作の記録（アプリを開いた・習慣を達成した・Premiumの画面を見た、など）と、アプリの版、端末の言語と地域。習慣やごほうびの名前、金額、入力した文は含みません',
-				'ヘルスケアとモーションの記録（歩数・ワークアウト・睡眠。iPhoneの版だけ）は、許可したときだけ端末の中で読みます。読んだ値はサーバーに送らず、目標に届いた日の達成だけを記録します',
-				'購入の記録（App StoreまたはGoogle Playでの無料体験の開始・購入・更新・解約・返金と、その金額と通貨。以前の「広告削除」を含みます）と、広告からアプリを入れたかどうか（iPhoneの版だけ）',
-				'通知のための端末の情報（プッシュ通知のトークン、時間帯、言語、アプリの版、通知を許可しているかどうか。iPhoneの版だけ。Androidの版のリマインダーは端末の中で鳴らし、通知のための情報をサーバーに送りません）',
-				'ごほうびにつけた写真（つけたときだけ。iPhoneの版だけ）',
-				'「ごほうびを頼む」を使ったときの呼び名、ごほうびの名前、目標の回数と進み、送った応援（約束の相手に見えます。iPhoneの版だけ）',
-				'シェアのリンクにつける絵（自分でリンクを送るときだけ。iPhoneの版だけ）',
-				'約束やシェアのリンクのページを開いた記録（Cookieの乱数を使います。IPアドレスと端末の情報は持ちません）'
-			],
-			serviceProviders: [
-				'サインイン・記録のバックアップと同期・操作と購入と通知の端末の記録の保管・通知の送信・購入の管理と広告からアプリを入れたかどうかの計測・書いた文の読み取りを、外部の事業者に任せています。任せる情報は、その目的に要る分だけです。',
-				'iPhoneの版で習慣やごほうびを自分で書いたときは、書いた文と端末の言語・お金の単位をAIで読み取り、習慣やごほうびの形に直します。あなたのIDは送りません。',
-				'Androidの版で外部の事業者に任せるのは、サインイン・記録のバックアップと同期・操作と購入の記録の保管・購入の管理です。'
-			],
-			analyticsUsed: true,
-			sections: [
-				{
-					title: '運営者',
-					paragraphs: [
-						'ごほうび習慣は、日本に住む個人開発者が運営しています。EU一般データ保護規則（GDPR）などでいう、データの管理者にあたります。連絡先はこのページの最後にあります。'
-					]
-				},
-				{
-					title: '使う目的と法的根拠',
-					paragraphs: [
-						'集めた情報は次の目的にだけ使います。広告には使いません。情報を売ることも、ほかの会社のアプリやWebサイトをまたいで追跡することもしません。目的ごとに「:」の後ろに書いたのが、EU・英国などにお住まいの方についてのGDPRの法的根拠です。'
-					],
-					items: [
-						'アプリを提供するため（サインイン、記録のバックアップと同期、Premium、許可された通知の配信）: 利用者との契約の履行（GDPR第6条1項(b)）',
-						'アプリの使われ方を知って改善するため、どこからアプリを入れて購入に至ったかを測るため: 私たちの正当な利益（同項(f)）。記録の中身を含まない、利用者への影響が小さい情報に絞っています'
-					]
-				},
-				{
-					title: '預け先とEUの外への移転',
-					paragraphs: [
-						'私たちは日本にいて、情報の保管と処理を外部の事業者に任せています。事業者のサーバーは米国や日本など、EUの外にあります。',
-						'日本はEUから十分な保護の水準があると認められています（十分性認定）。米国などへの移転は、各事業者が用意するEUの標準契約条項（SCC）や、EU・米国データプライバシーフレームワークなどの仕組みで保護されます。'
-					]
-				},
-				{
-					title: '保存する期間',
-					items: [
-						'アカウントと、習慣・ごほうび・目標・達成と交換の記録: アカウントがあるあいだ。アカウントを削除すると消します',
-						'操作の記録と購入の記録: アプリの改善と売上の把握に要るあいだ。アカウントを削除したあとは、あなたのIDを無作為なIDに置き換え、あなたと結びつかない形で残します',
-						'通知の端末の情報: サインアウトしたとき、アカウントを削除したとき、通知の配信の仕組みがその端末にもう届かないと答えたときに消します',
-						'約束とシェアのリンクの絵: 約束が終わってから、またはシェアしてから90日で消します。アカウントを削除したときも消します。相手がいる約束は終わった扱いになり、あなたの名前は相手から見えなくなります',
-						'外部の事業者が持つ購入の記録は、各事業者の決まりに従って保管されます'
-					]
-				},
-				{
-					title: 'アカウントの削除',
-					paragraphs: [
-						'アプリの「設定」→「アカウントを削除」で、いつでもアカウントを削除できます。サインインのアカウントと、サーバーとこの端末にある習慣・ごほうび・目標・達成と交換の記録、通知の端末の情報が消えます。元に戻せません。',
-						'操作の記録と購入の記録は、あなたのIDを無作為なIDに置き換えて残します。これらに習慣やごほうびの名前、金額、入力した文は含まれません。',
-						'アカウントを削除してもPremiumは解約されず、App StoreまたはGoogle Playでの請求が続きます。先に、購入したストアで解約してください。アプリを消すだけでは、サーバーの記録は消えません。',
-						'アプリを消したあとでも、下のメールアドレスに削除を頼めます。手順は削除の案内のページ（https://gohobishukan.com/delete-account）にもあります。'
-					]
-				},
-				{
-					title: '開示・削除などの求め方',
-					paragraphs: [
-						'自分の情報の開示・訂正・削除・利用の制限・利用への異議・データの持ち出しを求めることができます。下のメールアドレスにご連絡ください。原則として1か月以内にお答えします。本人の確認のため、いくつかお尋ねすることがあります。',
-						'EU・英国などにお住まいの方は、お住まいの国のデータ保護の監督機関に苦情を申し立てることもできます。'
-					]
-				}
-			],
-			contactEmail: 'info@taniguchi-kyoichi.com'
-		},
-		support: {
-			contactEmail: 'info@taniguchi-kyoichi.com',
-			faq: [
-				{
-					question: 'ごほうびはどうやって近づきますか？',
-					answer:
-						'続けたい習慣を登録して1回ぶんの値を決めると、その習慣を達成するたびにごほうびが近づきます。続けるほど増える継続ボーナスもあります。'
-				},
-				{
-					question: 'アプリの中の数字は現実のお金ですか？',
-					answer:
-						'いいえ。アプリの中だけの数字で、現金やポイントとして引き出すことはできません。自分で決めた「ごほうび」と交換して、続ける気持ちに使います。'
-				},
-				{
-					question: 'データはどこに保存されますか？',
-					answer:
-						'この端末に保存され、匿名のアカウントでサーバーにもバックアップされます（無料）。Premium で Apple または Google とつなぐと、複数の端末で同期でき、機種を変えても引き継げます。'
-				},
-				{
-					question: '機種変更してもデータを引き継げますか？',
-					answer:
-						'Premium で Apple または Google とつないでおくと引き継げます。iPhoneとAndroidのあいだでも引き継げます。新しい端末では、設定から前と同じアカウントでサインインしてください（無料）。同じストアで買ったPremiumは、サインインすると自動で引き継がれます。'
-				},
-				{
-					question: '以前に「広告削除」を買いました',
-					answer:
-						'3.0 から広告は無くなりました。以前に「広告削除」を買った方は、そのまま Premium を使えます。新しい端末では「購入を復元」を押してください。'
-				},
-				{
-					question: 'リマインダーの通知が届きません',
-					answer:
-						'iPhoneは「設定」→「通知」→「ごほうび習慣」で、Androidは端末の「設定」→「アプリ」→「ごほうび習慣」→「通知」で、通知が許可されているか確かめてください。習慣ごとの通知は、習慣の編集画面から曜日と時刻を決められます。'
-				}
-			],
-			systemRequirements: 'iOS 17.0以上、Android 8.0以上'
-		},
+		systemRequirements: 'iOS 17.0以上、Android 8.0以上',
 		subscription: {
 			planName: 'Premium',
 			prices: [
@@ -519,155 +169,15 @@ export const products: Product[] = [
 				'記録のグラフを全期間',
 				'Apple または Google とつないで、複数の端末で同期',
 				'機種を変えても続きから使える'
-			],
-			restoreSteps: ['「設定」を開く', '「購入を復元」をタップする'],
-			restoreStepsEn: ['Open 「設定」 (Settings) in the app', 'Tap 「購入を復元」 (Restore purchases)'],
-			notes: [
-				'無料のお試しはありません。購入を確定したときから代金がかかります',
-				'3.2.0より前の版のアプリでApp Storeの年額を買うときだけ、はじめの7日間を無料で試せます。お試しの終わる24時間前までに解約しないと、そのまま有料の年額に切り替わり、代金が請求されます',
-				'2026年10月26日までに使い始めた方は、追加の支払いなしで Premium を使えます',
-				'以前に買い切りの「広告削除」を買った方は、追加の支払いなしで Premium を使えます',
-				'Androidの版には、タイマーとホーム画面のウィジェットはありません'
 			]
 		},
-		en: {
-			name: 'Reward Habits',
-			privacy: {
-				dataItems: [
-					'An ID to identify your account (an anonymous ID created when you first open the app; when you connect Apple or Google, the ID of that account)',
-					'Email address (only when you connect Apple or Google; used for sign-in)',
-					'The habits, rewards and goals you add, and records of completions and exchanges (to back them up and sync them)',
-					'Records of actions in the app (such as opening the app, completing a habit, or viewing the Premium screen), with the app version and the language and region of your device. They do not contain the names of your habits or rewards, amounts, or text you type',
-					'Health and Motion data (steps, workouts and sleep; iPhone version only) is read on your device only if you allow it. The values are not sent to our servers; we record only the completion on days you reach your goal',
-					'Purchase records on the App Store or Google Play (start of a free trial, purchases, renewals, cancellations and refunds, with the amount and currency; including the earlier "Remove Ads"), and whether the app was installed from an ad (iPhone version only)',
-					'Device information for notifications (the push notification token, time zone, language, app version, and whether notifications are allowed; iPhone version only. In the Android version, reminders are scheduled on your device and no notification information is sent to our servers)',
-					'Photos you add to a reward (only when you add one; iPhone version only)',
-					'When you use “Ask for a reward”: the name you go by, the reward name, the target and progress, and the cheers you send (the person you asked can see these; iPhone version only)',
-					'The image attached to a share link (only when you send a link yourself; iPhone version only)',
-					'Records of opening a pact or share link page (using a random value in a cookie; we do not keep your IP address or device information)'
-				],
-				serviceProviders: [
-					'We use outside service providers for sign-in, backup and sync of your records, storing action records, purchase records and device information for notifications, sending notifications, managing purchases and measuring whether the app was installed from an ad, and reading the text you write. We share only what each purpose needs.',
-					'In the iPhone version, when you type a habit or reward yourself, the text you typed, with your device language and currency, is read by AI to turn it into a habit or reward. Your ID is not sent.',
-					'In the Android version, we use outside service providers only for sign-in, backup and sync of your records, storing action and purchase records, and managing purchases.'
-				],
-				sections: [
-					{
-						title: 'Who we are',
-						paragraphs: [
-							'Reward Habits is run by an individual developer based in Japan, who is the controller of your data under the EU General Data Protection Regulation (GDPR) and similar laws. Contact details are at the end of this page.'
-						]
-					},
-					{
-						title: 'Why we use your information, and our legal bases',
-						paragraphs: [
-							'We use the information only for the purposes below. We do not use it for advertising, we do not sell it, and we do not track you across other companies\' apps or websites. The text after each purpose is the GDPR legal basis for people in the EU, the UK and similar regions.'
-						],
-						items: [
-							'To provide the app (sign-in, backup and sync of your records, Premium, and the notifications you allow): performance of our contract with you (GDPR Article 6(1)(b))',
-							'To understand how the app is used and improve it, and to measure where installs and purchases come from: our legitimate interests (Article 6(1)(f)). We limit this to information that does not include the content of your records and has little impact on you'
-						]
-					},
-					{
-						title: 'Service providers and transfers outside the EU',
-						paragraphs: [
-							'We are based in Japan, and we use outside service providers to store and process the information. Their servers are outside the EU, including in the United States and Japan.',
-							'The EU recognizes Japan as providing an adequate level of protection (an adequacy decision). Transfers to the United States and other countries are protected by the safeguards each provider offers, such as the EU Standard Contractual Clauses (SCCs) or the EU-U.S. Data Privacy Framework.'
-						]
-					},
-					{
-						title: 'How long we keep it',
-						items: [
-							'Your account and your habits, rewards, goals, and completion and exchange records: while you have an account. They are deleted when you delete your account',
-							'Action records and purchase records: as long as needed to improve the app and understand revenue. After you delete your account, we replace your ID with a random ID and keep them in a form that is no longer linked to you',
-							'Device information for notifications: deleted when you sign out, when you delete your account, or when the notification delivery service reports that the device can no longer be reached',
-							'Pacts and share link images: deleted 90 days after a pact ends or after you share. They are also deleted when you delete your account. A pact with another person is marked as ended, and your name is no longer shown to them',
-							'Purchase records held by our service providers are kept under each provider\'s own rules'
-						]
-					},
-					{
-						title: 'Deleting your account',
-						paragraphs: [
-							'You can delete your account at any time in the app under Settings → Delete Account (「設定」→「アカウントを削除」 in Japanese). This deletes your sign-in account; your habits, rewards, goals, and completion and exchange records on the server and on this device; and the device information for notifications. It cannot be undone.',
-							'Action records and purchase records are kept with your ID replaced by a random ID. They do not contain the names of your habits or rewards, amounts, or text you type.',
-							'Deleting your account does not cancel Premium, and you will keep being billed on the App Store or Google Play. Cancel it first in the store you bought it from. Deleting the app alone does not delete your records on the server.',
-							'Even after you delete the app, you can ask us by email at the address below to delete your account. The steps are also on the account deletion page (https://gohobishukan.com/delete-account).'
-						]
-					},
-					{
-						title: 'Requesting access, deletion and more',
-						paragraphs: [
-							'You can ask us to give you access to, correct, or delete your information, to restrict or stop using it, or to give you a copy to take elsewhere. Email us at the address below. We will normally reply within one month. We may ask you a few questions to confirm that the account is yours.',
-							'If you live in the EU, the UK or a similar region, you can also complain to the data protection authority in your country.'
-						]
-					}
-				]
-			},
-			support: {
-				faq: [
-					{
-						question: 'How does a reward get closer?',
-						answer:
-							'Add a habit you want to keep and set the value of one completion. Each time you complete that habit, your reward gets closer. There is also a streak bonus that grows the longer you keep going.'
-					},
-					{
-						question: 'Are the numbers in the app real money?',
-						answer:
-							'No. The numbers exist only inside the app and cannot be withdrawn as cash or points. You exchange them for "rewards" you choose yourself, to help you keep going.'
-					},
-					{
-						question: 'Where is my data stored?',
-						answer:
-							'It is stored on this device and also backed up to the server with an anonymous account (free). With Premium, you can connect Apple or Google to sync across multiple devices and carry your data over when you change phones.'
-					},
-					{
-						question: 'Can I keep my data when I change phones?',
-						answer:
-							'Yes, if you connect Apple or Google with Premium. This also works between iPhone and Android. On the new device, sign in with the same account in Settings (free). Premium bought in the same store is carried over automatically when you sign in.'
-					},
-					{
-						question: 'I bought "Remove Ads" before',
-						answer:
-							'Ads were removed in 3.0. If you bought "Remove Ads" before, you can keep using Premium as is. On a new device, tap "Restore purchases".'
-					},
-					{
-						question: 'Reminder notifications do not arrive',
-						answer:
-							'On iPhone, check Settings → Notifications → Reward Habits. On Android, check the device Settings → Apps → Reward Habits → Notifications. Make sure notifications are allowed. For each habit, you can set the days and time of its notification on the habit\'s edit screen.'
-					}
-				],
-				systemRequirements: 'iOS 17.0 or later, Android 8.0 or later'
-			},
-			subscription: {
-				planName: 'Premium',
-				prices: [
-					{ period: 'Yearly', price: '¥6,000' },
-					{ period: 'Monthly', price: '¥800' }
-				],
-				free: [
-					'Up to 3 habits, and any number of rewards',
-					'Completions and exchanges, and the streak bonus',
-					'Timer and reminders',
-					'History charts for the last 7 days',
-					'Cloud backup of your records (anonymous account)'
-				],
-				paid: [
-					'Any number of habits',
-					'Home Screen widget',
-					'History charts for all time',
-					'Connect Apple or Google to sync across multiple devices',
-					'Continue where you left off after changing phones'
-				],
-				restoreSteps: ['Open "Settings"', 'Tap "Restore purchases"'],
-				notes: [
-					'There is no free trial. You are charged when you confirm the purchase',
-					'Only when you buy the annual plan on the App Store from an app version earlier than 3.2.0, you can try it free for the first 7 days. Unless you cancel at least 24 hours before the trial ends, it switches to the paid annual plan and you are charged',
-					'If you started using the app on or before October 26, 2026, you can use Premium at no additional cost',
-					'If you bought the earlier one-time "Remove Ads" purchase, you can use Premium at no additional cost',
-					'The Android version does not have the timer or the Home Screen widget'
-				]
-			}
-		}
+		legal: {
+			support: 'https://gohobishukan.com/support/',
+			privacy: 'https://gohobishukan.com/privacy/',
+			terms: 'https://gohobishukan.com/terms/',
+			supportEn: 'https://gohobishukan.com/en/support/'
+		},
+		nameEn: 'Reward Habits'
 	},
 	{
 		id: 'stock-radar',
@@ -685,7 +195,7 @@ export const products: Product[] = [
 			appStore: 'https://apps.apple.com/jp/app/id6792582581',
 			web: 'https://stock-radar.taniguchi-kyoichi.com'
 		},
-		// 掲載は3本（読書メモリー・ごほうび習慣・じぶんBGM）に絞った。規約・プライバシー・サポートのページは残す。
+		// 掲載は3本（読書メモリー・ごほうび習慣・じぶんBGM）に絞った。規約・プライバシー・サポートのページは appgrowstack-legal の Worker が出す。
 		hidden: true,
 		thumbnail: '/stock-radar-icon.png',
 		ogImage: '/stock-radar-icon.jpg',
@@ -703,55 +213,7 @@ export const products: Product[] = [
 			'ストックレーダー プラスで、家族と在庫を共有',
 			'氏名・メール不要。アカウント削除はアプリ内から'
 		],
-		privacy: {
-			// 本文を実態に合わせて書き直した日。**中身を直したらここも直す** ——
-			// 表示だけ古い日付が残ると、法務ページがそのページ自身の内容と食い違う。
-			effectiveDate: '2026-11-03',
-			dataCollection: 'minimal',
-			dataItems: [
-				'アカウントを識別するための ID（端末内で作られる匿名の ID、または Apple・Google のサインイン）',
-				'表示名（「あなた／パートナー」の区別に使うニックネーム。本名は保存しません）',
-				'登録した日用品と、買った記録',
-				'ご自身で撮影した写真（アイテムや世帯のアイコン）',
-				'レシートの写真（読み取りのために送信し、読み取った後は保存しません）',
-				'世帯に招待するためのコード（そのままではなく、元に戻せない形にして保存します）',
-				'通知を届けるための端末の識別子',
-				'ストックレーダー プラスの加入状況',
-				'その月に読み取ったレシートの枚数（無料の枚数を数えるため）',
-				'アプリ内の操作の記録（改善のために使います。広告には使いません）'
-			],
-			serviceProviders: [
-				'サインイン・データと写真の保管と世帯のあいだの同期・利用状況の分析・通知の配信・購入の管理・レシートと商品名の読み取り・バーコードから商品名を調べること（バーコードの番号を送ります）を、外部の事業者に任せています。任せる情報は、その目的に要る分だけです。'
-			],
-			analyticsUsed: true,
-			contactEmail: 'info@taniguchi-kyoichi.com'
-		},
-		support: {
-			contactEmail: 'info@taniguchi-kyoichi.com',
-			faq: [
-				{
-					question: '無料でどこまで使えますか？',
-					answer:
-						'日用品の登録・切れかけの予測・1タップの記録・通知・ウィジェット・買い物前のチェックは無料です。レシートの読み取りは、月3枚まで無料です（日本時間の月の初めに戻ります）。4枚目からの読み取りと、家族との共有は「ストックレーダー プラス」で使えます。'
-				},
-				{
-					question: 'ストックレーダー プラスとは？',
-					answer:
-						'レシートの読み取りが無制限になり、同じ家の在庫を家族と1つのリストで共有できる有料プランです。年額¥6,000（7日間の無料お試しつき）/ 月額¥800 で、自動で更新されます。世帯の誰か1人が入れば、世帯のみんなで共有できます。'
-				},
-				{
-					question: 'データはどこに保存されますか？',
-					answer:
-						'在庫や購入の記録はサーバーに保存され、世帯のメンバーのあいだで同期されます。氏名やメールアドレスは保存しません（メンバーは「あなた／パートナー」として扱います）。'
-				},
-				{
-					question: 'アカウントやデータを削除するには？',
-					answer:
-						'アカウント画面の「アカウントを削除」から、世帯データを含めて完全に削除できます。この操作は取り消せません。'
-				}
-			],
-			systemRequirements: 'iOS 26.0以上'
-		},
+		systemRequirements: 'iOS 26.0以上',
 		subscription: {
 			planName: 'ストックレーダー プラス',
 			prices: [
@@ -766,13 +228,12 @@ export const products: Product[] = [
 				'レシートの読み取りが無制限',
 				'家族と1つの在庫リストを共有（世帯の誰か1人が入れば、世帯のみんなで使えます）'
 			],
-			trial: { length: 7, unit: 'day', period: '年額', periodEn: 'annual' },
-			restoreSteps: ['「設定」を開く', '「アカウント」を押す', '「購入を復元」を押す'],
-			restoreStepsEn: [
-				'Open 「設定」 (Settings) in the app',
-				'Tap 「アカウント」 (Account)',
-				'Tap 「購入を復元」 (Restore purchases)'
-			]
+			trial: { length: 7, unit: 'day', period: '年額' }
+		},
+		legal: {
+			support: 'https://taniguchi-kyoichi.com/products/stock-radar/support',
+			privacy: 'https://taniguchi-kyoichi.com/products/stock-radar/privacy',
+			terms: 'https://taniguchi-kyoichi.com/products/stock-radar/terms'
 		}
 	},
 	{
@@ -831,68 +292,7 @@ export const products: Product[] = [
 		],
 		audience: '音を流しながら作業や勉強をする人。雨や焚き火の音を重ねたい人、YouTubeのカフェジャズなどで作業している人に向けています。',
 		why: 'YouTubeで毎回やっている「BGMを探して、音量を合わせて、広告で止まる」を省くため。曲に雨音や焚き火の音を自分の比率で重ねて保存し、押せばすぐ流れるようにしました。',
-		privacy: {
-			effectiveDate: '2026-11-22',
-			dataCollection: 'standard',
-			dataItems: [
-				'匿名のインストール ID（初回の起動で端末が作るランダムな文字列。サインインしたときは、ユーザーIDと結び付けます）',
-				'アプリ内の操作の記録（例: 画面を開いた、BGMを流した。値は数の範囲や決まった語だけで、BGMの名前や入力した文字は送りません）。iPhoneとAndroidの両方の版で送ります',
-				'サインインしたときだけ: メールアドレス・名前・ユーザーID（有料プランを別の端末に引き継ぐためと、操作の記録・問い合わせ・アンケートの答えをその人の物として結び付けるために使います。名前はサインインを任せている外部の事業者が持ち、アプリの画面に出すだけです）',
-				'有料プランの期限（サインインしているときはユーザー ID と一緒に）',
-				'音の配信のときに、接続元の IP アドレス（配信と不正利用の防止のため）',
-				'アプリの中の問い合わせ（「ヘルプと問い合わせ」）に書いた文と添えた画像、問い合わせに自動で添える情報（アプリの版・端末の機種とOS・プレミアムか・開いていた画面・直近の操作・アプリの中で出したお知らせ）。iPhoneの版だけです',
-				'問い合わせの返事を知らせる通知のための、端末の通知のトークン（iPhoneの版だけ）',
-				'どこからアプリを入れたか（入れたあと最初にアプリを開いたURL、Appleの検索広告から入れたときの広告のトークン、Androidの版ではGoogle PlayのInstall Referrer）',
-				'アンケートの答え（選んだ答えと、書いた人だけ書いた文）。答えるかどうかは任意です',
-				'作ったBGM・お気に入り・集中の記録・外観の設定は端末の中だけに保存し、送りません',
-				'購入の記録（App StoreまたはGoogle Playでの購入・更新・解約）',
-				'広告ID（iPhoneのIDFA、Androidの広告ID）は読みません。広告もトラッキングもありません'
-			],
-			serviceProviders: [
-				'サインイン（Appleでサインイン・Googleでサインインしたときだけ）・音とカタログの配信・操作の記録の保管・購入の管理を、外部の事業者に任せています。任せる情報は、その目的に要る分だけです。',
-				'操作の記録・問い合わせ・アンケートの答え・どこからアプリを入れたか・有料プランの状態は、私たちがCloudflareの上で動かしている仕組み（appgrowstack・api.appgrowstack.com）に送ります。インストールごとのIDと結び付け、サインインしていればユーザーIDとも結び付けます。',
-				'問い合わせの返事の下書きを作ることと、アンケートに書いた文を話題に分けることに、AI（AnthropicのClaude）を使います。そのために、問い合わせの文と添えた画像・添えた情報、アンケートの文を、Anthropic（米国）に送ります。返事は、運営者が下書きを読んでから送ります。問い合わせとアンケートの文を、AIの学習のために渡すことはしません。'
-			],
-			analyticsUsed: true,
-			sections: [
-				{
-					title: '保存する期間',
-					items: [
-						'サインインの記録と有料プランの期限: アカウントがあるあいだ。アカウントを削除すると消します',
-						'私たちのアプリのサーバーにある操作の記録: アプリの改善に要るあいだ。インストールごとのIDとだけ結び付いていて、アカウントを削除しても消えません',
-						'appgrowstackに送った操作の記録: 90日で消します',
-						'問い合わせと返事・添えた画像・アンケートの答え・どこからアプリを入れたか・通知のトークン: アカウントを削除するまで。アカウントを削除すると消します。サインインしていない方は、下のメールアドレスに頼めば消します。通知のトークンは、通知が届かなくなったときにも消します',
-						'外部の事業者が持つ購入の記録、AIに送った文と画像は、各事業者の決まりに従って保管されます'
-					]
-				}
-			],
-			contactEmail: 'info@taniguchi-kyoichi.com'
-		},
-		support: {
-			contactEmail: 'info@taniguchi-kyoichi.com',
-			faq: [
-				{
-					question: '無料でどこまで使えますか？',
-					answer:
-						'定番のBGMを流す・タイマー・ロック画面とコントロールセンター（Androidはクイック設定と通知）からの操作は無料です。曲と環境音を重ねて自分のBGMを保存すること、ウィジェットで流すBGMを選ぶことはプレミアム（年額¥6,000 / 月額¥1,200）です。'
-				},
-				{
-					question: 'インターネットにつながっていなくても鳴りますか？',
-					answer: '一度読み込んだ音は、オフラインでも鳴り続けます。'
-				},
-				{
-					question: 'サインインは必要ですか？',
-					answer:
-						'いいえ。サインインしなくても、すべての機能を使えます。サインインが要るのは、有料プランを別の端末に引き継ぐときだけです。'
-				},
-				{
-					question: 'アカウントを削除するには？',
-					answer:
-						'iPhoneでは、BGMの一覧の右上の人のアイコンから「アカウント」を開き、「アカウントを削除」をタップしてください。Androidでは、右上の人のアイコンから「設定」を開き、「サインイン」の欄の「アカウントを削除」をタップしてください。端末に保存したBGMは端末に残ります。アカウントを削除しても有料プランは解約されないので、先に、購入したストアで解約してください。手順は削除の案内のページ（https://jibun-bgm.taniguchi-kyoichi.com/delete-account）にもあります。'
-				}
-			],
-			systemRequirements: 'iOS 27.0以上、Android 8.0以上'
-		},
+		systemRequirements: 'iOS 27.0以上、Android 8.0以上',
 		subscription: {
 			planName: 'プレミアム',
 			prices: [
@@ -905,108 +305,15 @@ export const products: Product[] = [
 				'ロック画面・コントロールセンター（Androidはクイック設定と通知）からの操作',
 				'広告なし・再生時間の制限なし'
 			],
-			paid: ['曲と環境音を重ねて、自分のBGMとして保存', 'ウィジェットで流すBGMを選ぶ'],
-			restoreSteps: [
-				'BGMの一覧の右上の人のアイコンから「アカウント」を開く',
-				'「プラン」の「有料にする」をタップする',
-				'「購入を復元」をタップする'
-			],
-			restoreStepsEn: [
-				'On the BGM list, tap the person icon at the top right to open 「アカウント」 (Account)',
-				'Under 「プラン」 (Plan), tap 「有料にする」 (Upgrade)',
-				'Tap 「購入を復元」 (Restore purchases)'
-			],
-			restoreStepsAndroid: [
-				'BGMの一覧の右上の人のアイコンから「設定」を開く',
-				'「サブスクリプション」の「プレミアムにする」をタップする',
-				'「購入を復元」をタップする'
-			],
-			restoreStepsAndroidEn: [
-				'On the BGM list, tap the person icon at the top right to open 「設定」 (Settings)',
-				'Under 「サブスクリプション」 (Subscription), tap 「プレミアムにする」 (Go Premium)',
-				'Tap 「購入を復元」 (Restore purchases)'
-			]
+			paid: ['曲と環境音を重ねて、自分のBGMとして保存', 'ウィジェットで流すBGMを選ぶ']
 		},
-		en: {
-			name: 'Jibun BGM',
-			privacy: {
-				dataItems: [
-					'An anonymous installation ID (a random string your device makes the first time you open the app. When you sign in, it is linked to your user ID)',
-					'Records of actions in the app (for example, opening a screen or playing a BGM. Values are only number ranges or fixed words; BGM names and anything you type are not sent). Both the iPhone and Android versions send them',
-					'Only when you sign in: your email address, name and user ID (used to carry your paid plan over to another device, and to link action records, questions and survey answers to you. Your name is held by the service provider we use for sign-in and is only shown in the app)',
-					'The expiry date of your paid plan (with your user ID when you are signed in)',
-					'Your IP address when sounds are delivered (for delivery and to prevent abuse)',
-					'What you write in the in-app contact form (「ヘルプと問い合わせ」, Help & Contact) and any images you attach, plus information added to it automatically (the app version, device model and OS, whether you have Premium, the screen you were on, your recent actions, and in-app messages we showed you). iPhone version only',
-					'Your device\'s notification token, to let you know when we reply to your question (iPhone version only)',
-					'Where you installed the app from (the URL that first opened the app after you installed it, the ad token when you installed from an Apple Search Ads ad, and in the Android version, the Google Play Install Referrer)',
-					'Your survey answers (the choices you pick, and text only if you write some). Answering is optional',
-					'The BGMs you make, your favorites, your focus records and appearance settings are stored only on your device and are not sent',
-					'Purchase records (purchases, renewals and cancellations on the App Store or Google Play)',
-					'We do not read the advertising ID (IDFA on iPhone, the advertising ID on Android). There are no ads and no tracking'
-				],
-				serviceProviders: [
-					'We use outside service providers for sign-in (only when you use Sign in with Apple or Sign in with Google), delivering sounds and the catalog, storing action records, and managing purchases. We share only what each purpose needs.',
-					'Action records, questions you send us, survey answers, where you installed the app from, and the status of your paid plan are sent to a system we run on Cloudflare (appgrowstack, api.appgrowstack.com). They are linked to an ID for each installation, and also to your user ID if you are signed in.',
-					'We use AI (Claude by Anthropic) to draft replies to your questions and to sort the text you write in surveys into topics. For this, the text of your question with its attached images and information, and the text of your survey answers, are sent to Anthropic in the United States. A person running the app reads each draft before a reply is sent. We do not hand over your questions or survey text for training AI.'
-				],
-				sections: [
-					{
-						title: 'How long we keep it',
-						items: [
-							'Sign-in records and the expiry date of your paid plan: while you have an account. They are deleted when you delete your account',
-							'Action records on the app\'s own server: as long as needed to improve the app. They are linked only to an ID for each installation, and are not deleted when you delete your account',
-							'Action records sent to appgrowstack: deleted after 90 days',
-							'Questions and replies, attached images, survey answers, where you installed the app from, and notification tokens: until you delete your account. They are deleted when you delete your account. If you have not signed in, email us at the address below and we will delete them. A notification token is also deleted when notifications can no longer reach the device',
-							'Purchase records held by our service providers, and text and images sent to AI, are kept under each provider\'s own rules'
-						]
-					}
-				]
-			},
-			support: {
-				faq: [
-					{
-						question: 'How much can I use for free?',
-						answer:
-							'Playing the standard BGMs, the timer, and controls from the Lock Screen and Control Center (on Android, Quick Settings and the notification) are free. Saving your own BGM by layering music and ambient sounds, and choosing which BGM a widget plays, need Premium (¥6,000 per year / ¥1,200 per month in Japan).'
-					},
-					{
-						question: 'Does it play without an internet connection?',
-						answer: 'Sounds that have been loaded once keep playing offline.'
-					},
-					{
-						question: 'Do I need to sign in?',
-						answer:
-							'No. You can use every feature without signing in. You only need to sign in to carry your paid plan over to another device.'
-					},
-					{
-						question: 'How do I delete my account?',
-						answer:
-							'On iPhone, tap the person icon at the top right of the BGM list, open 「アカウント」 (Account), and tap 「アカウントを削除」 (Delete account). On Android, tap the person icon at the top right, open 「設定」 (Settings), and tap 「アカウントを削除」 (Delete account) in the 「サインイン」 (Sign in) section. The BGMs saved on your device stay on your device. Deleting your account does not cancel your paid plan, so cancel it first in the store you bought it from. The steps are also on the account deletion page (https://jibun-bgm.taniguchi-kyoichi.com/delete-account).'
-					}
-				],
-				systemRequirements: 'iOS 27.0 or later, Android 8.0 or later'
-			},
-			subscription: {
-				planName: 'Premium',
-				prices: [
-					{ period: 'Yearly', price: '¥6,000' },
-					{ period: 'Monthly', price: '¥1,200' }
-				],
-				free: [
-					'Playing the standard BGMs',
-					'The focus timer',
-					'Controls from the Lock Screen and Control Center (on Android, Quick Settings and the notification)',
-					'No ads and no limit on playing time'
-				],
-				paid: ['Saving your own BGM by layering music and ambient sounds', 'Choosing which BGM a widget plays'],
-				restoreSteps: [
-					'On the BGM list, tap the person icon at the top right to open 「アカウント」 (Account)',
-					'Under 「プラン」 (Plan), tap 「有料にする」 (Upgrade)',
-					'Tap 「購入を復元」 (Restore purchases)'
-				],
-				notes: ['Prices in countries and regions other than Japan are shown on the App Store and Google Play']
-			}
-		}
+		legal: {
+			support: 'https://taniguchi-kyoichi.com/products/jibun-bgm/support',
+			privacy: 'https://taniguchi-kyoichi.com/products/jibun-bgm/privacy',
+			terms: 'https://taniguchi-kyoichi.com/products/jibun-bgm/terms',
+			supportEn: 'https://taniguchi-kyoichi.com/en/products/jibun-bgm/support'
+		},
+		nameEn: 'Jibun BGM'
 	}
 ];
 

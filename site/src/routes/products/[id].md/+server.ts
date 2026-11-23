@@ -78,10 +78,10 @@ export const GET: RequestHandler = ({ params, setHeaders }) => {
 		lines.push('');
 	}
 
-	if (product.support?.systemRequirements) {
+	if (product.systemRequirements) {
 		lines.push('## System Requirements');
 		lines.push('');
-		lines.push(product.support.systemRequirements);
+		lines.push(product.systemRequirements);
 		lines.push('');
 	}
 
