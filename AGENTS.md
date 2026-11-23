@@ -23,6 +23,12 @@ site/              公開 SvelteKit（Cloudflare Workers Static Assets）— ape
 
 > ローカルの `wrangler login`(OAuth) は DNS 権限が無い。DNS/custom domain 操作は必ず上記トークン（`with-secrets --attended --profile infra`）で行う。
 
+## 規約・プライバシー・サポートの面はこの repo に無い
+
+- 読書メモリー・じぶんBGM・ストックレーダーの `/products/<id>/{privacy,terms,support}*` と、読書メモリー・じぶんBGM の `/en/products/<id>/...` は、別の Worker（appgrowstack-legal）が Workers Routes で出す。ルートがこのサイトより先に当たるので、ここに同じ道のページを作っても配られない
+- ごほうび習慣の面は gohobishukan.com。古い URL は `hooks.server.ts` が 301 で送る
+- 製品のページの一番下のリンクは `products.ts` の `legal` に書いた URL をそのまま出す
+
 ## デプロイ
 
 **site は main マージで自動デプロイされる**（`.github/workflows/deploy-site.yml`・`site/**` の変更のみ）。

@@ -51,11 +51,6 @@ function gohobiLegalRedirect(pathname: string): string | null {
 	return m ? `https://gohobishukan.com${m[1] ?? ''}/${m[2]}/` : null;
 }
 
-/** `<html lang>`。英語のページは /en/ の下にだけ置く（今は法務・サポートの面だけ）。 */
-function pageLanguage(pathname: string): 'ja' | 'en' {
-	return pathname === '/en' || pathname.startsWith('/en/') ? 'en' : 'ja';
-}
-
 export const handle: Handle = async ({ event, resolve }) => {
 	// 308（301 ではなく）にするのは、メソッドを保つため。/api/* が www に来ても壊れない。
 	const redirect = canonicalRedirect(event);
@@ -68,10 +63,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		return new Response('Gone', { status: 410, headers: { 'content-type': 'text/plain; charset=utf-8' } });
 	}
 
-	const lang = pageLanguage(event.url.pathname);
-	const response = await resolve(event, {
-		transformPageChunk: ({ html }) => html.replace('%lang%', lang)
-	});
+	const response = await resolve(event);
 	response.headers.set('Content-Security-Policy', CSP);
 	response.headers.set('X-Frame-Options', 'DENY');
 	response.headers.set('X-Content-Type-Options', 'nosniff');

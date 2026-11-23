@@ -40,31 +40,20 @@ export interface ProductLinks {
   docs?: string;
 }
 
-export interface PrivacyConfig {
-  effectiveDate: string;
-  dataCollection: "none" | "minimal" | "standard";
-  dataItems?: string[];
-  /** 外部の事業者に何を任せているかを、機能で書いた短い段落。会社や技術の名前は書かない */
-  serviceProviders?: string[];
-  analyticsUsed?: boolean;
-  /** 目的・法的根拠・移転・保存期間・削除と開示の求め方など、アプリごとに書く節。「外部の事業者」の後に順に出す */
-  sections?: PrivacySection[];
-  contactEmail: string;
+/**
+ * 規約・プライバシー・サポートの面の URL。文面はこのサイトに置かない。
+ * 読書メモリー・じぶんBGM・ストックレーダーは appgrowstack-legal の Worker が同じドメインの
+ * /products/<id>/… と /en/products/<id>/… で出し、ごほうび習慣は gohobishukan.com にある。
+ */
+export interface LegalLinks {
+  support: string;
+  privacy: string;
+  terms: string;
+  /** 英語のサポートの面。英語の面がある製品だけ */
+  supportEn?: string;
 }
 
-export interface PrivacySection {
-  title: string;
-  paragraphs?: string[];
-  items?: string[];
-}
-
-export interface SupportConfig {
-  contactEmail: string;
-  faq?: { question: string; answer: string }[];
-  systemRequirements?: string;
-}
-
-/** 自動更新サブスクリプションの条件。利用規約のページ（/products/<id>/terms）とサポートのページに出す */
+/** 有料プランの中身。製品のページの価格の1行と AI に質問の答えに使う */
 export interface SubscriptionConfig {
   /** アプリの中の呼び名（例: プレミアム） */
   planName: string;
@@ -74,16 +63,6 @@ export interface SubscriptionConfig {
   free: string[];
   /** 有料で増えるもの */
   paid: string[];
-  /** 購入を復元する手順（アプリの画面の言葉のまま） */
-  restoreSteps: string[];
-  /** 英語の手順。画面の言葉は日本語のまま「」で残す */
-  restoreStepsEn: string[];
-  /** Android で画面の言葉や道筋が iPhone と違うときだけ書く、Android の復元の手順 */
-  restoreStepsAndroid?: string[];
-  /** restoreStepsAndroid の英語。画面の言葉は日本語のまま「」で残す */
-  restoreStepsAndroidEn?: string[];
-  /** 補足（旧プランの扱いなど） */
-  notes?: string[];
   /** 無料のお試し。例: 年額に 7 日間 / 年額に 1 か月 */
   trial?: SubscriptionTrial;
 }
@@ -94,8 +73,6 @@ export interface SubscriptionTrial {
   unit: "day" | "month";
   /** お試しが付くプラン（日本語の画面の言葉）。例: 年額 */
   period: string;
-  /** 英語の文に入れる形。例: annual */
-  periodEn: string;
 }
 
 export interface Product {
@@ -129,14 +106,12 @@ export interface Product {
   audience?: string;
   /** なぜ作ったか・何の悩みをなくすか（1〜2文）。AI に質問の答えの材料として渡す */
   why?: string;
-  privacy?: PrivacyConfig;
-  support?: SupportConfig;
+  /** 対応する OS の版。.md の版に出す */
+  systemRequirements?: string;
   subscription?: SubscriptionConfig;
-  /**
-   * 法務・サポートの英語のページ（/en/products/<id>/terms|privacy|support）の文面。
-   * 日本語のページの訳で、意味を足し引きしない。無ければ英語のページは 404。
-   */
-  en?: ProductEnglish;
+  legal?: LegalLinks;
+  /** App Store の英語の表示名 */
+  nameEn?: string;
   /** トップのカードと製品のページの見せ方。無い製品は飾りのない形で出す */
   showcase?: ProductShowcase;
 }
@@ -168,23 +143,6 @@ export interface ProductTheme {
   accent: string;
   /** 補助の文字 */
   muted: string;
-}
-
-/** 日本語のデータ（privacy / support / subscription）のうち、文面の項目だけを英語にしたもの */
-export interface ProductEnglish {
-  /** App Store の英語の表示名 */
-  name: string;
-  privacy?: Pick<PrivacyConfig, "dataItems" | "serviceProviders" | "sections">;
-  support?: Pick<SupportConfig, "faq" | "systemRequirements">;
-  subscription?: {
-    planName: string;
-    prices: { period: string; price: string }[];
-    free: string[];
-    paid: string[];
-    /** アプリの英語の画面の言葉で書いた手順 */
-    restoreSteps: string[];
-    notes?: string[];
-  };
 }
 
 // OSS の種別。今は Swift パッケージ中心だが、将来 Claude Code プラグインや

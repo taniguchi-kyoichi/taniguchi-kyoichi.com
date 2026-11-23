@@ -6,7 +6,6 @@ import { absoluteUrl, DEFAULT_OG_IMAGE, DEFAULT_OG_IMAGE_SIZE, SITE_NAME, SITE_U
 import type { SEO } from '$lib/seo';
 import type { Product } from '$lib/types';
 import { appStoreIdOf, priceLineOf } from '$lib/productShowcase';
-import { legalPath } from '$lib/legal';
 
 // schema.org Offer.price must be numeric. Free → '0'; non-numeric (e.g.
 // '無料（プレミアム予定）') → '0'; otherwise extract digits, else omit offers.
@@ -108,16 +107,17 @@ function pageProduct(product: Product) {
 }
 
 /**
- * ページの一番下の規約類の1行。ルートが 404 になる物は出さない（各 +page.server.ts の条件と同じ）。
+ * ページの一番下の規約類の1行。面はこのサイトの外（appgrowstack-legal の Worker・gohobishukan.com）にあり、
  * App Store の審査に登録している URL なので、ここから辿れることが大事。
  */
 function legalLinksOf(product: Product): { label: string; href: string; lang?: string }[] {
-	const links: { label: string; href: string; lang?: string }[] = [];
-	if (product.support) links.push({ label: 'サポート', href: legalPath(product.id, 'support', 'ja') });
-	if (product.privacy) links.push({ label: 'プライバシーポリシー', href: legalPath(product.id, 'privacy', 'ja') });
-	if (product.subscription) links.push({ label: '利用規約', href: legalPath(product.id, 'terms', 'ja') });
-	if (product.en && product.support && product.en.support) {
-		links.push({ label: 'English', href: legalPath(product.id, 'support', 'en'), lang: 'en' });
-	}
+	const legal = product.legal;
+	if (!legal) return [];
+	const links: { label: string; href: string; lang?: string }[] = [
+		{ label: 'サポート', href: legal.support },
+		{ label: 'プライバシーポリシー', href: legal.privacy },
+		{ label: '利用規約', href: legal.terms }
+	];
+	if (legal.supportEn) links.push({ label: 'English', href: legal.supportEn, lang: 'en' });
 	return links;
 }

@@ -10,9 +10,6 @@ import { SITE_URL } from '$lib/seo';
  * 載せるのは「インデックスされてほしいページ」だけ。`/ask` は noindex なので入れない。
  */
 function paths(): string[] {
-	// /products/{id}/privacy と /support は載せない。アプリ審査のために URL が
-	// 生きているだけの法務ページで、ページ自身が noindex を宣言している。
-	// sitemap は「インデックスしてほしい」の宣言なので、載せると自分の指示と矛盾する。
 	return [
 		'',
 		'/writings',
